@@ -1,0 +1,117 @@
+{
+    "node1": {
+        "id": "node1",
+        "speaker": "Passenger",
+        "text": "The passenger looks out the window and smiles. 'So, what do you think about train rides?'",
+        "choices": [
+            {
+                "text": "I think they’re relaxing. What about you?",
+                "nextId": "node2"
+            },
+            {
+                "text": "Honestly, they can be a bit boring sometimes.",
+                "nextId": "node3"
+            },
+            {
+                "text": "[End Conversation]",
+                "nextId": "END_DIALOGUE"
+            }
+        ]
+    },
+    "node2": {
+        "id": "node2",
+        "speaker": "Passenger",
+        "text": "They nod, leaning back. 'Yeah, they’re kind of soothing, aren’t they? Just the sound of the tracks and the scenery flying by.'",
+        "choices": [
+            {
+                "text": "Exactly! It’s a nice way to clear your head.",
+                "nextId": "node4"
+            },
+            {
+                "text": "Sometimes I lose track of time staring out the window.",
+                "nextId": "node5"
+            }
+        ]
+    },
+    "node3": {
+        "id": "node3",
+        "speaker": "Passenger",
+        "text": "They chuckle. 'Fair enough. I guess not everyone finds them exciting. What do you do to pass the time?'",
+        "choices": [
+            {
+                "text": "I usually bring a book or listen to music.",
+                "nextId": "node6"
+            },
+            {
+                "text": "Mostly just stare out the window. It’s kind of mesmerizing.",
+                "nextId": "node7"
+            }
+        ]
+    },
+    "node4": {
+        "id": "node4",
+        "speaker": "Passenger",
+        "text": "They smile warmly. 'Yeah, it’s like a little escape, isn’t it? I don’t even mind when it’s a long trip.'",
+        "choices": [
+            {
+                "text": "Exactly. It’s like time slows down a bit.",
+                "nextId": "END_DIALOGUE"
+            }
+        ]
+    },
+    "node5": {
+        "id": "node5",
+        "speaker": "Passenger",
+        "text": "They laugh softly. 'Right? It’s like the world becomes a giant movie screen.'",
+        "choices": [
+            {
+                "text": "Yeah, and every scene is different.",
+                "nextId": "END_DIALOGUE"
+            }
+        ]
+    },
+    "node6": {
+        "id": "node6",
+        "speaker": "Passenger",
+        "text": "They nod thoughtfully. 'Good choices. Music and books definitely help the time fly.'",
+        "choices": [
+            {
+                "text": "Do you have a favorite book or playlist for train rides?",
+                "nextId": "node8"
+            }
+        ]
+    },
+    "node7": {
+        "id": "node7",
+        "speaker": "Passenger",
+        "text": "They grin. 'Same here. There’s something so calming about watching the world blur by.'",
+        "choices": [
+            {
+                "text": "Especially when the light hits just right.",
+                "nextId": "node9"
+            }
+        ]
+    },
+    "node8": {
+        "id": "node8",
+        "speaker": "Passenger",
+        "text": "They light up. 'Oh, absolutely. For books, I like thrillers—makes the calm of the train feel like the perfect backdrop.'",
+        "choices": [
+            {
+                "text": "That’s an interesting contrast. Thrills in a peaceful setting.",
+                "nextId": "END_DIALOGUE"
+            }
+        ]
+    },
+    "node9": {
+        "id": "node9",
+        "speaker": "Passenger",
+        "text": "They glance out the window, their tone reflective. 'Yeah, especially during sunrise or sunset. It’s like nature showing off.'",
+        "choices": [
+            {
+                "text": "It’s moments like that that make me love train rides.",
+                "nextId": "END_DIALOGUE"
+            }
+        ]
+    }
+}

@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c3313e3219e9c84aaea84951a58b9bd, type: 3}
+  m_Name: TrainCar2
+  m_EditorClassIdentifier: 
+  description: A 2nd car
+  roomName: Train Car 2
+  exits:
+  - exitDirection: 1
+    exitDescription: The door south leads back to the original car
+    targetRoom: {fileID: 11400000, guid: 8c06a7c976268c4499e012b520bd27a7, type: 2}
