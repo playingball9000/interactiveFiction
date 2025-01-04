@@ -16,6 +16,11 @@ public class GameInitializer : MonoBehaviour
 
         startingRoom.npcs.Add(woman);
 
+        IItem book = new Book();
+        book.referenceName = "book";
+        book.description = "an old book with a worn cover";
+
+        startingRoom.roomItems.Add(book);
     }
 
     private void Start()

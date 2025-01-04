@@ -1,7 +1,6 @@
-public interface IClothing : IExaminable
+public interface IClothing : IExaminable, IItem
 {
     new string referenceName { get; set; }
-    string description { get; set; }
     string color { get; set; }
 
 }
@@ -9,7 +8,12 @@ public interface IClothing : IExaminable
 public interface IExaminable
 {
     string referenceName { get; set; }
+    string description { get; set; }
     string GetDescription();
+}
+
+public interface IItem : IExaminable
+{
 }
 
 public interface IPlayerAction

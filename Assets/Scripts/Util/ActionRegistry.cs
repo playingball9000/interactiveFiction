@@ -8,6 +8,9 @@ public class ActionRegistry
         CreateAction<LookAction>(),
         CreateAction<TalkAction>(),
         CreateAction<ExamineAction>(),
+        CreateAction<GetAction>(),
+        CreateAction<DropAction>(),
+        CreateAction<InventoryAction>(),
 
     }
     .Concat(CreateMoveActions<MoveAction>())
