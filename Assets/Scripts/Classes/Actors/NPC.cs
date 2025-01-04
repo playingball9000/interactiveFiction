@@ -10,12 +10,12 @@ public class NPC : IExaminable
 
     public string GetDescription()
     {
-        string clothingListString = string.Join(", ", clothes.Select(clothingItem => $"{clothingItem.color} {clothingItem.referenceName}"));
 
         string fullDescription = $@"{this.description}";
 
-        if (clothingListString.Length > 0)
+        if (clothes.Any() == true)
         {
+            string clothingListString = string.Join(", ", clothes.Select(clothingItem => $"{clothingItem.color} {clothingItem.referenceName}"));
             fullDescription = fullDescription + $"{referenceName} is wearing {clothingListString}";
         }
 
