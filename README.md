@@ -1,6 +1,11 @@
 # interactiveFiction
 
 ## Setup
+1. Open Unity Hub
+2. "Select Add project from disk"
+3. ![image](https://github.com/user-attachments/assets/9416fd4a-d36b-479b-a762-22a4fda393bf)
+4. Find the cloned github project and add that folder.
+
 Make sure you load the "ifScene" before you start.
 
 ## Rooms
