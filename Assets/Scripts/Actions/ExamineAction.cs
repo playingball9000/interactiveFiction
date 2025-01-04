@@ -16,10 +16,12 @@ public class ExamineAction : IPlayerAction
         {
             //TODO: try and find exact match first
 
-            List<IExaminable> examinableThings = ActionUtil.GetInstance().FindItemsFieldContainsString(WorldState.GetInstance().player.currentLocation.npcs, npc => npc.referenceName, target).ToList<IExaminable>();
+            List<IExaminable> potentialMatches = ActionUtil.GetInstance().FindItemsFieldContainsString(WorldState.GetInstance().player.currentLocation.npcs, npc => npc.referenceName, target).ToList<IExaminable>();
+            potentialMatches.AddRange(ActionUtil.GetInstance().FindItemsFieldContainsString(WorldState.GetInstance().player.currentLocation.roomItems, item => item.referenceName, target).ToList<IExaminable>());
+            potentialMatches.AddRange(ActionUtil.GetInstance().FindItemsFieldContainsString(WorldState.GetInstance().player.inventory, item => item.referenceName, target).ToList<IExaminable>());
 
             ActionUtil.GetInstance().MatchZeroOneAndMany<IExaminable>(
-                 examinableThings,
+                 potentialMatches,
                  () => DisplayTextHandler.invokeUpdateTextDisplay("You can't examine that"),
                  thing => DisplayTextHandler.invokeUpdateTextDisplay(thing.GetDescription()),
                  things => DisplayTextHandler.invokeUpdateTextDisplay("Be more specific about what you are examining ie. 'red ring' instead of 'ring'")
@@ -37,9 +39,9 @@ public class ExamineAction : IPlayerAction
             else if (matchedNpcsInRoom.Count >= 1)
             {
                 List<IClothing> listOfAllClothes = matchedNpcsInRoom.SelectMany(npc => npc.clothes).ToList();
-                List<IExaminable> examinableThings = ActionUtil.GetInstance().FindItemsFieldContainsString(listOfAllClothes, clothingItem => clothingItem.referenceName, item).ToList<IExaminable>();
+                List<IExaminable> potentialMatches = ActionUtil.GetInstance().FindItemsFieldContainsString(listOfAllClothes, clothingItem => clothingItem.referenceName, item).ToList<IExaminable>();
                 ActionUtil.GetInstance().MatchZeroOneAndMany<IExaminable>(
-                    examinableThings,
+                    potentialMatches,
                     () => DisplayTextHandler.invokeUpdateTextDisplay("You can't examine that"),
                     thing => DisplayTextHandler.invokeUpdateTextDisplay(thing.GetDescription()),
                     things => DisplayTextHandler.invokeUpdateTextDisplay("Be more specific about what you are examining ie. 'red ring' instead of 'ring'")

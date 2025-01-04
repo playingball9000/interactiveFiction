@@ -4,7 +4,7 @@ using System.Linq;
 public class NPC : IExaminable
 {
     public string referenceName { get; set; }
-    public string description;
+    public string description { get; set; }
     public Room currentLocation;
     public List<IClothing> clothes = new List<IClothing>();
 

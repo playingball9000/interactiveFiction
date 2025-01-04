@@ -42,7 +42,9 @@ public class DisplayTextHandler : MonoBehaviour
 
         string joinedInteractionDescriptions = string.Join("\n", interactionDescriptionsInRoom.ToArray());
 
-        string combinedText = room.roomName + "\n" + room.description + "\n" + joinedInteractionDescriptions;
+        string combinedText = room.roomName + "\n"
+            + room.description + "\n\n"
+            + joinedInteractionDescriptions;
 
         UpdateTextDisplay(combinedText);
     }
