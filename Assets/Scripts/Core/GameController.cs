@@ -1,5 +1,22 @@
 using UnityEngine;
 
+/*
+ * TODO List
+ * 
+ * implement tk
+ * fix up dialogue?
+ * Save and Load the game
+ *      
+ * implement specific char
+ * npc should have list of examinable things on them and method to get them
+ * 
+ * 
+ * Standardize go action?
+ * buttons for quick action? Save prompts?
+ * 
+ * 
+ */
+
 public class GameController : MonoBehaviour
 {
 
