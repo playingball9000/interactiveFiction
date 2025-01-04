@@ -17,6 +17,7 @@ Make sure you load the "ifScene" before you start.
 
 ## Core
 1. Pretty much all the main interfaces/managers for the UI, gameplay setup, etc.
+2. Most of these scripts are attached to the GameController GameObject and the necessary elements are injected via the Unity Inspector.
 
 ## Adding Actions
 1. Actions are invoked via the command pattern
