@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
 using TMPro;
 using UnityEngine;
 
@@ -39,7 +38,7 @@ public class DisplayTextHandler : MonoBehaviour
 
     public void DisplayRoomText(Room room)
     {
-        List<string> interactionDescriptionsInRoom = GetRoomInteractionDescriptions(room);
+        List<string> interactionDescriptionsInRoom = room.GetRoomInteractionDescriptions();
 
         string joinedInteractionDescriptions = string.Join("\n", interactionDescriptionsInRoom.ToArray());
 
@@ -47,24 +46,4 @@ public class DisplayTextHandler : MonoBehaviour
 
         UpdateTextDisplay(combinedText);
     }
-
-    // TODO: should move this to the room object
-    private List<string> GetRoomInteractionDescriptions(Room room)
-    {
-        List<string> interactionDescriptionsInRoom = new List<string>();
-
-        List<string> npcNames = room.npcs.Select(npc => npc.referenceName).ToList();
-
-        if (npcNames?.Any() == true)
-        {
-            interactionDescriptionsInRoom.Add("The following people are here: " + string.Join(", ", npcNames) + "\n");
-        }
-
-        foreach (Exit exit in room.exits)
-        {
-            interactionDescriptionsInRoom.Add(exit.exitDescription);
-        }
-        return interactionDescriptionsInRoom;
-    }
-
 }

@@ -21,7 +21,7 @@ public class GrabTextFromInput : MonoBehaviour
             inputField = inputFieldObject.GetComponent<TMP_InputField>();
         }
 
-        inputField.onEndEdit.AddListener(GrabTextFromInputField);
+        inputField.onSubmit.AddListener(GrabTextFromInputField);
     }
 
     void Update()
@@ -41,7 +41,7 @@ public class GrabTextFromInput : MonoBehaviour
 
     void OnDestroy()
     {
-        inputField.onEndEdit.RemoveListener(GrabTextFromInputField);
+        inputField.onSubmit.RemoveListener(GrabTextFromInputField);
     }
 
     public void GrabTextFromInputField(string inputText)
