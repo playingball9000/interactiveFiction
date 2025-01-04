@@ -1,5 +1,8 @@
 # interactiveFiction
 
+## Setup
+Make sure you load the "ifScene" before you start.
+
 ## Rooms
 1. Rooms have exits, NPCs, and what not. Should be pretty self explanatory.
 1. Unlike the other things, Rooms are controlled through the Unity Inspector.
