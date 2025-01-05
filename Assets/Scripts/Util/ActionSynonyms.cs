@@ -34,5 +34,9 @@ public class ActionSynonyms
         { "examine", ActionConstants.ACTION_EXAMINE },
         { "x", ActionConstants.ACTION_EXAMINE },
         { "inspect", ActionConstants.ACTION_EXAMINE },
+        { "savegame", ActionConstants.ACTION_SAVEGAME },
+        { "save", ActionConstants.ACTION_SAVEGAME },
+        { "loadgame", ActionConstants.ACTION_LOADGAME },
+        { "load", ActionConstants.ACTION_LOADGAME },
     };
 }

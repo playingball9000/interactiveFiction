@@ -1,5 +1,7 @@
 using System.Collections.Generic;
+using System.Linq;
 
+[System.Serializable]
 public class Player
 {
     public string playerName { get; set; }
@@ -30,5 +32,29 @@ public class Player
             DisplayTextHandler.invokeUpdateTextDisplay("You drop " + item.referenceName);
             inventory.Remove(item);
         }
+    }
+
+    public string GetInventoryString()
+    {
+        if (inventory.Any() == true)
+        {
+            List<string> itemNames = inventory.Select(item => item.referenceName).ToList();
+            return "Inventory:\n - " + string.Join(" - ", itemNames) + "\n";
+        }
+        else
+        {
+            return "";
+        }
+    }
+
+    public override string ToString()
+    {
+        string toString = $@"
+            playerName: {playerName}
+            description: {description}
+            currentLocation: {currentLocation.roomName}
+            {GetInventoryString()}
+";
+        return toString;
     }
 }
