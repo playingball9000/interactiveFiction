@@ -9,6 +9,11 @@ public static class LoggingUtil
     [Conditional("DEVELOPMENT_BUILD"), Conditional("UNITY_EDITOR")]
     public static void Log(object message, bool condition = true)
     {
+        if (message == null)
+        {
+            UnityEngine.Debug.Log("LoggingUtil: null input");
+
+        }
         if (condition)
         {
             UnityEngine.Debug.Log(message);
@@ -30,7 +35,7 @@ public static class LoggingUtil
 
             string typeName = typeof(T).Name;
             var fieldValues = objects.Select(obj => property.GetValue(obj)?.ToString()).ToList();
-            string result = "[" + string.Join(", ", fieldValues) + "]";
+            string result = StringUtil.GetStringFromList(fieldValues);
             string log = $"Type: {typeName}, Field: {fieldName}, Values: {result}";
             UnityEngine.Debug.Log(log);
         }

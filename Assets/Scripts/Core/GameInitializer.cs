@@ -21,6 +21,7 @@ public class GameInitializer : MonoBehaviour
         book.description = "an old book with a worn cover";
 
         startingRoom.roomItems.Add(book);
+
     }
 
     private void Start()

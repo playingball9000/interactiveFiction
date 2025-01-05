@@ -1,6 +1,3 @@
-using System.Collections.Generic;
-using System.Linq;
-
 public class InventoryAction : IPlayerAction
 {
     public string tooFewMessage { get; private set; }
@@ -12,11 +9,10 @@ public class InventoryAction : IPlayerAction
 
     void IPlayerAction.Execute(string[] inputTextArray)
     {
-        List<IItem> inventory = WorldState.GetInstance().player.inventory;
-        if (inventory.Any() == true)
+        string inventoryString = WorldState.GetInstance().player.GetInventoryString();
+        if (inventoryString.Length > 0)
         {
-            List<string> itemNames = inventory.Select(item => item.referenceName).ToList();
-            DisplayTextHandler.invokeUpdateTextDisplay("Inventory:\n - " + string.Join(" - ", itemNames) + "\n");
+            DisplayTextHandler.invokeUpdateTextDisplay(inventoryString);
 
         }
         else

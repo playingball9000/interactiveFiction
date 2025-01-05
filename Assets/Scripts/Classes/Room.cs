@@ -3,6 +3,7 @@ using System.Linq;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Adventure/Room")]
+[System.Serializable]
 public class Room : ScriptableObject
 {
     [TextArea(15, 20)]
@@ -55,5 +56,22 @@ public class Room : ScriptableObject
     public void AddItem(IItem item)
     {
         roomItems.Add(item);
+    }
+
+    public override string ToString()
+    {
+        string npcNames = StringUtil.GetStringFromList(npcs.Select(npc => npc.referenceName).ToList());
+        string itemNames = StringUtil.GetStringFromList(roomItems.Select(item => item.referenceName).ToList());
+        string exitsPaths = StringUtil.GetStringFromList(exits.Select(ex => ex.ToString()).ToList());
+
+        string toString = $@"
+            roomName: {roomName}
+            description: {description}
+            npcNames: {npcNames}
+            itemNames: {itemNames}
+            exitsPaths: {exitsPaths}
+        ";
+
+        return toString;
     }
 }

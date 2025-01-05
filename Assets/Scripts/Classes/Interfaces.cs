@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 public interface IClothing : IExaminable, IItem
 {
     new string referenceName { get; set; }
@@ -26,4 +28,11 @@ public interface IPlayerAction
     public abstract void Execute(string[] inputTextArray);
 }
 
+public interface IContainer
+{
+    void AddItem(IItem item);
+    void RemoveItem(IItem item);
+    bool ContainsItem(IItem item);
+    List<IItem> GetItems();
+}
 
