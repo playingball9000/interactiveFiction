@@ -13,7 +13,6 @@ public class InventoryAction : IPlayerAction
         if (inventoryString.Length > 0)
         {
             DisplayTextHandler.invokeUpdateTextDisplay(inventoryString);
-
         }
         else
         {

@@ -9,18 +9,9 @@ public class SaveAction : IPlayerAction
     void IPlayerAction.Execute(string[] inputTextArray)
     {
         GameState gameState = new GameState();
-        //gameState.player = WorldState.GetInstance().player;
-        //LoggingUtil.Log(gameState.player);
-        gameState.test = 10;
-
-        //Some things aren't serializable like scriptable and monobehavior
+        gameState.player = WorldState.GetInstance().player;
+        gameState.worldState = WorldState.GetInstance();
 
         SaveManager.SaveGame(gameState);
-
-        gameState = SaveManager.LoadGame();
-        LoggingUtil.Log(gameState.test);
-        //WorldState.SetInstance(gameState.worldState);
-        //DebugUtil.printPlayer();
-
     }
 }

@@ -1,3 +1,4 @@
+[System.Serializable]
 public class Book : IItem
 {
     public string referenceName { get; set; }
@@ -7,6 +8,4 @@ public class Book : IItem
     {
         return description;
     }
-
-
 }
