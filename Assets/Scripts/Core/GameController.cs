@@ -2,7 +2,6 @@ using UnityEngine;
 
 public class GameController : MonoBehaviour
 {
-
     DialogueParser dialogueParser;
 
     public Canvas dialogueCanvas;

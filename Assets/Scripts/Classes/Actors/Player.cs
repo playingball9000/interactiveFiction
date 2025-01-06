@@ -7,16 +7,7 @@ public class Player
     public string playerName { get; set; }
     public string description { get; set; }
     public Room currentLocation { get; set; }
-    public List<IItem> inventory { get; private set; }
-
-    public Player(string name, string description, Room currentLocation)
-    {
-        this.playerName = name;
-        this.description = description;
-        this.currentLocation = currentLocation;
-        inventory = new List<IItem>();
-    }
-
+    public List<IItem> inventory = new List<IItem>();
 
     public void AddToInventory(IItem item)
     {
