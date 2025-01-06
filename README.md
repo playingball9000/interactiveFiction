@@ -6,13 +6,13 @@
 3. ![image](https://github.com/user-attachments/assets/9416fd4a-d36b-479b-a762-22a4fda393bf)
 4. Find the cloned github project and add that folder.
 
-Make sure you load the "ifScene" before you start.
-All code is in Assets/Scripts
+- Make sure you load the "ifScene" before you start.
+- All code is in Assets/Scripts
+- GameInitializer.cs is used to setup all the classes and WorldState
+- WorldState keeps track of the game state during play
 
 ## Rooms
 1. Rooms have exits, NPCs, and what not. Should be pretty self explanatory.
-1. Unlike the other things, Rooms are controlled through the Unity Inspector.
-2. Rooms are located in Assets/GameplayObjects
 
 ## Actors
 1. Player, NPC, etc.
