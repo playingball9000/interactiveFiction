@@ -26,12 +26,6 @@
 1. Actions should extend IPlayerAction
 1. Make sure to update the ActionRegistry and ActionSynonyms with any new
 
-## Dialogue
-Located in Resources/Dialogue
-
-## Other
-1. The other notable is IExaminable which you'll want to extend if you want to make something actionable from the "examine" action
-
 ### Action List
 1. Look
 2. Talk
@@ -42,3 +36,17 @@ Located in Resources/Dialogue
 7. Save
 8. Load
 9. Movement
+
+### Inventory
+1. Anything that can be placed in the inventory needs to extend IItem
+
+### Examine
+1. Anything examinable needs to extend IExaminable
+
+## Dialogue
+Located in Resources/Dialogue
+
+## Other
+1. The other notable is IExaminable which you'll want to extend if you want to make something actionable from the "examine" action
+
+
