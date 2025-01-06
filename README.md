@@ -31,3 +31,14 @@ Located in Resources/Dialogue
 
 ## Other
 1. The other notable is IExaminable which you'll want to extend if you want to make something actionable from the "examine" action
+
+### Action List
+1. Look
+2. Talk
+3. Examine
+4. Get
+5. Drop
+6. Inventory
+7. Save
+8. Load
+9. Movement
