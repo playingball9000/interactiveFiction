@@ -1,16 +1,13 @@
 using System.Collections.Generic;
 using System.Linq;
-using UnityEngine;
 
-[CreateAssetMenu(menuName = "Adventure/Room")]
 [System.Serializable]
-public class Room : ScriptableObject
+public class Room
 {
-    [TextArea(15, 20)]
     public string description;
     public string roomName;
 
-    public List<Exit> exits;
+    public List<Exit> exits = new List<Exit>();
     public List<NPC> npcs = new List<NPC>();
     public List<IItem> roomItems = new List<IItem>();
 
