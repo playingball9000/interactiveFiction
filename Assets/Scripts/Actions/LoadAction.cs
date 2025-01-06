@@ -16,8 +16,7 @@ public class LoadAction : IPlayerAction
         }
         else
         {
-            //WorldState.SetInstance(gameState.worldState);
-            DebugUtil.printPlayer();
+            WorldState.SetInstance(gameState.worldState);
         }
     }
 }

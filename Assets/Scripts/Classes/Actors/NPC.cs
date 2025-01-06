@@ -22,7 +22,6 @@ public class NPC : IExaminable
             fullDescription = fullDescription + $"{referenceName} is wearing {clothingListString}";
         }
 
-
         return fullDescription;
     }
 }

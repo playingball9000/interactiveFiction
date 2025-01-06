@@ -31,7 +31,6 @@ public class GameInitializer : MonoBehaviour
         player.description = "Player description";
         player.currentLocation = startingRoom;
 
-        WorldState.GetInstance().player = player;
 
         NPC woman = new Woman();
         woman.referenceName = "Woman";
@@ -46,6 +45,10 @@ public class GameInitializer : MonoBehaviour
 
         startingRoom.roomItems.Add(book);
 
+        WorldState.GetInstance().player = player;
+
+        WorldState.GetInstance().rooms.Add(startingRoom);
+        WorldState.GetInstance().rooms.Add(trainCarTwo);
     }
 
     // Put stuff that happens at the start of the game here

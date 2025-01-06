@@ -3,7 +3,7 @@ using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
 
-//TODO: This is absoluetly not done and needs some work - probably use local storage, change rooms so i can serialize
+//TODO: Probably update to localstorage
 public static class SaveManager
 {
     private const string SaveKey = "IfGameSave";
@@ -43,10 +43,8 @@ public static class SaveManager
             {
                 dataToReturn = default;
             }
-            //string json = PlayerPrefs.GetString(SaveKey);
             LoggingUtil.Log("Game loaded successfully.");
             return dataToReturn;
-            //return JsonUtility.FromJson<GameState>(json);
         }
         Debug.Log("No save found.");
         return null;
