@@ -20,7 +20,7 @@ public class TalkAction : IPlayerAction
             () => DisplayTextHandler.invokeUpdateTextDisplay("You can't talk to that"),
             npc =>
             {
-                GameController.invokeStartDialogue();
+                DialogueParser.invokeStartDialogue(npc);
             },
             npcs => DisplayTextHandler.invokeUpdateTextDisplay(
                 "Are you trying to talk to " + string.Join(" or ", npcs.Select(npc => npc.referenceName)))

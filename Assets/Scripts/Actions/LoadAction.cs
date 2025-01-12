@@ -8,15 +8,16 @@ public class LoadAction : IPlayerAction
 
     void IPlayerAction.Execute(string[] inputTextArray)
     {
-        GameState gameState = SaveManager.LoadGame();
-        if (gameState == null)
+        WorldState worldState = SaveManager.LoadGame();
+        if (worldState == null)
         {
             DisplayTextHandler.invokeUpdateTextDisplay("No save game found");
             return;
         }
         else
         {
-            WorldState.SetInstance(gameState.worldState);
+            DisplayTextHandler.invokeUpdateTextDisplay("Game has been loaded");
+            WorldState.SetInstance(worldState);
         }
     }
 }

@@ -3,7 +3,7 @@ using UnityEngine;
 public class GameInitializer : MonoBehaviour
 {
 
-
+    //Setup for the game here
     void Awake()
     {
         Room trainCarTwo = new Room();
@@ -36,6 +36,7 @@ public class GameInitializer : MonoBehaviour
         woman.referenceName = "Woman";
         woman.description = @"The woman is striking in a casual way. Her her auburn hair falling in loose waves around her shoulders, framing a face that was both striking and sincere.  Her outfit was casual yet put-together—fitted jeans, a maroon sweater that hugged her frame, and black ankle boots that looked both practical and stylish.";
         woman.currentLocation = startingRoom;
+        woman.dialogueFile = "womanDialogue";
 
         startingRoom.npcs.Add(woman);
 

@@ -13,6 +13,16 @@ public class GrabTextFromInput : MonoBehaviour
     private int currentHistoryIndex = -1;
     private int MAX_HISTORY_LENGTH = 20;
 
+    private void OnEnable()
+    {
+        GameController.invokeShowMainCanvas += ActivateInputTextField;
+    }
+
+    private void OnDisable()
+    {
+        GameController.invokeShowMainCanvas -= ActivateInputTextField;
+    }
+
     void Start()
     {
         if (inputField == null)
@@ -72,9 +82,13 @@ public class GrabTextFromInput : MonoBehaviour
             LoggingUtil.Log("Action was null, no corresponding action for: " + inputTextArray[0]);
             DisplayTextHandler.invokeUpdateTextDisplay("Unknown command");
         }
-
-        inputField.ActivateInputField();
+        ActivateInputTextField();
         inputField.text = "";
+    }
+
+    public void ActivateInputTextField()
+    {
+        inputField.ActivateInputField();
 
     }
 
