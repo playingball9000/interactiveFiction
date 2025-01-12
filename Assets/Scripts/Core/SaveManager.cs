@@ -8,21 +8,21 @@ public static class SaveManager
 {
     private const string SaveKey = "IfGameSave";
 
-    public static void SaveGame(GameState gameState)
+    public static void SaveGame(WorldState worldState)
     {
 
         BinaryFormatter formatter = new BinaryFormatter();
         MemoryStream memoryStream = new MemoryStream();
-        formatter.Serialize(memoryStream, gameState);
+        formatter.Serialize(memoryStream, worldState);
         string dataToSave = Convert.ToBase64String(memoryStream.ToArray());
         PlayerPrefs.SetString(SaveKey, dataToSave);
         PlayerPrefs.Save();
         LoggingUtil.Log("Game saved successfully.");
     }
 
-    public static GameState LoadGame()
+    public static WorldState LoadGame()
     {
-        GameState dataToReturn;
+        WorldState dataToReturn;
         if (PlayerPrefs.HasKey(SaveKey))
         {
             string dataToLoad = PlayerPrefs.GetString(SaveKey);
@@ -32,7 +32,7 @@ public static class SaveManager
                 MemoryStream memoryStream = new MemoryStream(Convert.FromBase64String(dataToLoad));
                 try
                 {
-                    dataToReturn = (GameState)formatter.Deserialize(memoryStream);
+                    dataToReturn = (WorldState)formatter.Deserialize(memoryStream);
                 }
                 catch
                 {

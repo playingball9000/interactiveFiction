@@ -17,19 +17,32 @@ public class DialogueParser : MonoBehaviour
 
     public Image speakerPortrait;
 
-    void Awake()
+    KeyCode[] numpadKeys = { KeyCode.Keypad0, KeyCode.Keypad1, KeyCode.Keypad2, KeyCode.Keypad3, KeyCode.Keypad4,
+                         KeyCode.Keypad5, KeyCode.Keypad6, KeyCode.Keypad7, KeyCode.Keypad8, KeyCode.Keypad9 };
+
+
+
+    public delegate void StartDialogueDelegate(NPC npc);
+    public static StartDialogueDelegate invokeStartDialogue;
+
+    private void OnEnable()
     {
-        LoadDialogue();
+        DialogueParser.invokeStartDialogue += StartDialogue;
+    }
+
+    private void OnDisable()
+    {
+        DialogueParser.invokeStartDialogue -= StartDialogue;
     }
 
     void Update()
     {
+        // I guess I could also check if the dialogue window is active here...
         if (currentNode != null && Input.anyKeyDown)
         {
             for (int i = 0; i < currentNode.choices.Count; i++)
             {
-                // Check if the corresponding number key was pressed
-                if (Input.GetKeyDown((i + 1).ToString()))
+                if (Input.GetKeyDown((i + 1).ToString()) || Input.GetKeyDown(numpadKeys[i + 1]))
                 {
                     DialogueChoice choice = currentNode.choices[i];
                     OnChoiceSelected(choice.text, choice.nextId);
@@ -38,10 +51,15 @@ public class DialogueParser : MonoBehaviour
         }
     }
 
-    void LoadDialogue()
+    public void StartDialogue(NPC npc)
     {
-        var jsonText = Resources.Load<TextAsset>("Dialogue/dialogue1").text;
+        GameController.invokeShowDialogueCanvas();
+
+        // This takes about 45 ms to run for a 100 line file. Not sure if performance degrades
+        var jsonText = Resources.Load<TextAsset>("Dialogue/" + npc.dialogueFile).text;
         dialogues = JsonConvert.DeserializeObject<Dictionary<string, DialogueNode>>(jsonText);
+
+        DisplayDialogue("node1");
     }
 
     public void DisplayDialogue(string dialogueId)
@@ -64,7 +82,7 @@ public class DialogueParser : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning($"Dialogue with ID '{dialogueId}' not found.");
+            LoggingUtil.Log($"Dialogue with ID '{dialogueId}' not found.");
         }
     }
 

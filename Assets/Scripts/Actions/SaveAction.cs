@@ -8,10 +8,6 @@ public class SaveAction : IPlayerAction
 
     void IPlayerAction.Execute(string[] inputTextArray)
     {
-        GameState gameState = new GameState();
-        gameState.player = WorldState.GetInstance().player;
-        gameState.worldState = WorldState.GetInstance();
-
-        SaveManager.SaveGame(gameState);
+        SaveManager.SaveGame(WorldState.GetInstance());
     }
 }
