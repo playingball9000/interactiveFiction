@@ -13,6 +13,7 @@
 
 ## Rooms
 1. Rooms have exits, NPCs, and what not. Should be pretty self explanatory.
+2. Scenery is stuff that player can examine but not pick up. Should extend class Scenery.
 
 ## Actors
 1. Player, NPC, etc.
@@ -44,9 +45,7 @@
 1. Anything examinable needs to extend IExaminable
 
 ## Dialogue
-Located in Resources/Dialogue
+Located in Resources/Dialogue (file must match name of dialogueFile field in NPC)
 
-## Other
-1. The other notable is IExaminable which you'll want to extend if you want to make something actionable from the "examine" action
 
 
