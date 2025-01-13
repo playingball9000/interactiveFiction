@@ -13,16 +13,16 @@ public class TalkAction : IPlayerAction
     {
         string target = inputTextArray.Length == 2 ? inputTextArray[1] : (inputTextArray.Length == 3 && inputTextArray[1] == "to") ? inputTextArray[2] : null;
 
-        List<NPC> npcs = ActionUtil.GetInstance().FindItemsFieldContainsString(WorldState.GetInstance().player.currentLocation.npcs, npc => npc.referenceName, target);
+        List<NPC> npcs = ActionUtil.FindItemsFieldContainsString(WorldState.GetInstance().player.currentLocation.npcs, npc => npc.referenceName, target);
 
-        ActionUtil.GetInstance().MatchZeroOneAndMany<NPC>(
+        ActionUtil.MatchZeroOneAndMany<NPC>(
             npcs,
-            () => DisplayTextHandler.invokeUpdateTextDisplay("You can't talk to that"),
+            () => StoryTextHandler.invokeUpdateTextDisplay("You can't talk to that"),
             npc =>
             {
                 DialogueParser.invokeStartDialogue(npc);
             },
-            npcs => DisplayTextHandler.invokeUpdateTextDisplay(
+            npcs => StoryTextHandler.invokeUpdateTextDisplay(
                 "Are you trying to talk to " + string.Join(" or ", npcs.Select(npc => npc.referenceName)))
         );
     }

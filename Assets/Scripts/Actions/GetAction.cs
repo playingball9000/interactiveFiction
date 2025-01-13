@@ -13,17 +13,17 @@ public class GetAction : IPlayerAction
     {
         string target = inputTextArray[1];
 
-        List<IItem> items = ActionUtil.GetInstance().FindItemsFieldContainsString(WorldState.GetInstance().player.currentLocation.roomItems, item => item.referenceName, target);
+        List<IItem> items = ActionUtil.FindItemsFieldContainsString(WorldState.GetInstance().player.currentLocation.roomItems, item => item.referenceName, target);
 
-        ActionUtil.GetInstance().MatchZeroOneAndMany<IItem>(
+        ActionUtil.MatchZeroOneAndMany<IItem>(
             items,
-            () => DisplayTextHandler.invokeUpdateTextDisplay("You can't get that"),
+            () => StoryTextHandler.invokeUpdateTextDisplay("You can't get that"),
             item =>
             {
                 WorldState.GetInstance().player.AddToInventory(item);
                 WorldState.GetInstance().player.currentLocation.RemoveItem(item);
             },
-            items => DisplayTextHandler.invokeUpdateTextDisplay(
+            items => StoryTextHandler.invokeUpdateTextDisplay(
                 "Are you trying to get " + string.Join(" or ", items.Select(npc => npc.referenceName)))
         );
     }

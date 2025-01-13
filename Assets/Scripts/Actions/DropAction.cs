@@ -13,17 +13,17 @@ public class DropAction : IPlayerAction
     {
         string target = inputTextArray[1];
 
-        List<IItem> items = ActionUtil.GetInstance().FindItemsFieldContainsString(WorldState.GetInstance().player.inventory, item => item.referenceName, target);
+        List<IItem> items = ActionUtil.FindItemsFieldContainsString(WorldState.GetInstance().player.inventory, item => item.referenceName, target);
 
-        ActionUtil.GetInstance().MatchZeroOneAndMany<IItem>(
+        ActionUtil.MatchZeroOneAndMany<IItem>(
             items,
-            () => DisplayTextHandler.invokeUpdateTextDisplay("You can't drop that"),
+            () => StoryTextHandler.invokeUpdateTextDisplay("You can't drop that"),
             item =>
             {
                 WorldState.GetInstance().player.RemoveFromInventory(item);
                 WorldState.GetInstance().player.currentLocation.AddItem(item);
             },
-            items => DisplayTextHandler.invokeUpdateTextDisplay(
+            items => StoryTextHandler.invokeUpdateTextDisplay(
                 "Are you trying to drop " + string.Join(" or ", items.Select(npc => npc.referenceName)))
         );
     }

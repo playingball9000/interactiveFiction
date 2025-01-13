@@ -10,6 +10,7 @@ public class Room
     public List<Exit> exits = new List<Exit>();
     public List<NPC> npcs = new List<NPC>();
     public List<IItem> roomItems = new List<IItem>();
+    public List<IExaminable> roomScenery = new List<IExaminable>();
 
     public Dictionary<string, IExaminable> examinableItems { get; private set; }
 

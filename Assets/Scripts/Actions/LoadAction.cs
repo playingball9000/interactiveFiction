@@ -11,12 +11,12 @@ public class LoadAction : IPlayerAction
         WorldState worldState = SaveManager.LoadGame();
         if (worldState == null)
         {
-            DisplayTextHandler.invokeUpdateTextDisplay("No save game found");
+            StoryTextHandler.invokeUpdateTextDisplay("No save game found");
             return;
         }
         else
         {
-            DisplayTextHandler.invokeUpdateTextDisplay("Game has been loaded");
+            StoryTextHandler.invokeUpdateTextDisplay("Game has been loaded");
             WorldState.SetInstance(worldState);
         }
     }

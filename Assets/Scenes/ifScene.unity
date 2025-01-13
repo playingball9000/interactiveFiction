@@ -134,7 +134,7 @@ GameObject:
   - component: {fileID: 97676741}
   - component: {fileID: 97676742}
   m_Layer: 5
-  m_Name: StoryText
+  m_Name: StoryTextBox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -439,7 +439,7 @@ GameObject:
   - component: {fileID: 145162364}
   - component: {fileID: 145162363}
   m_Layer: 5
-  m_Name: ChoicesText
+  m_Name: ChoicesTextBox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1793,7 +1793,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 525d3addb7d30dc47841849355ba35ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  displayText: {fileID: 97676742}
+  UI_storyBox: {fileID: 97676742}
 --- !u!114 &1186198841
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1806,7 +1806,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3763c21a19fb7354cae0936699e1ff45, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inputField: {fileID: 1444874289}
+  UI_playerInputBox: {fileID: 1444874289}
 --- !u!114 &1186198842
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1819,7 +1819,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a53992ce18660f41afb6f807b4c3132, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startingRoom: {fileID: 11400000, guid: 8c06a7c976268c4499e012b520bd27a7, type: 2}
 --- !u!114 &1186198843
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1832,8 +1831,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9666b1bf2ec41ca49acc74b743df4335, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dialogueTextBox: {fileID: 1918732483}
-  choicesTextBox: {fileID: 145162363}
+  UI_dialogueBox: {fileID: 1918732483}
+  UI_dialogueChoicesBox: {fileID: 145162363}
   speakerPortrait: {fileID: 0}
 --- !u!1 &1310056718
 GameObject:
@@ -1938,7 +1937,7 @@ GameObject:
   - component: {fileID: 1444874291}
   - component: {fileID: 1444874289}
   m_Layer: 5
-  m_Name: PlayerActionInputField
+  m_Name: PlayerInputBox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2498,7 +2497,7 @@ GameObject:
   - component: {fileID: 1918732483}
   - component: {fileID: 1918732481}
   m_Layer: 5
-  m_Name: DialogueText
+  m_Name: DialogueTextBox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

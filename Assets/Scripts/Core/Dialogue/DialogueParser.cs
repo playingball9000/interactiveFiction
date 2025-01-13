@@ -12,14 +12,13 @@ public class DialogueParser : MonoBehaviour
 
     List<string> dialogueLog = new List<string>();
 
-    public TextMeshProUGUI dialogueTextBox;
-    public TextMeshProUGUI choicesTextBox;
+    public TextMeshProUGUI UI_dialogueBox;
+    public TextMeshProUGUI UI_dialogueChoicesBox;
 
     public Image speakerPortrait;
 
     KeyCode[] numpadKeys = { KeyCode.Keypad0, KeyCode.Keypad1, KeyCode.Keypad2, KeyCode.Keypad3, KeyCode.Keypad4,
                          KeyCode.Keypad5, KeyCode.Keypad6, KeyCode.Keypad7, KeyCode.Keypad8, KeyCode.Keypad9 };
-
 
 
     public delegate void StartDialogueDelegate(NPC npc);
@@ -53,6 +52,7 @@ public class DialogueParser : MonoBehaviour
 
     public void StartDialogue(NPC npc)
     {
+        dialogueLog.Clear();
         GameController.invokeShowDialogueCanvas();
 
         // This takes about 45 ms to run for a 100 line file. Not sure if performance degrades
@@ -71,13 +71,13 @@ public class DialogueParser : MonoBehaviour
             dialogueLog.Add(fullText + "\n");
             string logAsText = string.Join("\n", dialogueLog.ToArray());
 
-            dialogueTextBox.text = logAsText;
+            UI_dialogueBox.text = logAsText;
             //speakerPortrait.sprite = GetPortraitForSpeaker(node.speaker);
 
-            choicesTextBox.text = "";
+            UI_dialogueChoicesBox.text = "";
             for (int i = 0; i < currentNode.choices.Count; i++)
             {
-                choicesTextBox.text += $"{i + 1}. {currentNode.choices[i].text}\n";
+                UI_dialogueChoicesBox.text += $"{i + 1}. {currentNode.choices[i].text}\n";
             }
         }
         else

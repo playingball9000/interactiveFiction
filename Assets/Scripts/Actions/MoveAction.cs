@@ -13,12 +13,12 @@ public class MoveAction : IPlayerAction
         if (exit != null)
         {
             WorldState.GetInstance().player.currentLocation = exit.targetRoom;
-            DisplayTextHandler.invokeDisplayRoomText(exit.targetRoom);
+            StoryTextHandler.invokeDisplayRoomText(exit.targetRoom);
 
         }
         else
         {
-            DisplayTextHandler.invokeUpdateTextDisplay("You can't go that way");
+            StoryTextHandler.invokeUpdateTextDisplay("You can't go that way");
         }
     }
 }
