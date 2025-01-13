@@ -4,14 +4,17 @@ using System.Text.RegularExpressions;
 using TMPro;
 using UnityEngine;
 
-public class GrabTextFromInput : MonoBehaviour
+public class PlayerInputHandler : MonoBehaviour
 {
-    public TMP_InputField inputField;
+    public TMP_InputField UI_playerInputBox;
 
 
     private List<string> inputHistory = new List<string>();
     private int currentHistoryIndex = -1;
     private int MAX_HISTORY_LENGTH = 20;
+
+    //TODO: for later complex inputs
+    private static readonly HashSet<string> prepositions = new HashSet<string> { "in", "on", "under", "into", "onto" };
 
     private void OnEnable()
     {
@@ -25,18 +28,18 @@ public class GrabTextFromInput : MonoBehaviour
 
     void Start()
     {
-        if (inputField == null)
+        if (UI_playerInputBox == null)
         {
             GameObject inputFieldObject = GameObject.Find("PlayerActionInputField");
-            inputField = inputFieldObject.GetComponent<TMP_InputField>();
+            UI_playerInputBox = inputFieldObject.GetComponent<TMP_InputField>();
         }
 
-        inputField.onSubmit.AddListener(GrabTextFromInputField);
+        UI_playerInputBox.onSubmit.AddListener(GrabTextFromInputField);
     }
 
     void Update()
     {
-        if (inputField.isFocused)
+        if (UI_playerInputBox.isFocused)
         {
             if (Input.GetKeyDown(KeyCode.UpArrow))
             {
@@ -51,7 +54,7 @@ public class GrabTextFromInput : MonoBehaviour
 
     void OnDestroy()
     {
-        inputField.onSubmit.RemoveListener(GrabTextFromInputField);
+        UI_playerInputBox.onSubmit.RemoveListener(GrabTextFromInputField);
     }
 
     public void GrabTextFromInputField(string inputText)
@@ -59,7 +62,7 @@ public class GrabTextFromInput : MonoBehaviour
         AddToInputHistory(inputText);
         inputText = NormalizeInput(inputText);
 
-        DisplayTextHandler.invokeUpdateTextDisplay("> " + inputText);
+        StoryTextHandler.invokeUpdateTextDisplay("> " + inputText);
 
         string[] inputTextArray = inputText.Split(' ');
 
@@ -73,22 +76,33 @@ public class GrabTextFromInput : MonoBehaviour
 
         if (action != null)
         {
-            inputTextArray[0] = action;
-            GameController.invokeProcessPlayerAction(inputTextArray);
+            IPlayerAction playerAction = ActionRegistry.ActionsDict[action];
 
+            if (inputTextArray.Length < playerAction.minInputCount)
+            {
+                StoryTextHandler.invokeUpdateTextDisplay(playerAction.tooFewMessage);
+            }
+            else if (inputTextArray.Length > playerAction.maxInputCount)
+            {
+                StoryTextHandler.invokeUpdateTextDisplay(playerAction.tooManyMessage);
+            }
+            else
+            {
+                playerAction.Execute(inputTextArray);
+            }
         }
         else
         {
             LoggingUtil.Log("Action was null, no corresponding action for: " + inputTextArray[0]);
-            DisplayTextHandler.invokeUpdateTextDisplay("Unknown command");
+            StoryTextHandler.invokeUpdateTextDisplay(ActionUtil.GetUnknownCommandResponse());
         }
         ActivateInputTextField();
-        inputField.text = "";
+        UI_playerInputBox.text = "";
     }
 
     public void ActivateInputTextField()
     {
-        inputField.ActivateInputField();
+        UI_playerInputBox.ActivateInputField();
 
     }
 
@@ -106,7 +120,7 @@ public class GrabTextFromInput : MonoBehaviour
         if (direction == 1 && currentHistoryIndex == inputHistory.Count - 1)
         {
             currentHistoryIndex = -1;
-            inputField.text = "";
+            UI_playerInputBox.text = "";
             return;
         }
         if (currentHistoryIndex == -1)
@@ -116,8 +130,8 @@ public class GrabTextFromInput : MonoBehaviour
 
         currentHistoryIndex = Mathf.Clamp(currentHistoryIndex + direction, 0, inputHistory.Count - 1);
 
-        inputField.text = inputHistory[currentHistoryIndex];
-        inputField.caretPosition = inputField.text.Length;
+        UI_playerInputBox.text = inputHistory[currentHistoryIndex];
+        UI_playerInputBox.caretPosition = UI_playerInputBox.text.Length;
     }
 
     private void AddToInputHistory(string input)

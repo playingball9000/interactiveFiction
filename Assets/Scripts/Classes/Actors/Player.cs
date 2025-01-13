@@ -11,7 +11,7 @@ public class Player
 
     public void AddToInventory(IItem item)
     {
-        DisplayTextHandler.invokeUpdateTextDisplay("You pick up " + item.referenceName);
+        StoryTextHandler.invokeUpdateTextDisplay("You pick up " + item.referenceName);
 
         inventory.Add(item);
     }
@@ -20,7 +20,7 @@ public class Player
     {
         if (inventory.Contains(item))
         {
-            DisplayTextHandler.invokeUpdateTextDisplay("You drop " + item.referenceName);
+            StoryTextHandler.invokeUpdateTextDisplay("You drop " + item.referenceName);
             inventory.Remove(item);
         }
     }

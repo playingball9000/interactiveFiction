@@ -2,9 +2,9 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class DisplayTextHandler : MonoBehaviour
+public class StoryTextHandler : MonoBehaviour
 {
-    public TextMeshProUGUI displayText;
+    public TextMeshProUGUI UI_storyBox;
 
     List<string> storyLog = new List<string>();
 
@@ -17,14 +17,14 @@ public class DisplayTextHandler : MonoBehaviour
 
     private void OnEnable()
     {
-        DisplayTextHandler.invokeUpdateTextDisplay += UpdateTextDisplay;
-        DisplayTextHandler.invokeDisplayRoomText += DisplayRoomText;
+        StoryTextHandler.invokeUpdateTextDisplay += UpdateTextDisplay;
+        StoryTextHandler.invokeDisplayRoomText += DisplayRoomText;
     }
 
     private void OnDisable()
     {
-        DisplayTextHandler.invokeUpdateTextDisplay -= UpdateTextDisplay;
-        DisplayTextHandler.invokeDisplayRoomText -= DisplayRoomText;
+        StoryTextHandler.invokeUpdateTextDisplay -= UpdateTextDisplay;
+        StoryTextHandler.invokeDisplayRoomText -= DisplayRoomText;
     }
 
     public void UpdateTextDisplay(string text)
@@ -33,7 +33,7 @@ public class DisplayTextHandler : MonoBehaviour
         storyLog.Add(text + "\n");
         string logAsText = string.Join("\n", storyLog.ToArray());
 
-        displayText.text = logAsText;
+        UI_storyBox.text = logAsText;
     }
 
     public void DisplayRoomText(Room room)
