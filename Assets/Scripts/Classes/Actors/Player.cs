@@ -20,7 +20,6 @@ public class Player
     {
         if (inventory.Contains(item))
         {
-            StoryTextHandler.invokeUpdateTextDisplay("You drop " + item.referenceName);
             inventory.Remove(item);
         }
     }

@@ -21,6 +21,7 @@ public class GameInitializer : MonoBehaviour
         Exit startingRoomExit = new Exit
         {
             exitDirection = ExitDirection.north,
+            exitDescription = "There is a doorway to another car to the north",
             targetRoom = trainCarTwo
         };
 
@@ -29,6 +30,7 @@ public class GameInitializer : MonoBehaviour
         Exit trainCarTwoExit = new Exit
         {
             exitDirection = ExitDirection.south,
+            exitDescription = "There is a doorway to another car to the south",
             targetRoom = startingRoom
         };
 
@@ -45,7 +47,7 @@ public class GameInitializer : MonoBehaviour
         NPC woman = new Woman
         {
             referenceName = "Woman",
-            description = @"The woman is striking in a casual way. Her her auburn hair falling in loose waves around her shoulders, framing a face that was both striking and sincere.  Her outfit was casual yet put-together—fitted jeans, a maroon sweater that hugged her frame, and black ankle boots that looked both practical and stylish.",
+            description = @"The woman is striking in a casual way. Her her auburn hair falling in loose waves around her shoulders, framing a face that was both striking and sincere.  Her outfit was casual yet put-togetherï¿½fitted jeans, a maroon sweater that hugged her frame, and black ankle boots that looked both practical and stylish.",
             currentLocation = startingRoom,
             dialogueFile = "womanDialogue"
         };
@@ -77,7 +79,7 @@ public class GameInitializer : MonoBehaviour
     // Put stuff that happens at the start of the game here
     private void Start()
     {
-        StoryTextHandler.invokeUpdateTextDisplay("The train hummed softly as it cut through the countryside, the rhythmic clatter of its wheels blending seamlessly with the muted murmur of other passengers. You’re seated by the window, gazing out at the scenery rushing by. Fields of tall grass sway in the breeze, their golden heads catching the warm hues of the setting sun. A cluster of trees here, a scattering of wildflowers there—they’re gone in an instant, replaced by something else fleeting yet equally picturesque.\r\n\r\nYou lean back in the seat, the plush upholstery giving slightly beneath you. The faint aroma of brewed coffee wafts through the air, a comforting counterpoint to the occasional squeak of the train’s brakes as it adjusts speed. A low creak from the seat across the aisle draws your attention momentarily, where an elderly man adjusts his hat, his hands gnarled but steady. He nods at you with a faint smile before returning to his book—a worn volume with a cracked spine.\r\n\r\nThe scene outside shifts again, now a stretch of calm water reflecting the deepening colors of twilight. Your reflection in the glass momentarily overlaps with a flash of a distant town’s lights. For a brief moment, you consider the train’s destination. Nowhere in particular, you remind yourself. The journey itself is the point, isn’t it?");
+        StoryTextHandler.invokeUpdateTextDisplay("The train hummed softly as it cut through the countryside, the rhythmic clatter of its wheels blending seamlessly with the muted murmur of other passengers. You're seated by the window, gazing out at the scenery rushing by. Fields of tall grass sway in the breeze, their golden heads catching the warm hues of the setting sun. A cluster of trees here, a scattering of wildflowers there they're gone in an instant, replaced by something else fleeting yet equally picturesque.\r\n\r\nYou lean back in the seat, the plush upholstery giving slightly beneath you. The faint aroma of brewed coffee wafts through the air, a comforting counterpoint to the occasional squeak of the train's brakes as it adjusts speed. A low creak from the seat across the aisle draws your attention momentarily, where an elderly man adjusts his hat, his hands gnarled but steady. He nods at you with a faint smile before returning to his book, a worn volume with a cracked spine.\r\n\r\nThe scene outside shifts again, now a stretch of calm water reflecting the deepening colors of twilight. Your reflection in the glass momentarily overlaps with a flash of a distant town's lights. For a brief moment, you consider the train's destination. Nowhere in particular, you remind yourself. The journey itself is the point, isn't it?");
     }
 
 }
