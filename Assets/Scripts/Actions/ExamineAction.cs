@@ -9,7 +9,7 @@ public class ExamineAction : IPlayerAction
     public int maxInputCount { get; private set; } = 3;
     string IPlayerAction.actionReferenceName { get; } = ActionConstants.ACTION_EXAMINE;
 
-
+    private string CANT = "You can't examine that";
 
     /*
      * What this needs to do in the future is
@@ -27,16 +27,14 @@ public class ExamineAction : IPlayerAction
         string target = inputTextArray[1];
         if (inputTextArray.Length == 2)
         {
-            //TODO: try and find exact match first
+            //TODO: try and find exact match first, also, intelligence maybe - ex. find npc items too
 
-            List<IExaminable> potentialMatches = ActionUtil.FindItemsFieldContainsString(WorldState.GetInstance().player.currentLocation.npcs, npc => npc.referenceName, target).ToList<IExaminable>();
-            potentialMatches.AddRange(ActionUtil.FindItemsFieldContainsString(WorldState.GetInstance().player.currentLocation.roomItems, item => item.referenceName, target).ToList<IExaminable>());
-            potentialMatches.AddRange(ActionUtil.FindItemsFieldContainsString(WorldState.GetInstance().player.currentLocation.roomScenery, item => item.referenceName, target).ToList<IExaminable>());
+            List<IExaminable> potentialMatches = ActionUtil.FindItemsFieldContainsString(WorldState.GetInstance().player.currentLocation.GetExaminableThings(), item => item.referenceName, target).ToList();
             potentialMatches.AddRange(ActionUtil.FindItemsFieldContainsString(WorldState.GetInstance().player.inventory, item => item.referenceName, target).ToList<IExaminable>());
 
             ActionUtil.MatchZeroOneAndMany<IExaminable>(
                  potentialMatches,
-                 () => StoryTextHandler.invokeUpdateTextDisplay("You can't examine that"),
+                 () => StoryTextHandler.invokeUpdateTextDisplay(CANT),
                  thing => StoryTextHandler.invokeUpdateTextDisplay(thing.GetDescription()),
                  things => StoryTextHandler.invokeUpdateTextDisplay("Be more specific about what you are examining ie. 'red ring' instead of 'ring'")
              );
@@ -50,7 +48,7 @@ public class ExamineAction : IPlayerAction
 
             if (!matchedNpcsInRoom.Any())
             {
-                StoryTextHandler.invokeUpdateTextDisplay("You can't examine that");
+                StoryTextHandler.invokeUpdateTextDisplay(CANT);
             }
             else if (matchedNpcsInRoom.Count >= 1)
             {
@@ -58,7 +56,7 @@ public class ExamineAction : IPlayerAction
                 List<IExaminable> potentialMatches = ActionUtil.FindItemsFieldContainsString(listOfAllClothes, clothingItem => clothingItem.referenceName, item).ToList<IExaminable>();
                 ActionUtil.MatchZeroOneAndMany<IExaminable>(
                     potentialMatches,
-                    () => StoryTextHandler.invokeUpdateTextDisplay("You can't examine that"),
+                    () => StoryTextHandler.invokeUpdateTextDisplay(CANT),
                     thing => StoryTextHandler.invokeUpdateTextDisplay(thing.GetDescription()),
                     things => StoryTextHandler.invokeUpdateTextDisplay("Be more specific about what you are examining ie. 'red ring' instead of 'ring'")
                 );

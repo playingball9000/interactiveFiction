@@ -1,26 +1,11 @@
 using System.Collections.Generic;
-using System.Linq;
 
-[System.Serializable]
-public class NPC : IExaminable
+public interface NPC : IExaminable
 {
-    public string referenceName { get; set; }
-    public string description { get; set; }
     public string dialogueFile { get; set; }
-    public Room currentLocation;
-    public List<IClothing> clothes = new List<IClothing>();
+    Room currentLocation { get; set; }
+    List<IClothing> clothes { get; set; }
 
-    public string GetDescription()
-    {
+    public void GetGiveReaction(IItem giftedItem) { }
 
-        string fullDescription = $@"{this.description}";
-
-        if (clothes.Any() == true)
-        {
-            string clothingListString = string.Join(", ", clothes.Select(clothingItem => $"{clothingItem.color} {clothingItem.referenceName}"));
-            fullDescription = fullDescription + $"{referenceName} is wearing {clothingListString}";
-        }
-
-        return fullDescription;
-    }
 }

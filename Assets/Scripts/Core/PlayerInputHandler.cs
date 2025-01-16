@@ -74,8 +74,13 @@ public class PlayerInputHandler : MonoBehaviour
 
         string action = ActionSynonyms.SynonymsDict.ContainsKey(inputTextArray[0]) ? ActionSynonyms.SynonymsDict[inputTextArray[0]] : null;
 
+        // Putting this here for movement abbreviations so n is replaced by north
+        inputTextArray[0] = action;
+
         if (action != null)
         {
+            LoggingUtil.Log("Player Action was : " + action + " | inputTextArray: " + inputTextArray.Length);
+            LoggingUtil.LogList(inputTextArray.ToList());
             IPlayerAction playerAction = ActionRegistry.ActionsDict[action];
 
             if (inputTextArray.Length < playerAction.minInputCount)

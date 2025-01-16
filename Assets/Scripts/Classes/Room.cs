@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using System.Linq;
 
+//TODO: add a function to get all examinable stuff in the room
+
 [System.Serializable]
 public class Room
 {
@@ -11,13 +13,6 @@ public class Room
     public List<NPC> npcs = new List<NPC>();
     public List<IItem> roomItems = new List<IItem>();
     public List<IExaminable> roomScenery = new List<IExaminable>();
-
-    public Dictionary<string, IExaminable> examinableItems { get; private set; }
-
-    public void populateExaminableItems(string item)
-    {
-        npcs.ForEach(npc => examinableItems.Add(npc.referenceName, npc));
-    }
 
     public List<string> GetRoomInteractionDescriptions()
     {
@@ -41,6 +36,14 @@ public class Room
             interactionDescriptionsInRoom.Add(exit.exitDescription);
         }
         return interactionDescriptionsInRoom;
+    }
+
+    public List<IExaminable> GetExaminableThings()
+    {
+        List<IExaminable> examinableThings = npcs.ToList<IExaminable>();
+        examinableThings.AddRange(roomItems.ToList<IExaminable>());
+        examinableThings.AddRange(roomScenery);
+        return examinableThings;
     }
 
     public void RemoveItem(IItem item)

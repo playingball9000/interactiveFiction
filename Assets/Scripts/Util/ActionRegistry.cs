@@ -13,6 +13,7 @@ public class ActionRegistry
         CreateAction<InventoryAction>(),
         CreateAction<SaveAction>(),
         CreateAction<LoadAction>(),
+        CreateAction<GiveAction>(),
     }
     .Concat(CreateMoveActions<MoveAction>())
     .ToDictionary(kvp => kvp.Key, kvp => kvp.Value);

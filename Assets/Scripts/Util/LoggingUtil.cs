@@ -20,6 +20,20 @@ public static class LoggingUtil
         }
     }
 
+    public static void LogList<T>(List<T> objects, bool condition = true)
+    {
+        if (condition)
+        {
+            if (objects == null || objects.Count == 0)
+            {
+                UnityEngine.Debug.Log("The list is empty or null.");
+                return;
+            }
+
+            UnityEngine.Debug.Log(string.Join(", ", objects));
+        }
+    }
+
     // Probably should just implement toString on everything and use that instead of fieldName
     [Conditional("DEVELOPMENT_BUILD"), Conditional("UNITY_EDITOR")]
     public static void LogList<T>(List<T> objects, string fieldName, bool condition = true)
