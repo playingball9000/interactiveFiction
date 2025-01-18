@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class GameInitializer : MonoBehaviour
@@ -47,17 +48,19 @@ public class GameInitializer : MonoBehaviour
         NPC woman = new Woman
         {
             referenceName = "Woman",
-            description = @"The woman is striking in a casual way. Her her auburn hair falling in loose waves around her shoulders, framing a face that was both striking and sincere.  Her outfit was casual yet put-together�fitted jeans, a maroon sweater that hugged her frame, and black ankle boots that looked both practical and stylish.",
+            description = @"The woman is striking in a casual way. Her her auburn hair falling in loose waves around her shoulders, framing a face that was both striking and sincere.  Her outfit was casual yet put-together fitted jeans, a maroon sweater that hugged her frame, and black ankle boots that looked both practical and stylish.",
             currentLocation = startingRoom,
             dialogueFile = "womanDialogue"
         };
 
         startingRoom.npcs.Add(woman);
 
-        IItem book = new Book
+        IItem book = new ItemBase
         {
             referenceName = "book",
-            description = "an old book with a worn cover"
+            description = "An old book with a worn cover",
+            isGettable = true,
+            pickUpNarration = "You pick up the book."
         };
 
         startingRoom.roomItems.Add(book);
@@ -69,6 +72,29 @@ public class GameInitializer : MonoBehaviour
         };
 
         startingRoom.roomScenery.Add(seats);
+
+        IItem quill = new ItemBase
+        {
+            referenceName = "quill",
+            description = "A simple feather quill",
+            isGettable = true,
+            pickUpNarration = "You pick up the feather quill. Carefully as to not get ink on you."
+        };
+
+
+        ContainerBase suitcase = new ContainerBase
+        {
+            contents = new List<IItem>() { quill },
+            description = "A small suitcase. There are a few stickers on the side denoting the places it has travelled to.",
+            isGettable = false,
+            isLocked = false,
+            isOpen = false,
+            pickUpNarration = "This doesn't belong to you.",
+            referenceName = "suitcase"
+        };
+
+        startingRoom.roomItems.Add(suitcase);
+
 
         WorldState.GetInstance().player = player;
 

@@ -79,8 +79,10 @@ public class PlayerInputHandler : MonoBehaviour
 
         if (action != null)
         {
-            LoggingUtil.Log("Player Action was : " + action + " | inputTextArray: " + inputTextArray.Length);
-            LoggingUtil.LogList(inputTextArray.ToList());
+            // LoggingUtil.Log("Player Action was : " + action + " | inputTextArray: " + inputTextArray.Length);
+            // LoggingUtil.LogList(inputTextArray.ToList());
+
+            //TODO: I should really parse the inputTextArray here and then send the relevant values (direct object, target, item, etc) to the action.
             IPlayerAction playerAction = ActionRegistry.ActionsDict[action];
 
             if (inputTextArray.Length < playerAction.minInputCount)

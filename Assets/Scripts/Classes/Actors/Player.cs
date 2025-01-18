@@ -11,8 +11,6 @@ public class Player
 
     public void AddToInventory(IItem item)
     {
-        StoryTextHandler.invokeUpdateTextDisplay("You pick up " + item.referenceName);
-
         inventory.Add(item);
     }
 
@@ -29,7 +27,7 @@ public class Player
         if (inventory.Any() == true)
         {
             List<string> itemNames = inventory.Select(item => item.referenceName).ToList();
-            return "Inventory:\n - " + string.Join(" - ", itemNames) + "\n";
+            return "Inventory:\n - " + string.Join("\n - ", itemNames);
         }
         else
         {
