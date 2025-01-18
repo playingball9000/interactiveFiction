@@ -16,6 +16,9 @@ public interface IExaminable
 
 public interface IItem : IExaminable
 {
+    bool isGettable { get; set; }
+    string pickUpNarration { get; set; }
+    //TODO: probably should contain a list of disambiguations, but priority check 1) exact match 2) partial match 3) disambiguation match
 }
 
 public interface IPlayerAction
@@ -28,8 +31,13 @@ public interface IPlayerAction
     public abstract void Execute(string[] inputTextArray);
 }
 
-public interface IContainer
+public interface IContainer : IExaminable, IItem
 {
+    bool isLocked { get; set; }
+    bool isOpen { get; set; }
+    List<IItem> contents { get; set; }
+
+
     void AddItem(IItem item);
     void RemoveItem(IItem item);
     bool ContainsItem(IItem item);

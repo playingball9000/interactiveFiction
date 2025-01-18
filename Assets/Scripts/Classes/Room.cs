@@ -43,6 +43,12 @@ public class Room
         List<IExaminable> examinableThings = npcs.ToList<IExaminable>();
         examinableThings.AddRange(roomItems.ToList<IExaminable>());
         examinableThings.AddRange(roomScenery);
+
+        examinableThings.AddRange(roomItems.OfType<IContainer>()
+                                    .Where(container => container.isOpen)
+                                    .SelectMany(openContainer => openContainer.contents)
+                                    .ToList());
+
         return examinableThings;
     }
 

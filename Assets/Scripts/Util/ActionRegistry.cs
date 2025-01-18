@@ -14,6 +14,9 @@ public class ActionRegistry
         CreateAction<SaveAction>(),
         CreateAction<LoadAction>(),
         CreateAction<GiveAction>(),
+        CreateAction<OpenAction>(),
+        CreateAction<CloseAction>(),
+        CreateAction<PutAction>(),
     }
     .Concat(CreateMoveActions<MoveAction>())
     .ToDictionary(kvp => kvp.Key, kvp => kvp.Value);

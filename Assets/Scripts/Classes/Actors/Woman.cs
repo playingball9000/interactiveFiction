@@ -24,12 +24,15 @@ public class Woman : NPC
         return fullDescription;
     }
 
-    public void GetGiveReaction(IItem giftedItem)
+    public bool GetGiveReaction(IItem giftedItem)
     {
         if (giftedItem.referenceName == "book")
         {
             StoryTextHandler.invokeUpdateTextDisplay("Thank you, but no thanks.");
             this.currentLocation.AddItem(giftedItem);
+            return true;
         }
+
+        return false;
     }
 }

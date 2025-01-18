@@ -6,6 +6,6 @@ public interface NPC : IExaminable
     Room currentLocation { get; set; }
     List<IClothing> clothes { get; set; }
 
-    public void GetGiveReaction(IItem giftedItem) { }
+    bool GetGiveReaction(IItem giftedItem);
 
 }
