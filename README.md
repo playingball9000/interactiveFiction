@@ -24,7 +24,7 @@
 
 ## Adding Actions
 1. Actions are invoked via the command pattern
-1. Actions should extend IPlayerAction
+1. Actions should implement IPlayerAction
 1. Make sure to update the ActionRegistry and ActionSynonyms with any new
 
 ### Action List
@@ -37,12 +37,20 @@
 7. Save
 8. Load
 9. Movement
+10. Open / Close
+11. Put
 
 ### Inventory
-1. Anything that can be placed in the inventory needs to extend IItem
+1. Anything that can be placed in the inventory needs to implement IItem
+2. Mostly I use ItemBase for items.
+
+### Containers
+1. Stuff that holds stuff, has a list of IItems in it.
+2. Anything that can be a container needs to extend ContainerBase.
+3. You can put containers in Inventory, but can toggle with isGettable
 
 ### Examine
-1. Anything examinable needs to extend IExaminable
+1. Anything examinable needs to implement IExaminable
 
 ## Dialogue
 Located in Resources/Dialogue (file must match name of dialogueFile field in NPC)
