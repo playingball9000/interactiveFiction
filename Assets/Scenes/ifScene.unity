@@ -1793,8 +1793,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 525d3addb7d30dc47841849355ba35ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  UI_storyBox: {fileID: 97676742}
-  storyScrollView: {fileID: 2098332726}
+  UI_storyBox: {fileID: 0}
+  UI_storyScrollView: {fileID: 0}
 --- !u!114 &1186198841
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1807,7 +1807,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3763c21a19fb7354cae0936699e1ff45, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  UI_playerInputBox: {fileID: 1444874289}
+  UI_playerInputBox: {fileID: 0}
 --- !u!114 &1186198842
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2649,7 +2649,7 @@ GameObject:
   - component: {fileID: 2028469813}
   - component: {fileID: 2028469812}
   m_Layer: 5
-  m_Name: Scroll View
+  m_Name: DialogueScrollView
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2836,7 +2836,7 @@ GameObject:
   - component: {fileID: 2098332729}
   - component: {fileID: 2098332728}
   m_Layer: 5
-  m_Name: Scroll View
+  m_Name: StoryScrollView
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

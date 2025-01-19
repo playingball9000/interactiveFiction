@@ -6,39 +6,41 @@ using UnityEngine;
 
 public class PlayerInputHandler : MonoBehaviour
 {
+    [HideInInspector]
     public TMP_InputField UI_playerInputBox;
 
-
-    private List<string> inputHistory = new List<string>();
     private int currentHistoryIndex = -1;
-    private int MAX_HISTORY_LENGTH = 20;
+    StringListMax inputHistory = new StringListMax(20);
 
     //TODO: for later complex inputs
     private static readonly HashSet<string> prepositions = new HashSet<string> { "in", "on", "under", "into", "onto" };
 
-    private void OnEnable()
+    void Awake()
+    {
+        // Has to match game object name
+        GameObject inputFieldObject = GameObject.Find("PlayerInputBox");
+        UI_playerInputBox = inputFieldObject.GetComponent<TMP_InputField>();
+    }
+
+    void OnEnable()
     {
         GameController.invokeShowMainCanvas += ActivateAndClearField;
     }
 
-    private void OnDisable()
+    void OnDisable()
     {
         GameController.invokeShowMainCanvas -= ActivateAndClearField;
     }
 
     void Start()
     {
-        if (UI_playerInputBox == null)
-        {
-            GameObject inputFieldObject = GameObject.Find("PlayerActionInputField");
-            UI_playerInputBox = inputFieldObject.GetComponent<TMP_InputField>();
-        }
-
+        // Enter or Return while box is focused will call the GrabTextFromInputField() function
         UI_playerInputBox.onSubmit.AddListener(GrabTextFromInputField);
     }
 
     void Update()
     {
+        // Handles navigating the history of inputs
         if (UI_playerInputBox.isFocused && Input.anyKeyDown)
         {
             if (Input.GetKeyDown(KeyCode.UpArrow))
@@ -59,9 +61,15 @@ public class PlayerInputHandler : MonoBehaviour
 
     public void GrabTextFromInputField(string inputText)
     {
+        if (string.IsNullOrEmpty(inputText))
+        {
+            return;
+        }
+
         AddToInputHistory(inputText);
         inputText = NormalizeInput(inputText);
 
+        // Updates the main story display with text
         StoryTextHandler.invokeUpdateStoryDisplay("> " + TmpTextTagger.Color(inputText, UiConstants.TEXT_COLOR_PLAYER_ACTION));
 
         string[] inputTextArray = inputText.Split(' ');
@@ -136,7 +144,7 @@ public class PlayerInputHandler : MonoBehaviour
 
         currentHistoryIndex = Mathf.Clamp(currentHistoryIndex + direction, 0, inputHistory.Count - 1);
 
-        UI_playerInputBox.text = inputHistory[currentHistoryIndex];
+        UI_playerInputBox.text = inputHistory.Get(currentHistoryIndex);
         UI_playerInputBox.caretPosition = UI_playerInputBox.text.Length;
     }
 
@@ -146,10 +154,6 @@ public class PlayerInputHandler : MonoBehaviour
         {
             currentHistoryIndex = -1;
             inputHistory.Add(input);
-            if (inputHistory.Count > MAX_HISTORY_LENGTH)
-            {
-                inputHistory.RemoveAt(0);
-            }
         }
     }
 

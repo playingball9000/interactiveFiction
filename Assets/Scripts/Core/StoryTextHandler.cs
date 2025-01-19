@@ -5,27 +5,34 @@ using UnityEngine.UI;
 
 public class StoryTextHandler : MonoBehaviour
 {
+    [HideInInspector]
     public TextMeshProUGUI UI_storyBox;
-    public GameObject storyScrollView;
+    [HideInInspector]
+    public GameObject UI_storyScrollView;
     private ScrollRect storyScrollRect;
 
-    List<string> storyLog = new List<string>();
+    StringListMax storyLog = new StringListMax(250);
 
     // Delegates for other functions to use to invoke this. Probably not the right way but oh well.
     public delegate void UpdateStoryDisplayDelegate(string text);
     public static UpdateStoryDisplayDelegate invokeUpdateStoryDisplay;
 
-    void Start()
+    void Awake()
     {
-        storyScrollRect = storyScrollView.GetComponent<ScrollRect>();
+        // Has to match game object name
+        GameObject storyBoxObject = GameObject.Find("StoryTextBox");
+        UI_storyBox = storyBoxObject.GetComponent<TextMeshProUGUI>();
+
+        UI_storyScrollView = GameObject.Find("StoryScrollView");
+        storyScrollRect = UI_storyScrollView.GetComponent<ScrollRect>();
     }
 
-    private void OnEnable()
+    void OnEnable()
     {
         StoryTextHandler.invokeUpdateStoryDisplay += UpdateStoryDisplay;
     }
 
-    private void OnDisable()
+    void OnDisable()
     {
         StoryTextHandler.invokeUpdateStoryDisplay -= UpdateStoryDisplay;
     }
@@ -34,11 +41,8 @@ public class StoryTextHandler : MonoBehaviour
     {
         text = TmpTextTagger.Color(text, UiConstants.TEXT_COLOR_STORY_TEXT);
         storyLog.Add(text + "\n");
-        string logAsText = string.Join("\n", storyLog.ToArray());
-
-        UI_storyBox.text = logAsText;
+        UI_storyBox.text = storyLog.GetLogsString();
         ScrollToBottom();
-
     }
 
     private void ScrollToBottom()

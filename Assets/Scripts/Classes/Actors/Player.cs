@@ -8,6 +8,7 @@ public class Player
     public string description { get; set; }
     public Room currentLocation { get; set; }
     public List<IItem> inventory = new List<IItem>();
+    List<IClothing> clothes { get; set; }
 
     public void AddToInventory(IItem item)
     {
