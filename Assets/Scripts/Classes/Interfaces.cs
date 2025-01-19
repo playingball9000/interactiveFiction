@@ -17,7 +17,7 @@ public interface IExaminable
 public interface IItem : IExaminable
 {
     bool isGettable { get; set; }
-    string pickUpNarration { get; set; }
+    string pickUpNarration { get; }
     //TODO: probably should contain a list of disambiguations, but priority check 1) exact match 2) partial match 3) disambiguation match
 }
 

@@ -16,28 +16,27 @@ public class CloseAction : IPlayerAction
 
         List<IContainer> roomContainers = roomItems.OfType<IContainer>().ToList();
 
-        //TODO: Exact match, blah blah blah
         string target = inputTextArray[1];
 
         List<IContainer> containers = ActionUtil.FindItemsFieldContainsString(roomContainers, item => item.referenceName, target);
 
         ActionUtil.MatchZeroOneAndMany<IContainer>(
             containers,
-            () => StoryTextHandler.invokeUpdateTextDisplay("You can't close that"),
+            () => StoryTextHandler.invokeUpdateStoryDisplay("You can't close that"),
             container =>
             {
                 if (container.isOpen)
                 {
                     // TODO: Might be nice to have custom close text for each container
-                    StoryTextHandler.invokeUpdateTextDisplay("You close " + container.referenceName);
+                    StoryTextHandler.invokeUpdateStoryDisplay("You close " + container.referenceName);
                     container.isOpen = false;
                 }
                 else
                 {
-                    StoryTextHandler.invokeUpdateTextDisplay("That's already closed");
+                    StoryTextHandler.invokeUpdateStoryDisplay("That's already closed");
                 }
             },
-            containers => StoryTextHandler.invokeUpdateTextDisplay(
+            containers => StoryTextHandler.invokeUpdateStoryDisplay(
                 "Are you trying to close " + string.Join(" or ", containers.Select(item => item.referenceName)))
         );
     }

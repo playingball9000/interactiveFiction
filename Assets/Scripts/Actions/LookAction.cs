@@ -8,6 +8,6 @@ public class LookAction : IPlayerAction
 
     void IPlayerAction.Execute(string[] inputTextArray)
     {
-        StoryTextHandler.invokeDisplayRoomText(WorldState.GetInstance().player.currentLocation);
+        WorldState.GetInstance().player.currentLocation.DisplayRoomStoryText();
     }
 }

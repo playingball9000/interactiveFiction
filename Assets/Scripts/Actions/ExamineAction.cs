@@ -27,16 +27,16 @@ public class ExamineAction : IPlayerAction
         string target = inputTextArray[1];
         if (inputTextArray.Length == 2)
         {
-            //TODO: try and find exact match first, also, intelligence maybe - ex. find npc items too
+            //TODO:also, intelligence maybe - ex. find npc items too
 
             List<IExaminable> potentialMatches = ActionUtil.FindItemsFieldContainsString(WorldState.GetInstance().player.currentLocation.GetExaminableThings(), item => item.referenceName, target).ToList();
             potentialMatches.AddRange(ActionUtil.FindItemsFieldContainsString(WorldState.GetInstance().player.inventory, item => item.referenceName, target).ToList<IExaminable>());
 
             ActionUtil.MatchZeroOneAndMany<IExaminable>(
                  potentialMatches,
-                 () => StoryTextHandler.invokeUpdateTextDisplay(CANT_ACTION_MESSAGE),
-                 thing => StoryTextHandler.invokeUpdateTextDisplay(thing.GetDescription()),
-                 things => StoryTextHandler.invokeUpdateTextDisplay("Are you trying to examine " + string.Join(" or ", things.Select(thing => thing.referenceName)))
+                 () => StoryTextHandler.invokeUpdateStoryDisplay(CANT_ACTION_MESSAGE),
+                 thing => StoryTextHandler.invokeUpdateStoryDisplay(thing.GetDescription()),
+                 things => StoryTextHandler.invokeUpdateStoryDisplay("Are you trying to examine " + string.Join(" or ", things.Select(thing => thing.referenceName)))
              );
         }
         else if (inputTextArray.Length == 3)
@@ -46,7 +46,7 @@ public class ExamineAction : IPlayerAction
 
             if (!matchedNpcsInRoom.Any())
             {
-                StoryTextHandler.invokeUpdateTextDisplay(CANT_ACTION_MESSAGE);
+                StoryTextHandler.invokeUpdateStoryDisplay(CANT_ACTION_MESSAGE);
             }
             else if (matchedNpcsInRoom.Count >= 1)
             {
@@ -54,9 +54,9 @@ public class ExamineAction : IPlayerAction
                 List<IExaminable> potentialMatches = ActionUtil.FindItemsFieldContainsString(listOfAllClothes, clothingItem => clothingItem.referenceName, item).ToList<IExaminable>();
                 ActionUtil.MatchZeroOneAndMany<IExaminable>(
                     potentialMatches,
-                    () => StoryTextHandler.invokeUpdateTextDisplay(CANT_ACTION_MESSAGE),
-                    thing => StoryTextHandler.invokeUpdateTextDisplay(thing.GetDescription()),
-                    things => StoryTextHandler.invokeUpdateTextDisplay("Are you trying to examine " + string.Join(" or ", things.Select(thing => thing.referenceName)))
+                    () => StoryTextHandler.invokeUpdateStoryDisplay(CANT_ACTION_MESSAGE),
+                    thing => StoryTextHandler.invokeUpdateStoryDisplay(thing.GetDescription()),
+                    things => StoryTextHandler.invokeUpdateStoryDisplay("Are you trying to examine " + string.Join(" or ", things.Select(thing => thing.referenceName)))
                 );
             }
         }

@@ -54,4 +54,9 @@ public class ContainerBase : IContainer
             contents.Remove(item);
         }
     }
+
+    public override string ToString()
+    {
+        return referenceName;
+    }
 }

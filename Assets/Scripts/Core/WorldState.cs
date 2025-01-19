@@ -7,6 +7,8 @@ public class WorldState
     public List<Room> rooms = new List<Room>();
     public List<NPC> npcs = new List<NPC>();
 
+    public bool FLAG_dialogWindowActive = false;
+
     private static WorldState instance;
 
     public static WorldState GetInstance()

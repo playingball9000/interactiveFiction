@@ -1,5 +1,12 @@
 using UnityEngine;
 
+/*
+
+colors of player input?
+
+
+*/
+
 public class GameController : MonoBehaviour
 {
     public Canvas dialogueCanvas;
@@ -32,12 +39,14 @@ public class GameController : MonoBehaviour
 
     public void ShowMainCanvas()
     {
+        WorldState.GetInstance().FLAG_dialogWindowActive = false;
         dialogueCanvas.gameObject.SetActive(false);
         mainDisplayCanvas.gameObject.SetActive(true);
     }
 
     public void ShowDialogueCanvas()
     {
+        WorldState.GetInstance().FLAG_dialogWindowActive = true;
         dialogueCanvas.gameObject.SetActive(true);
         mainDisplayCanvas.gameObject.SetActive(false);
     }

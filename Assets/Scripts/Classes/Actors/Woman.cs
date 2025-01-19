@@ -28,7 +28,7 @@ public class Woman : NPC
     {
         if (giftedItem.referenceName == "book")
         {
-            StoryTextHandler.invokeUpdateTextDisplay("Thank you, but no thanks.");
+            StoryTextHandler.invokeUpdateStoryDisplay("Thank you, but no thanks.");
             this.currentLocation.AddItem(giftedItem);
             return true;
         }

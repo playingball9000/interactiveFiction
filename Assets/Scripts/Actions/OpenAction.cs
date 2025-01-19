@@ -17,33 +17,32 @@ public class OpenAction : IPlayerAction
         List<IContainer> roomContainers = roomItems.OfType<IContainer>()
                 .ToList();
 
-        //TODO: Exact match, blah blah blah
         string target = inputTextArray[1];
 
         List<IContainer> containers = ActionUtil.FindItemsFieldContainsString(roomContainers, item => item.referenceName, target);
 
         ActionUtil.MatchZeroOneAndMany<IContainer>(
             containers,
-            () => StoryTextHandler.invokeUpdateTextDisplay("You can't open that"),
+            () => StoryTextHandler.invokeUpdateStoryDisplay("You can't open that"),
             container =>
             {
                 if (container.isOpen)
                 {
-                    StoryTextHandler.invokeUpdateTextDisplay("That's already open");
+                    StoryTextHandler.invokeUpdateStoryDisplay("That's already open");
                 }
                 else if (container.isLocked)
                 {
                     // TODO: maybe auto unlock if you have key or code? INTELLIGENCE
-                    StoryTextHandler.invokeUpdateTextDisplay("Container is locked");
+                    StoryTextHandler.invokeUpdateStoryDisplay("Container is locked");
                 }
                 else
                 {
                     // TODO: Might be nice to have custom open text for each container
-                    StoryTextHandler.invokeUpdateTextDisplay("You open " + container.referenceName);
+                    StoryTextHandler.invokeUpdateStoryDisplay("You open " + container.referenceName);
                     container.isOpen = true;
                 }
             },
-            containers => StoryTextHandler.invokeUpdateTextDisplay(
+            containers => StoryTextHandler.invokeUpdateStoryDisplay(
                 "Are you trying to open " + string.Join(" or ", containers.Select(item => item.referenceName)))
         );
     }

@@ -36,8 +36,7 @@ public class DialogueParser : MonoBehaviour
 
     void Update()
     {
-        // I guess I could also check if the dialogue window is active here...
-        if (currentNode != null && Input.anyKeyDown)
+        if (WorldState.GetInstance().FLAG_dialogWindowActive && currentNode != null && Input.anyKeyDown)
         {
             for (int i = 0; i < currentNode.choices.Count; i++)
             {

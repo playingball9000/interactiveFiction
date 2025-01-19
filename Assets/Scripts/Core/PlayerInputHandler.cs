@@ -18,12 +18,12 @@ public class PlayerInputHandler : MonoBehaviour
 
     private void OnEnable()
     {
-        GameController.invokeShowMainCanvas += ActivateInputTextField;
+        GameController.invokeShowMainCanvas += ActivateAndClearField;
     }
 
     private void OnDisable()
     {
-        GameController.invokeShowMainCanvas -= ActivateInputTextField;
+        GameController.invokeShowMainCanvas -= ActivateAndClearField;
     }
 
     void Start()
@@ -39,7 +39,7 @@ public class PlayerInputHandler : MonoBehaviour
 
     void Update()
     {
-        if (UI_playerInputBox.isFocused)
+        if (UI_playerInputBox.isFocused && Input.anyKeyDown)
         {
             if (Input.GetKeyDown(KeyCode.UpArrow))
             {
@@ -62,7 +62,7 @@ public class PlayerInputHandler : MonoBehaviour
         AddToInputHistory(inputText);
         inputText = NormalizeInput(inputText);
 
-        StoryTextHandler.invokeUpdateTextDisplay("> " + inputText);
+        StoryTextHandler.invokeUpdateStoryDisplay("> " + TmpTextTagger.Color(inputText, UiConstants.TEXT_COLOR_PLAYER_ACTION));
 
         string[] inputTextArray = inputText.Split(' ');
 
@@ -87,11 +87,11 @@ public class PlayerInputHandler : MonoBehaviour
 
             if (inputTextArray.Length < playerAction.minInputCount)
             {
-                StoryTextHandler.invokeUpdateTextDisplay(playerAction.tooFewMessage);
+                StoryTextHandler.invokeUpdateStoryDisplay(playerAction.tooFewMessage);
             }
             else if (inputTextArray.Length > playerAction.maxInputCount)
             {
-                StoryTextHandler.invokeUpdateTextDisplay(playerAction.tooManyMessage);
+                StoryTextHandler.invokeUpdateStoryDisplay(playerAction.tooManyMessage);
             }
             else
             {
@@ -101,23 +101,22 @@ public class PlayerInputHandler : MonoBehaviour
         else
         {
             LoggingUtil.Log("Action was null, no corresponding action for: " + inputTextArray[0]);
-            StoryTextHandler.invokeUpdateTextDisplay(ActionUtil.GetUnknownCommandResponse());
+            StoryTextHandler.invokeUpdateStoryDisplay(ActionUtil.GetUnknownCommandResponse());
         }
-        ActivateInputTextField();
-        UI_playerInputBox.text = "";
+        ActivateAndClearField();
     }
 
-    public void ActivateInputTextField()
+    public void ActivateAndClearField()
     {
         UI_playerInputBox.ActivateInputField();
-
+        UI_playerInputBox.text = "";
     }
 
     private string NormalizeInput(string input)
     {
         var normalized = input.ToLower().Trim();
         normalized = Regex.Replace(normalized, @"\b(a|an|the)\b", "").Trim();
-        normalized = normalized.Replace("'s ", " ").Replace("  ", " ");
+        normalized = normalized.Replace("'s ", "").Replace("  ", " ");
         return normalized;
     }
 
