@@ -6,16 +6,18 @@ using UnityEngine.UI;
 
 public class DialogueParser : MonoBehaviour
 {
+    [HideInInspector]
+    public TextMeshProUGUI UI_dialogueBox;
+    [HideInInspector]
+    public TextMeshProUGUI UI_dialogueChoicesBox;
+    [HideInInspector]
+    public GameObject UI_storyScrollView;
+    private ScrollRect dialogueScrollRect;
 
     private DialogueNode currentNode;
     private Dictionary<string, DialogueNode> dialogues;
 
-    List<string> dialogueLog = new List<string>();
-
-    public TextMeshProUGUI UI_dialogueBox;
-    public TextMeshProUGUI UI_dialogueChoicesBox;
-
-    public Image speakerPortrait;
+    StringListMax dialogueLog = new StringListMax(100);
 
     KeyCode[] numpadKeys = { KeyCode.Keypad0, KeyCode.Keypad1, KeyCode.Keypad2, KeyCode.Keypad3, KeyCode.Keypad4,
                          KeyCode.Keypad5, KeyCode.Keypad6, KeyCode.Keypad7, KeyCode.Keypad8, KeyCode.Keypad9 };
@@ -24,12 +26,24 @@ public class DialogueParser : MonoBehaviour
     public delegate void StartDialogueDelegate(NPC npc);
     public static StartDialogueDelegate invokeStartDialogue;
 
-    private void OnEnable()
+    void Awake()
+    {
+        GameObject dialogueTextObject = GameObject.Find("DialogueTextBox");
+        UI_dialogueBox = dialogueTextObject.GetComponent<TextMeshProUGUI>();
+
+        GameObject choicesTextObject = GameObject.Find("ChoicesTextBox");
+        UI_dialogueChoicesBox = choicesTextObject.GetComponent<TextMeshProUGUI>();
+
+        UI_storyScrollView = GameObject.Find("DialogueScrollView");
+        dialogueScrollRect = UI_storyScrollView.GetComponent<ScrollRect>();
+    }
+
+    void OnEnable()
     {
         DialogueParser.invokeStartDialogue += StartDialogue;
     }
 
-    private void OnDisable()
+    void OnDisable()
     {
         DialogueParser.invokeStartDialogue -= StartDialogue;
     }
@@ -68,10 +82,8 @@ public class DialogueParser : MonoBehaviour
         {
             string fullText = TmpTextTagger.Color($"{currentNode.speaker}   -   ", UiConstants.TEXT_COLOR_NPC_NAME) + TmpTextTagger.Color($"{currentNode.text}", UiConstants.TEXT_COLOR_NPC_TEXT);
             dialogueLog.Add(fullText + "\n");
-            string logAsText = string.Join("\n", dialogueLog.ToArray());
-
-            UI_dialogueBox.text = logAsText;
-            //speakerPortrait.sprite = GetPortraitForSpeaker(node.speaker);
+            UI_dialogueBox.text = dialogueLog.GetLogsString();
+            ScrollToBottom();
 
             UI_dialogueChoicesBox.text = "";
             for (int i = 0; i < currentNode.choices.Count; i++)
@@ -100,10 +112,10 @@ public class DialogueParser : MonoBehaviour
         }
     }
 
-    private Sprite GetPortraitForSpeaker(string speaker)
+    private void ScrollToBottom()
     {
-        // If I want to make portraits
-        return null;
+        Canvas.ForceUpdateCanvases();
+        dialogueScrollRect.verticalNormalizedPosition = 0f;
     }
 }
 

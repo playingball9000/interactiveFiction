@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 public interface IClothing : IExaminable, IItem
 {
-    new string referenceName { get; set; }
+    bool isWearable { get; set; }
     string color { get; set; }
 
 }
