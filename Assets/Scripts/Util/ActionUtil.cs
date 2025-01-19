@@ -11,15 +11,14 @@ public enum ItemLocation
 
 public static class ActionUtil
 {
-
-
-
-
-    /**
-     * Takes in a list of any type <T> and handles checking how many items
-     * are in that list: 0, 1, or >1 and lets the user do appropriate actions.
-     * 
-     */
+    /// <summary>
+    /// Takes in a list of any type <T> and handles checking how many items are in that list: 0, 1, or >1 and lets the user do appropriate actions.
+    /// </summary>
+    /// <param name="filteredItems"></param>
+    /// <param name="noMatchAction"></param>
+    /// <param name="singleMatchAction"></param>
+    /// <param name="multipleMatchesAction"></param>
+    /// <typeparam name="T"></typeparam>
     public static void MatchZeroOneAndMany<T>(
         List<T> filteredItems,
         Action noMatchAction,
@@ -41,19 +40,61 @@ public static class ActionUtil
         }
     }
 
-    /**
-     * source - list to search 
-     *  ex. player.currentLocation.npcs
-     * propertySelector - field name on object to check
-     *  ex. npc => npc.npcName
-     * searchString - word you are looking for
-     *  ex. man
-     * 
-     */
+    /// <summary>
+    /// Searches a list of objects for a field value that matches the searchString
+    /// </summary>
+    /// <param name="source">list to search ex. player.currentLocation.npcs </param>
+    /// <param name="propertySelector">field name on object to check ex. npc => npc.referenceName</param>
+    /// <param name="searchString">word you are looking for ex. man</param>
+    /// <typeparam name="T"></typeparam>
+    /// <returns></returns>
     public static List<T> FindItemsFieldContainsString<T>(IEnumerable<T> source, Func<T, string> propertySelector, string searchString)
     {
+        // Look for exact match first
+        T exactMatch = source.SingleOrDefault(item => propertySelector(item).ToLower() == searchString.ToLower());
+
+        if (exactMatch != null)
+        {
+            return new List<T>() { exactMatch };
+        }
         return source.Where(item => propertySelector(item).ToLower().Contains(searchString.ToLower())).ToList();
     }
+
+    /// <summary>
+    /// Searches containers for an item that matches the searchString
+    /// </summary>
+    /// <param name="itemsToSearch">Takes in a list of IItems since containers are IItems</param>
+    /// <param name="searchString"></param>
+    /// <returns>The containing container and the item(s) matched</returns>
+    public static (ContainerBase, List<IItem>) FindItemsInContainers(List<IItem> itemsToSearch, string searchString)
+    {
+        ContainerBase containerHoldingItem = null;
+        List<IItem> finalMatchedItems = new List<IItem>();
+
+        List<IContainer> openContainers = itemsToSearch.OfType<IContainer>()
+                .Where(container => container.isOpen)
+                .ToList();
+
+        foreach (IContainer container in openContainers)
+        {
+            // Technically matches the first item name it matches in soonest container it searches, but shouldn't matter
+            List<IItem> matchedItems = FindItemsFieldContainsString(container.contents, item => item.referenceName, searchString);
+            if (matchedItems.Count == 1)
+            {
+                containerHoldingItem = (ContainerBase)container;
+                finalMatchedItems.Add(matchedItems[0]);
+                break;
+            }
+            else
+            {
+                // if 0 or many matches so the MatchZeroOneAndMany() will take care of it.
+                finalMatchedItems.AddRange(matchedItems);
+            }
+        }
+        ;
+        return (containerHoldingItem, finalMatchedItems);
+    }
+
 
     private static readonly string[] unknownCommandResponses =
     {

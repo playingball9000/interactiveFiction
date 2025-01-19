@@ -17,14 +17,14 @@ public class DropAction : IPlayerAction
 
         ActionUtil.MatchZeroOneAndMany<IItem>(
             items,
-            () => StoryTextHandler.invokeUpdateTextDisplay("You can't drop that"),
+            () => StoryTextHandler.invokeUpdateStoryDisplay("You can't drop that"),
             item =>
             {
-                StoryTextHandler.invokeUpdateTextDisplay("You drop " + item.referenceName);
+                StoryTextHandler.invokeUpdateStoryDisplay("You drop " + item.referenceName);
                 WorldState.GetInstance().player.RemoveFromInventory(item);
                 WorldState.GetInstance().player.currentLocation.AddItem(item);
             },
-            items => StoryTextHandler.invokeUpdateTextDisplay(
+            items => StoryTextHandler.invokeUpdateStoryDisplay(
                 "Are you trying to drop " + string.Join(" or ", items.Select(item => item.referenceName)))
         );
     }

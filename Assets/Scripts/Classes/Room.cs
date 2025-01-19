@@ -1,8 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
 
-//TODO: add a function to get all examinable stuff in the room
-
 [System.Serializable]
 public class Room
 {
@@ -50,6 +48,19 @@ public class Room
                                     .ToList());
 
         return examinableThings;
+    }
+
+    public void DisplayRoomStoryText()
+    {
+        List<string> interactionDescriptionsInRoom = GetRoomInteractionDescriptions();
+
+        string joinedInteractionDescriptions = string.Join("\n", interactionDescriptionsInRoom.ToArray());
+
+        string combinedText = TmpTextTagger.Bold(roomName) + "\n"
+            + description + "\n\n"
+            + joinedInteractionDescriptions;
+
+        StoryTextHandler.invokeUpdateStoryDisplay(combinedText);
     }
 
     public void RemoveItem(IItem item)

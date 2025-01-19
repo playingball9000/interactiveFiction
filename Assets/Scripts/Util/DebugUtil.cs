@@ -12,16 +12,15 @@ public static class DebugUtil
 
     }
 
-
-    /**
-     * Usage
-     * DebugUtil.MeasureExecutionTime(() =>
-        {
-            // Code to measure, example:
-            for (int i = 0; i < 1000000; i++) { }
-        }, "OPERATION_NAME");
-     * 
-     */
+    /// <summary>
+    /// Usage
+    /// DebugUtil.MeasureExecutionTime(() =>
+    ///     {
+    ///         for (int i = 0; i < 1000000; i++) { }
+    ///     }, "OPERATION_NAME");
+    /// </summary>
+    /// <param name="action">Code to be measured</param>
+    /// <param name="description">Name of code for logs</param>
     public static void MeasureExecutionTime(Action action, string description = "Operation")
     {
         Stopwatch stopwatch = Stopwatch.StartNew();

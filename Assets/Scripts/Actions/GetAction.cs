@@ -13,9 +13,8 @@ public class GetAction : IPlayerAction
     {
         Player player = WorldState.GetInstance().player;
         ItemLocation itemLocation = ItemLocation.room;
-        ContainerBase itemInThisContainer = null;
+        ContainerBase containerHoldingItem = null;
 
-        //TODO: Exact match, blah blah blah
         string target = inputTextArray[1];
 
         List<IItem> roomItems = player.currentLocation.roomItems;
@@ -26,35 +25,15 @@ public class GetAction : IPlayerAction
         {
             itemLocation = ItemLocation.container;
             // Check in open containers to get the item. INTELLIGENCE
-            List<IContainer> openContainers = roomItems.OfType<IContainer>()
-                .Where(container => container.isOpen)
-                .ToList();
-
-            foreach (IContainer container in openContainers)
-            {
-                List<IItem> matchedItems = ActionUtil.FindItemsFieldContainsString(container.contents, item => item.referenceName, target);
-                if (matchedItems.Count == 1)
-                {
-                    itemInThisContainer = (ContainerBase)container;
-                    items.Add(matchedItems[0]);
-                    break;
-                }
-                else
-                {
-                    // if 0 or many matches so the MatchZeroOneAndMany() will take care of it.
-                    items.AddRange(matchedItems);
-                }
-
-            }
-            ;
+            (containerHoldingItem, items) = ActionUtil.FindItemsInContainers(roomItems, target);
         }
 
         ActionUtil.MatchZeroOneAndMany<IItem>(
             items,
-            () => StoryTextHandler.invokeUpdateTextDisplay("You can't get that"),
+            () => StoryTextHandler.invokeUpdateStoryDisplay("You can't get that"),
             item =>
             {
-                StoryTextHandler.invokeUpdateTextDisplay(item.pickUpNarration);
+                StoryTextHandler.invokeUpdateStoryDisplay(item.pickUpNarration);
                 if (item.isGettable)
                 {
                     player.AddToInventory(item);
@@ -62,7 +41,7 @@ public class GetAction : IPlayerAction
                     switch (itemLocation)
                     {
                         case ItemLocation.container:
-                            itemInThisContainer.RemoveItem(item);
+                            containerHoldingItem.RemoveItem(item);
                             break;
                         case ItemLocation.room:
                             player.currentLocation.RemoveItem(item);
@@ -70,7 +49,7 @@ public class GetAction : IPlayerAction
                     }
                 }
             },
-            items => StoryTextHandler.invokeUpdateTextDisplay(
+            items => StoryTextHandler.invokeUpdateStoryDisplay(
                 "Are you trying to get " + string.Join(" or ", items.Select(item => item.referenceName)))
         );
     }

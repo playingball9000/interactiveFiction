@@ -13,22 +13,30 @@ public class GiveAction : IPlayerAction
     {
         Player player = WorldState.GetInstance().player;
         ItemLocation itemLocation = ItemLocation.inventory;
+        List<IItem> roomItems = player.currentLocation.roomItems;
+        ContainerBase containerHoldingItem = null;
+
         string itemBeingGiven = inputTextArray[1];
-        //TODO: this needs exact match also
 
         // Check player's inventory first for giving
         List<IItem> items = ActionUtil.FindItemsFieldContainsString(player.inventory, item => item.referenceName, itemBeingGiven);
         // Check the room next if it's just sitting there. INTELLIGENCE
         if (!items.Any())
         {
-            items = ActionUtil.FindItemsFieldContainsString(player.currentLocation.roomItems, item => item.referenceName, itemBeingGiven);
+            items = ActionUtil.FindItemsFieldContainsString(roomItems, item => item.referenceName, itemBeingGiven);
             itemLocation = ItemLocation.room;
         }
-        //TODO: Check open containers
+
+        if (!items.Any())
+        {
+            itemLocation = ItemLocation.container;
+            // Check in open containers to get the item. INTELLIGENCE
+            (containerHoldingItem, items) = ActionUtil.FindItemsInContainers(roomItems, itemBeingGiven);
+        }
 
         ActionUtil.MatchZeroOneAndMany<IItem>(
             items,
-            () => StoryTextHandler.invokeUpdateTextDisplay("You can't give that"),
+            () => StoryTextHandler.invokeUpdateStoryDisplay("You can't give that"),
             item =>
             {
                 string target = inputTextArray.Length == 3
@@ -39,7 +47,7 @@ public class GiveAction : IPlayerAction
 
                 ActionUtil.MatchZeroOneAndMany<NPC>(
                     npcs,
-                    () => StoryTextHandler.invokeUpdateTextDisplay("Who do you want to give that to?"),
+                    () => StoryTextHandler.invokeUpdateStoryDisplay("Who do you want to give that to?"),
                     npc =>
                     {
                         bool accepted = npc.GetGiveReaction(item);
@@ -53,18 +61,21 @@ public class GiveAction : IPlayerAction
                                 case ItemLocation.room:
                                     player.currentLocation.RemoveItem(item);
                                     break;
+                                case ItemLocation.container:
+                                    containerHoldingItem.RemoveItem(item);
+                                    break;
                             }
                         }
                         else
                         {
-                            StoryTextHandler.invokeUpdateTextDisplay("Not an acceptable item to give to that person");
+                            StoryTextHandler.invokeUpdateStoryDisplay("Not an acceptable item to give to that person");
                         }
                     },
-                    npcs => StoryTextHandler.invokeUpdateTextDisplay(
+                    npcs => StoryTextHandler.invokeUpdateStoryDisplay(
                         "Are you trying to give the item to " + string.Join(" or ", npcs.Select(npc => npc.referenceName)))
                 );
             },
-            items => StoryTextHandler.invokeUpdateTextDisplay(
+            items => StoryTextHandler.invokeUpdateStoryDisplay(
                 "Are you trying to give " + string.Join(" or ", items.Select(item => item.referenceName)))
         );
 

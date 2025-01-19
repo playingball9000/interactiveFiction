@@ -17,12 +17,12 @@ public class TalkAction : IPlayerAction
 
         ActionUtil.MatchZeroOneAndMany<NPC>(
             npcs,
-            () => StoryTextHandler.invokeUpdateTextDisplay("You can't talk to that"),
+            () => StoryTextHandler.invokeUpdateStoryDisplay("You can't talk to that"),
             npc =>
             {
                 DialogueParser.invokeStartDialogue(npc);
             },
-            npcs => StoryTextHandler.invokeUpdateTextDisplay(
+            npcs => StoryTextHandler.invokeUpdateStoryDisplay(
                 "Are you trying to talk to " + string.Join(" or ", npcs.Select(npc => npc.referenceName)))
         );
     }
