@@ -1,3 +1,5 @@
+using UnityEditor.Search;
+
 public class MoveAction : IPlayerAction
 {
     public string tooFewMessage { get; private set; }
@@ -12,6 +14,7 @@ public class MoveAction : IPlayerAction
         Exit exit = WorldState.GetInstance().player.currentLocation.exits.Find(e => e.exitDirection.ToString() == inputTextArray[0]);
         if (exit != null)
         {
+            QueryRunner.RunMoveFacts(WorldState.GetInstance().player.currentLocation);
             WorldState.GetInstance().player.currentLocation = exit.targetRoom;
             WorldState.GetInstance().player.currentLocation.DisplayRoomStoryText();
         }
