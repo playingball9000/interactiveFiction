@@ -55,5 +55,8 @@
 ## Dialogue
 Located in Resources/Dialogue (file must match name of dialogueFile field in NPC)
 
-
-
+## The Rule Engine
+1. Fact - flat data field representing the world in key:value form. ex. "in_inventory":"book" 
+2. Query - List of facts representing the state (player, player memory, world, etc.)
+3. Criteria - A test for a Fact. ex. equals("in_inventory", "book")
+4. Rule - A list of criteria. When a query satisfies the rule, a corresponding action will be done.
