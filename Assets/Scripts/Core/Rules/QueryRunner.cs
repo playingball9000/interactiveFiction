@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 
+//TODO: I feel like this should be some sort of interceptor or events driven thing...
 public static class QueryRunner
 {
 
@@ -8,7 +9,7 @@ public static class QueryRunner
     {
         var facts = new List<Fact>
             {
-                new Fact { key = "concept", value = "OnMove" },
+                new Fact { key = "concept", value = "onMove" },
             };
 
         movedFrom.npcs.ForEach(npc => facts.Add(new Fact { key = "in_room_npc", value = npc.referenceName }));
