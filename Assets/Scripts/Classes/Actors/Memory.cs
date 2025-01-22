@@ -5,7 +5,7 @@ public class Memory
 {
     private Dictionary<string, object> memory = new();
 
-    public void UpdateMemory(string key, object value)
+    public void Update(string key, object value)
     {
         if (memory.ContainsKey(key))
         {
@@ -27,5 +27,18 @@ public class Memory
     public List<Fact> GetMemoryFacts()
     {
         return memory.Select(kvp => new Fact { key = kvp.Key, value = kvp.Value }).ToList();
+    }
+
+    public void Delete(string key)
+    {
+        if (memory.ContainsKey(key))
+        {
+            memory.Remove(key);
+        }
+    }
+
+    public void Clear()
+    {
+        memory.Clear();
     }
 }

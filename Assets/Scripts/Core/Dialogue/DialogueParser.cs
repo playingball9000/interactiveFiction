@@ -71,6 +71,7 @@ public class DialogueParser : MonoBehaviour
         GameController.invokeShowDialogueCanvas();
 
         //TODO: Finish gathering facts here, npc, location, world, context, etc
+        dialogueFacts.AddRange(WorldState.GetInstance().player.currentLocation.GetRoomFacts());
         dialogueFacts.AddRange(WorldState.GetInstance().player.GetPlayerFacts());
 
         DialogueNode startNode = DialogueBuilder.BuildDialogue(npc.dialogueFile);
@@ -82,7 +83,9 @@ public class DialogueParser : MonoBehaviour
         currentNode = dialogueNode;
         if (currentNode != null)
         {
-            string fullText = TmpTextTagger.Color($"{currentNode.speaker}   -   ", UiConstants.TEXT_COLOR_NPC_NAME) + TmpTextTagger.Color($"{currentNode.text}", UiConstants.TEXT_COLOR_NPC_TEXT);
+            string fullText =
+                TmpTextTagger.Color($"{currentNode.speaker}   -   ", UiConstants.TEXT_COLOR_NPC_NAME) +
+                TmpTextTagger.Color($"{currentNode.text}", UiConstants.TEXT_COLOR_NPC_TEXT);
             dialogueLog.Add(fullText + "\n");
             UI_dialogueBox.text = dialogueLog.GetLogsString();
             ScrollToBottom();
@@ -115,7 +118,9 @@ public class DialogueParser : MonoBehaviour
         }
         else
         {
-            string coloredText = TmpTextTagger.Color($"You   -   ", UiConstants.TEXT_COLOR_PLAYER_NAME) + TmpTextTagger.Color($"{choiceText}", UiConstants.TEXT_COLOR_PLAYER_TEXT);
+            string coloredText =
+                TmpTextTagger.Color($"You   -   ", UiConstants.TEXT_COLOR_PLAYER_NAME) +
+                TmpTextTagger.Color($"{choiceText}", UiConstants.TEXT_COLOR_PLAYER_TEXT);
             dialogueLog.Add(coloredText + "\n");
             DisplayDialogue(nextNode);
         }

@@ -12,12 +12,9 @@ public static class QueryRunner
             new Fact { key = "concept", value = "onMove" },
         };
 
-        movedFrom.npcs.ForEach(npc => facts.Add(new Fact { key = "in_room_npc", value = npc.referenceName }));
-
+        facts.AddRange(movedFrom.GetRoomFacts());
         facts.AddRange(WorldState.GetInstance().player.GetPlayerFacts());
 
         RuleEngine.Execute(facts);
     }
-
-
 }
