@@ -4,9 +4,11 @@ using System.Linq;
 
 public class Rule
 {
-    private readonly List<Func<IEnumerable<Fact>, bool>> conditions = new List<Func<IEnumerable<Fact>, bool>>();
+    private readonly List<Func<IEnumerable<Fact>, bool>> conditions = new();
 
     private Action<IEnumerable<Fact>> action;
+
+    public string ruleName { get; set; }
 
     public Rule AddCondition(Func<IEnumerable<Fact>, bool> condition)
     {
@@ -20,11 +22,13 @@ public class Rule
         return this;
     }
 
-    public void Evaluate(IEnumerable<Fact> facts)
+    public bool Evaluate(IEnumerable<Fact> facts)
     {
         if (conditions.All(condition => condition(facts)))
         {
             action?.Invoke(facts);
+            return true;
         }
+        return false;
     }
 }

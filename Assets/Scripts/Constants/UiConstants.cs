@@ -6,4 +6,6 @@ public class UiConstants
     public const string TEXT_COLOR_NPC_NAME = "#887850";
     public const string TEXT_COLOR_NPC_TEXT = "#809870";
     public const string TEXT_COLOR_STORY_TEXT = "#D8C79C";
+
+    public const string EFFECT_TYPEWRITER = "typewriter";
 }

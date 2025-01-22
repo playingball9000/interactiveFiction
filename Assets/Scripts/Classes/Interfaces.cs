@@ -41,6 +41,7 @@ public interface IContainer : IExaminable, IItem
     void AddItem(IItem item);
     void RemoveItem(IItem item);
     bool ContainsItem(IItem item);
-    List<IItem> GetItems();
+    List<IItem> GetContents();
+    string ContentsToString();
 }
 

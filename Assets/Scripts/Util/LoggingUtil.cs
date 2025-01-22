@@ -49,7 +49,7 @@ public static class LoggingUtil
 
             string typeName = typeof(T).Name;
             var fieldValues = objects.Select(obj => property.GetValue(obj)?.ToString()).ToList();
-            string result = StringUtil.GetStringFromList(fieldValues);
+            string result = StringUtil.CreateCommaSeparatedString(fieldValues);
             string log = $"Type: {typeName}, Field: {fieldName}, Values: {result}";
             UnityEngine.Debug.Log(log);
         }

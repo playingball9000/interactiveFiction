@@ -11,8 +11,8 @@ public static class SaveManager
     public static void SaveGame(WorldState worldState)
     {
 
-        BinaryFormatter formatter = new BinaryFormatter();
-        MemoryStream memoryStream = new MemoryStream();
+        BinaryFormatter formatter = new();
+        MemoryStream memoryStream = new();
         formatter.Serialize(memoryStream, worldState);
         string dataToSave = Convert.ToBase64String(memoryStream.ToArray());
         PlayerPrefs.SetString(SaveKey, dataToSave);
@@ -28,8 +28,8 @@ public static class SaveManager
             string dataToLoad = PlayerPrefs.GetString(SaveKey);
             if (!string.IsNullOrEmpty(dataToLoad))
             {
-                BinaryFormatter formatter = new BinaryFormatter();
-                MemoryStream memoryStream = new MemoryStream(Convert.FromBase64String(dataToLoad));
+                BinaryFormatter formatter = new();
+                MemoryStream memoryStream = new(Convert.FromBase64String(dataToLoad));
                 try
                 {
                     dataToReturn = (WorldState)formatter.Deserialize(memoryStream);

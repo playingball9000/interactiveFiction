@@ -10,6 +10,8 @@ public class Woman : NPC
     public string referenceName { get; set; }
     public string description { get; set; }
 
+    public Memory memory { get; set; }
+
     public string GetDescription()
     {
 
