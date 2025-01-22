@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 public class ActionSynonyms
 {
-    public static readonly Dictionary<string, string> SynonymsDict = new Dictionary<string, string>
+    public static readonly Dictionary<string, string> SynonymsDict = new()
     {
         { "n", ExitDirection.north.ToString() },
         { "north", ExitDirection.north.ToString() },

@@ -7,8 +7,10 @@ public class Player
     public string playerName { get; set; }
     public string description { get; set; }
     public Room currentLocation { get; set; }
-    public List<IItem> inventory = new List<IItem>();
+    public List<IItem> inventory = new();
     List<IClothing> clothes { get; set; }
+
+    public Memory playerMemory { get; set; } = new Memory();
 
     public void AddToInventory(IItem item)
     {
@@ -34,6 +36,14 @@ public class Player
         {
             return "";
         }
+    }
+
+    public List<Fact> GetPlayerFacts()
+    {
+        List<Fact> playerFacts = new();
+        playerFacts.AddRange(inventory.Select(item => new Fact { key = "in_inventory", value = item.referenceName }).ToList());
+        playerFacts.AddRange(playerMemory.GetMemoryFacts());
+        return playerFacts;
     }
 
     public override string ToString()

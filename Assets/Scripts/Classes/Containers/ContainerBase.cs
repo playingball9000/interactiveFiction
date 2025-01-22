@@ -30,7 +30,7 @@ public class ContainerBase : IContainer
 
         if (isOpen)
         {
-            var itemNames = contents.Any() ? string.Join(", ", contents.Select(item => item.referenceName)) : "empty";
+            string itemNames = ContentsToString();
             fullDescription += $"\nIt is open and the contents are: {itemNames}.\n";
         }
         else
@@ -42,9 +42,15 @@ public class ContainerBase : IContainer
         return fullDescription;
     }
 
-    public List<IItem> GetItems()
+    public List<IItem> GetContents()
     {
         return contents;
+    }
+
+    public string ContentsToString()
+    {
+        List<string> itemList = contents.Select(c => c.referenceName).ToList();
+        return contents.Any() ? StringUtil.CreateCommaSeparatedString(itemList) : "empty";
     }
 
     public void RemoveItem(IItem item)

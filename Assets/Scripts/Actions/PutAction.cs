@@ -22,6 +22,8 @@ public class PutAction : IPlayerAction
         // Check player's inventory first for giving
         List<IItem> items = ActionUtil.FindItemsFieldContainsString(player.inventory, item => item.referenceName, itemBeingPut);
 
+        //TODO: Not gettable probably also means not puttable.
+
         // Check the room next if it's just sitting there. INTELLIGENCE
         if (!items.Any())
         {

@@ -4,8 +4,8 @@ using System.Collections.Generic;
 public class WorldState
 {
     public Player player;
-    public List<Room> rooms = new List<Room>();
-    public List<NPC> npcs = new List<NPC>();
+    public List<Room> rooms = new();
+    public List<NPC> npcs = new();
 
     public bool FLAG_dialogWindowActive = false;
 

@@ -10,10 +10,10 @@ public class PlayerInputHandler : MonoBehaviour
     public TMP_InputField UI_playerInputBox;
 
     private int currentHistoryIndex = -1;
-    StringListMax inputHistory = new StringListMax(20);
+    StringListMax inputHistory = new(20);
 
     //TODO: for later complex inputs
-    private static readonly HashSet<string> prepositions = new HashSet<string> { "in", "on", "under", "into", "onto" };
+    private static readonly HashSet<string> prepositions = new() { "in", "on", "under", "into", "onto" };
 
     void Awake()
     {
@@ -122,7 +122,7 @@ public class PlayerInputHandler : MonoBehaviour
 
     private string NormalizeInput(string input)
     {
-        var normalized = input.ToLower().Trim();
+        string normalized = input.ToLower().Trim();
         normalized = Regex.Replace(normalized, @"\b(a|an|the)\b", "").Trim();
         normalized = normalized.Replace("'s ", "").Replace("  ", " ");
         return normalized;

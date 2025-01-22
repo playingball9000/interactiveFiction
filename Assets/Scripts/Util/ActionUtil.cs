@@ -69,7 +69,7 @@ public static class ActionUtil
     public static (ContainerBase, List<IItem>) FindItemsInContainers(List<IItem> itemsToSearch, string searchString)
     {
         ContainerBase containerHoldingItem = null;
-        List<IItem> finalMatchedItems = new List<IItem>();
+        List<IItem> finalMatchedItems = new();
 
         List<IContainer> openContainers = itemsToSearch.OfType<IContainer>()
                 .Where(container => container.isOpen)
@@ -122,7 +122,7 @@ public static class ActionUtil
 
     public static string GetUnknownCommandResponse()
     {
-        Random random = new Random();
+        Random random = new();
         int index = random.Next(unknownCommandResponses.Length);
         return unknownCommandResponses[index];
     }

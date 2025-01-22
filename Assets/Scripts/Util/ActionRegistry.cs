@@ -33,14 +33,14 @@ public class ActionRegistry
         IPlayerAction moveAction = new T();
         KeyValuePair<string, IPlayerAction>[] keyValuePairs = new KeyValuePair<string, IPlayerAction>[]
         {
-            new KeyValuePair<string, IPlayerAction>("n", moveAction),
-            new KeyValuePair<string, IPlayerAction>("north", moveAction),
-            new KeyValuePair<string, IPlayerAction>("s", moveAction),
-            new KeyValuePair<string, IPlayerAction>("south", moveAction),
-            new KeyValuePair<string, IPlayerAction>("e", moveAction),
-            new KeyValuePair<string, IPlayerAction>("east", moveAction),
-            new KeyValuePair<string, IPlayerAction>("w", moveAction),
-            new KeyValuePair<string, IPlayerAction>("west", moveAction),
+            new("n", moveAction),
+            new("north", moveAction),
+            new("s", moveAction),
+            new("south", moveAction),
+            new("e", moveAction),
+            new("east", moveAction),
+            new("w", moveAction),
+            new("west", moveAction),
         };
         return keyValuePairs;
     }

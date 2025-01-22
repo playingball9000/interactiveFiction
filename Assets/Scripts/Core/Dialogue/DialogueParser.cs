@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using Newtonsoft.Json;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -15,9 +14,10 @@ public class DialogueParser : MonoBehaviour
     private ScrollRect dialogueScrollRect;
 
     private DialogueNode currentNode;
-    private Dictionary<string, DialogueNode> dialogues;
+    private List<DialogueChoice> currentChoices = new();
+    private List<Fact> dialogueFacts = new();
 
-    StringListMax dialogueLog = new StringListMax(100);
+    StringListMax dialogueLog = new(100);
 
     KeyCode[] numpadKeys = { KeyCode.Keypad0, KeyCode.Keypad1, KeyCode.Keypad2, KeyCode.Keypad3, KeyCode.Keypad4,
                          KeyCode.Keypad5, KeyCode.Keypad6, KeyCode.Keypad7, KeyCode.Keypad8, KeyCode.Keypad9 };
@@ -52,12 +52,12 @@ public class DialogueParser : MonoBehaviour
     {
         if (WorldState.GetInstance().FLAG_dialogWindowActive && currentNode != null && Input.anyKeyDown)
         {
-            for (int i = 0; i < currentNode.choices.Count; i++)
+            for (int i = 0; i < currentChoices.Count; i++)
             {
                 if (Input.GetKeyDown((i + 1).ToString()) || Input.GetKeyDown(numpadKeys[i + 1]))
                 {
-                    DialogueChoice choice = currentNode.choices[i];
-                    OnChoiceSelected(choice.text, choice.nextId);
+                    DialogueChoice choice = currentChoices[i];
+                    OnChoiceSelected(choice.text, choice.nextNode);
                 }
             }
         }
@@ -66,18 +66,20 @@ public class DialogueParser : MonoBehaviour
     public void StartDialogue(NPC npc)
     {
         dialogueLog.Clear();
+        currentChoices.Clear();
+        dialogueFacts.Clear();
         GameController.invokeShowDialogueCanvas();
 
-        // This takes about 45 ms to run for a 100 line file. Not sure if performance degrades
-        var jsonText = Resources.Load<TextAsset>("Dialogue/" + npc.dialogueFile).text;
-        dialogues = JsonConvert.DeserializeObject<Dictionary<string, DialogueNode>>(jsonText);
+        //TODO: Finish gathering facts here, npc, location, world, context, etc
+        dialogueFacts.AddRange(WorldState.GetInstance().player.GetPlayerFacts());
 
-        DisplayDialogue("node1");
+        DialogueNode startNode = DialogueBuilder.BuildDialogue(npc.dialogueFile);
+        DisplayDialogue(startNode);
     }
 
-    public void DisplayDialogue(string dialogueId)
+    public void DisplayDialogue(DialogueNode dialogueNode)
     {
-        currentNode = dialogues.ContainsKey(dialogueId) ? dialogues[dialogueId] : null;
+        currentNode = dialogueNode;
         if (currentNode != null)
         {
             string fullText = TmpTextTagger.Color($"{currentNode.speaker}   -   ", UiConstants.TEXT_COLOR_NPC_NAME) + TmpTextTagger.Color($"{currentNode.text}", UiConstants.TEXT_COLOR_NPC_TEXT);
@@ -86,20 +88,27 @@ public class DialogueParser : MonoBehaviour
             ScrollToBottom();
 
             UI_dialogueChoicesBox.text = "";
+
+            int choiceCounter = 1;
             for (int i = 0; i < currentNode.choices.Count; i++)
             {
-                UI_dialogueChoicesBox.text += $"{i + 1}. {currentNode.choices[i].text}\n";
+                // If no rule or if rule passes, add choice
+                if (currentNode.choices[i].showRule == null || currentNode.choices[i].showRule.Evaluate(dialogueFacts))
+                {
+                    // Not all choices satisfy rules so need to keep track of choices that passed
+                    currentChoices.Add(currentNode.choices[i]);
+                    UI_dialogueChoicesBox.text += $"{choiceCounter}. {currentNode.choices[i].text}\n";
+                    choiceCounter++;
+                }
             }
-        }
-        else
-        {
-            LoggingUtil.Log($"Dialogue with ID '{dialogueId}' not found.");
         }
     }
 
-    public void OnChoiceSelected(string choiceText, string nextDialogueId)
+    public void OnChoiceSelected(string choiceText, DialogueNode nextNode)
     {
-        if (nextDialogueId == "END_DIALOGUE")
+        currentChoices.Clear();
+
+        if (nextNode == null)
         {
             dialogueLog.Clear();
             GameController.invokeShowMainCanvas();
@@ -108,7 +117,7 @@ public class DialogueParser : MonoBehaviour
         {
             string coloredText = TmpTextTagger.Color($"You   -   ", UiConstants.TEXT_COLOR_PLAYER_NAME) + TmpTextTagger.Color($"{choiceText}", UiConstants.TEXT_COLOR_PLAYER_TEXT);
             dialogueLog.Add(coloredText + "\n");
-            DisplayDialogue(nextDialogueId);
+            DisplayDialogue(nextNode);
         }
     }
 
