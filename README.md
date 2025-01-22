@@ -17,10 +17,11 @@
 
 ## Actors
 1. Player, NPC, etc.
+2. Have Memory, which is just key value store of Facts basically. Used to run rules.
 
 ## Core
 1. Pretty much all the main interfaces/managers for the UI, gameplay setup, etc.
-2. Most of these scripts are attached to the GameController GameObject and the necessary elements are injected via the Unity Inspector.
+2. Most of these scripts are attached to the GameController.
 
 ## Adding Actions
 1. Actions are invoked via the command pattern
@@ -53,7 +54,9 @@
 1. Anything examinable needs to implement IExaminable
 
 ## Dialogue
-Located in Resources/Dialogue (file must match name of dialogueFile field in NPC)
+1. Located in DialogueBuilder
+2. Can add rules to choices to determine whether to show them.
+
 
 ## The Rule Engine
 1. Fact - flat data field representing the world in key:value form. ex. "in_inventory":"book" 
