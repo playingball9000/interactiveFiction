@@ -1834,7 +1834,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   UI_dialogueBox: {fileID: 1918732483}
   UI_dialogueChoicesBox: {fileID: 145162363}
-  speakerPortrait: {fileID: 0}
+  UI_storyScrollView: {fileID: 0}
 --- !u!1 &1310056718
 GameObject:
   m_ObjectHideFlags: 0
@@ -2263,7 +2263,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 99365747}
   m_HandleRect: {fileID: 99365746}
   m_Direction: 2
-  m_Value: 1
+  m_Value: 0
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:

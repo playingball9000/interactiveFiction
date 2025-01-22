@@ -31,7 +31,7 @@ public class ContainerBase : IContainer
         if (isOpen)
         {
             string itemNames = ContentsToString();
-            fullDescription += $"\nIt is open and the contents are: {itemNames}.\n";
+            fullDescription += $"\nIt is open. Contents: {itemNames}.\n";
         }
         else
         {

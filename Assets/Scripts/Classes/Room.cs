@@ -63,6 +63,15 @@ public class Room
         StoryTextHandler.invokeUpdateStoryDisplay(combinedText);
     }
 
+    public List<Fact> GetRoomFacts()
+    {
+        List<Fact> roomFacts = new();
+        npcs.ForEach(npc => roomFacts.Add(new Fact { key = "in_room_npc", value = npc.referenceName }));
+        roomItems.ForEach(item => roomFacts.Add(new Fact { key = "in_room_item", value = item.referenceName }));
+
+        return roomFacts;
+    }
+
     public void RemoveItem(IItem item)
     {
         if (roomItems.Contains(item))

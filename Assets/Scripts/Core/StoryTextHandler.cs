@@ -15,7 +15,7 @@ public class StoryTextHandler : MonoBehaviour
     StringListMax storyLog = new(250);
 
     private Coroutine typingCoroutine;
-    WaitForSeconds textQueueWait = new(0.8f);
+    WaitForSeconds textQueueWait = new(0.7f);
     WaitForSeconds typeWritingWait = new(0.015f);
     private Queue<(string text, string effect)> textQueue = new();
     private bool isTyping = false;
@@ -113,7 +113,6 @@ public class StoryTextHandler : MonoBehaviour
             charIndex++;
             yield return typeWritingWait;
         }
-        // typingCoroutine = null;
     }
 
     private void ScrollToBottom()

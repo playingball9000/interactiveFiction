@@ -1,8 +1,7 @@
 using UnityEngine;
 
 /*
-
-colors of player input?
+Overall list of stuff I'm thinking about
 
 
 */
