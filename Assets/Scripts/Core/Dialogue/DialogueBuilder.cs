@@ -79,7 +79,7 @@ public static class DialogueBuilder
         node1.AddChoice(
             "What did you think of this book?",
             node13,
-            new Rule().AddCondition(facts => Criteria.FactValueEquals(facts, "in_inventory", "book")));
+            new Rule().AddCriteria(facts => Criterion.FactValueEquals(facts, "in_inventory", "book")));
         node1.AddChoice("[End Conversation]", null);
 
         node13.AddChoice("Oh LOL", null);

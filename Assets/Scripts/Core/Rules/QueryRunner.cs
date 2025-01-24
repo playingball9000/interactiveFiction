@@ -9,10 +9,23 @@ public static class QueryRunner
     {
         List<Fact> facts = new()
         {
-            new Fact { key = "concept", value = "onMove" },
+            new Fact { key = RuleConstants.KEY_CONCEPT, value = RuleConstants.CONCEPT_ON_MOVE },
         };
 
         facts.AddRange(movedFrom.GetRoomFacts());
+        facts.AddRange(WorldState.GetInstance().player.GetPlayerFacts());
+
+        RuleEngine.Execute(facts);
+    }
+
+    public static void RunGiveFacts()
+    {
+        List<Fact> facts = new()
+        {
+            new Fact { key = RuleConstants.KEY_CONCEPT, value = RuleConstants.CONCEPT_ON_GIVE },
+        };
+
+        facts.AddRange(WorldState.GetInstance().player.currentLocation.GetRoomFacts());
         facts.AddRange(WorldState.GetInstance().player.GetPlayerFacts());
 
         RuleEngine.Execute(facts);

@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-public static class Criteria
+public static class Criterion
 {
     public static Fact FindFact(IEnumerable<Fact> facts, string key)
     {

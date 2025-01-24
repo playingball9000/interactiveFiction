@@ -10,32 +10,28 @@ public class GameInitializer : MonoBehaviour
         Room trainCarTwo = new()
         {
             roomName = "TrainCarTwo",
-            description = "The train car is modestly lit, with rows of cushioned seats lining both sides of the narrow aisle. Overhead, luggage racks brim with suitcases and duffel bags, one precariously teetering at the edge. The occasional rattle of the train blends with the low hum of conversation and the rhythmic clack of wheels on the tracks."
+            description = "The train car is modestly lit, with rows of cushioned seats lining both sides of the narrow aisle. Overhead, luggage racks brim with suitcases and duffel bags, one precariously teetering at the edge.  At the far end of the car, a service trolley rests unattended, its surface cluttered with various items."
         };
 
         Room startingRoom = new()
         {
             roomName = "StartingTrainCar",
-            description = "The train car stretched out in quiet solitude. Rows of cushioned seats, most unoccupied, lined either side of the aisle, their fabric worn smooth from years of passengers coming and going. Overhead, a few stray luggage compartments hung ajar. The faint scent of aged upholstery and the metallic tang of the train itself mingled in the still air."
+            description = "You are sitting in the booth seats of a cozy train car, the rhythmic clatter of the wheels filling the air like a steady heartbeat. The large window beside you frames a rolling countryside. Overhead, a luggage rack runs the length of the car. A small stack of folded newspapers lays forlorn on a nearby seat. The air carries a faint scent of leather, paper, and coffee."
         };
 
-        Exit startingRoomExit = new()
+        startingRoom.exits.Add(new()
         {
             exitDirection = ExitDirection.north,
             exitDescription = "There is a doorway to another car to the north",
             targetRoom = trainCarTwo
-        };
+        });
 
-        startingRoom.exits.Add(startingRoomExit);
-
-        Exit trainCarTwoExit = new()
+        trainCarTwo.exits.Add(new()
         {
             exitDirection = ExitDirection.south,
             exitDescription = "There is a doorway to another car to the south",
             targetRoom = startingRoom
-        };
-
-        trainCarTwo.exits.Add(trainCarTwoExit);
+        });
 
         Player player = new()
         {
@@ -64,13 +60,35 @@ public class GameInitializer : MonoBehaviour
 
         startingRoom.roomItems.Add(book);
 
-        IExaminable seats = new Scenery
-        {
-            referenceName = "seats",
-            description = "The cushioned seats sag with the wear of countless journeys. The once-vibrant fabric now bears the muted imprint of forgotten travelers, stories folded into the wrinkles of time."
-        };
+        startingRoom.roomScenery.AddRange(new List<Scenery>() {
+            new Scenery {
+                referenceName = "seats",
+                description = "The cushioned seats sag with the wear of countless journeys. The once-vibrant fabric now bears the muted imprint of many travelers."
+            },
+            new Scenery {
+                referenceName = "window",
+                description = "The window offers a sweeping view of fields and distant hills. A lone cow stands in the middle of a pasture, staring directly at the train. You wonder if it's judging you."
+            },
+            new Scenery {
+                referenceName = "rack",
+                description = "The overhead luggage rack lies empty. You could have put your bag there, but you didn't."
+            },
+            new Scenery {
+                referenceName = "newspapers",
+                description = "A stack of what seems to be old Chinese newspapers... 'Chiang Kai Shek died'."
+            }
+            });
 
-        startingRoom.roomScenery.Add(seats);
+        trainCarTwo.roomScenery.AddRange(new List<Scenery>() {
+            new Scenery {
+                referenceName = "seats",
+                description = "More train seats, nothing you haven't seen a lifetime of."
+            },
+            new Scenery {
+                referenceName = "trolley",
+                description = "The service trolley is a battlefield of abandoned beverages. Half-empty coffee cups form a sad little army waiting for reinforcements. A crumpled napkin lies in defeat, stained with the remains of what was probably a chocolate muffin — a tragic end for a noble pastry."
+            }
+            });
 
         IItem quill = new ItemBase
         {
@@ -81,18 +99,18 @@ public class GameInitializer : MonoBehaviour
         };
 
 
-        ContainerBase suitcase = new()
+        ContainerBase bag = new()
         {
             contents = new List<IItem>() { quill },
-            description = "A small suitcase. There are a few stickers on the side denoting the places it has travelled to.",
+            description = "A small bag. There are a few stickers on the side denoting the places it has travelled to.",
             isGettable = false,
             isLocked = false,
             isOpen = false,
             pickUpNarration = "This doesn't belong to you.",
-            referenceName = "suitcase"
+            referenceName = "bag"
         };
 
-        startingRoom.roomItems.Add(suitcase);
+        trainCarTwo.roomItems.Add(bag);
 
 
         WorldState.GetInstance().player = player;
@@ -104,7 +122,7 @@ public class GameInitializer : MonoBehaviour
     // Put stuff that happens at the start of the game here
     private void Start()
     {
-        StoryTextHandler.invokeUpdateStoryDisplay("The train hummed softly as it cut through the countryside, the rhythmic clatter of its wheels blending seamlessly with the muted murmur of other passengers. You're seated by the window, gazing out at the scenery rushing by. Fields of tall grass sway in the breeze, their golden heads catching the warm hues of the setting sun. A cluster of trees here, a scattering of wildflowers there.");
+        StoryTextHandler.invokeUpdateStoryDisplay("The train hummed softly as it cut through the countryside. You're seated by the window, gazing out at the scenery rushing by. Fields of tall grass sway in the breeze, their golden heads catching the warm hues of the setting sun. A cluster of trees here, a scattering of wildflowers there. The booth where you sit is quiet, your bag neatly tucked beneath your feet. A faint smell of coffee and worn leather lingers in the air.");
     }
 
 }

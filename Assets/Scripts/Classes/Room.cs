@@ -66,8 +66,8 @@ public class Room
     public List<Fact> GetRoomFacts()
     {
         List<Fact> roomFacts = new();
-        npcs.ForEach(npc => roomFacts.Add(new Fact { key = "in_room_npc", value = npc.referenceName }));
-        roomItems.ForEach(item => roomFacts.Add(new Fact { key = "in_room_item", value = item.referenceName }));
+        npcs.ForEach(npc => roomFacts.Add(new Fact { key = RuleConstants.KEY_IN_ROOM_NPC, value = npc.referenceName }));
+        roomItems.ForEach(item => roomFacts.Add(new Fact { key = RuleConstants.KEY_IN_ROOM_ITEM, value = item.referenceName }));
 
         return roomFacts;
     }
