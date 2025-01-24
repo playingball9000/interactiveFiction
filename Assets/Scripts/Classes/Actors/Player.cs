@@ -41,7 +41,7 @@ public class Player
     public List<Fact> GetPlayerFacts()
     {
         List<Fact> playerFacts = new();
-        playerFacts.AddRange(inventory.Select(item => new Fact { key = "in_inventory", value = item.referenceName }).ToList());
+        playerFacts.AddRange(inventory.Select(item => new Fact { key = RuleConstants.KEY_IN_INVENTORY, value = item.referenceName }).ToList());
         playerFacts.AddRange(playerMemory.GetMemoryFacts());
         return playerFacts;
     }

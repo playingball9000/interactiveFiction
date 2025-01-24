@@ -10,9 +10,9 @@ public static class RuleEngine
     static RuleEngine()
     {
         rules.Add(new Rule()
-            .AddCondition(facts => Criteria.FactValueEquals(facts, "concept", "onMove"))
-            .AddCondition(facts => Criteria.FactValueEquals(facts, "in_inventory", "book"))
-            .AddCondition(facts => Criteria.FactValueEquals(facts, "in_room_npc", "Woman"))
+            .AddCriteria(facts => Criterion.FactValueEquals(facts, RuleConstants.KEY_CONCEPT, RuleConstants.CONCEPT_ON_MOVE))
+            .AddCriteria(facts => Criterion.FactValueEquals(facts, RuleConstants.KEY_IN_INVENTORY, "book"))
+            .AddCriteria(facts => Criterion.FactValueEquals(facts, RuleConstants.KEY_IN_ROOM_NPC, "Woman"))
             .SetAction(facts =>
             {
                 StoryTextHandler.invokeUpdateStoryDisplay(

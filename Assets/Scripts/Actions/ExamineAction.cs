@@ -12,7 +12,7 @@ public class ExamineAction : IPlayerAction
     private string CANT_ACTION_MESSAGE = "You can't examine that";
 
     /*
-     * What this needs to do in the future is
+     * TODO: What this needs to do in the future is something like
      * 1. look for a direct object match (item or npc or scenery ) ie. woman, bag
      * 2. look for a modifier match (item or npc) ie. thin woman, black bag
      * 3. look for sub item ie. bag (item)
@@ -55,6 +55,7 @@ public class ExamineAction : IPlayerAction
                 ActionUtil.MatchZeroOneAndMany<IExaminable>(
                     potentialMatches,
                     () => StoryTextHandler.invokeUpdateStoryDisplay(CANT_ACTION_MESSAGE),
+                    // TODO: If i want complex dynamic reactions, i probably need to use the rule engine here
                     thing => StoryTextHandler.invokeUpdateStoryDisplay(thing.GetDescription()),
                     things => StoryTextHandler.invokeUpdateStoryDisplay("Are you trying to examine " + string.Join(" or ", things.Select(thing => thing.referenceName)))
                 );
