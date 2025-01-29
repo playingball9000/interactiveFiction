@@ -37,13 +37,14 @@ public class GameInitializer : MonoBehaviour
         {
             playerName = "Player",
             description = "description",
-            currentLocation = startingRoom
+            currentLocation = trainCarTwo
         };
 
 
         NPC woman = new Woman
         {
             referenceName = "Woman",
+            adjective = "thin",
             description = @"The woman is striking in a casual way. Her her auburn hair falling in loose waves around her shoulders, framing a face that was both striking and sincere.  Her outfit was casual yet put-together fitted jeans, a maroon sweater that hugged her frame, and black ankle boots that looked both practical and stylish.",
             currentLocation = startingRoom,
             dialogueFile = "womanDialogue"
@@ -51,23 +52,22 @@ public class GameInitializer : MonoBehaviour
 
         startingRoom.npcs.Add(woman);
 
-        IItem book = new ItemBase
+        startingRoom.roomItems.AddItem(new ItemBase
         {
             referenceName = "book",
-            description = "An old book with a worn cover",
+            adjective = "old",
+            description = "An old book with a worn cover. Inside, someone has doodled a mustache on a portrait of a very serious-looking duke.",
             isGettable = true,
-        };
-
-        startingRoom.roomItems.Add(book);
+        });
 
         startingRoom.roomScenery.AddRange(new List<Scenery>() {
             new Scenery {
                 referenceName = "seats",
-                description = "The cushioned seats sag with the wear of countless journeys. The once-vibrant fabric now bears the muted imprint of many travelers."
+                description = "The cushioned seats sag with the wear of countless journeys. The once-vibrant fabric now bears the muted imprint of many travelers' rear ends."
             },
             new Scenery {
                 referenceName = "window",
-                description = "The window offers a sweeping view of fields and distant hills. A lone cow stands in the middle of a pasture, staring directly at the train. You wonder if it's judging you."
+                description = "The window offers a sweeping view of fields and distant hills. A lone cow stands in the middle of a pasture, staring directly at the train. You wonder what it could be thinking about."
             },
             new Scenery {
                 referenceName = "rack",
@@ -93,24 +93,31 @@ public class GameInitializer : MonoBehaviour
         IItem quill = new ItemBase
         {
             referenceName = "quill",
-            description = "A simple feather quill",
+            adjective = "feather",
+            description = "A simple feather quill with many possibilities.",
             isGettable = true,
             pickUpNarration = "You pick up the feather quill. Carefully as to not get ink on you."
         };
-
 
         ContainerBase bag = new()
         {
             contents = new List<IItem>() { quill },
             description = "A small bag. There are a few stickers on the side denoting the places it has travelled to.",
+            adjective = "duffel",
             isGettable = false,
-            isLocked = false,
             isOpen = false,
             pickUpNarration = "This doesn't belong to you.",
             referenceName = "bag"
         };
 
-        trainCarTwo.roomItems.Add(bag);
+        trainCarTwo.roomItems.AddItem(bag);
+        trainCarTwo.roomItems.AddItem(new ItemBase
+        {
+            referenceName = "bar",
+            adjective = "chocolate",
+            description = "The label boasts a 'Rich, Decadent' experience. The ingredient list suggests otherwise.",
+            isGettable = true,
+        });
 
 
         WorldState.GetInstance().player = player;

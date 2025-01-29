@@ -6,7 +6,7 @@ public class SaveAction : IPlayerAction
     public int maxInputCount { get; private set; } = 1;
     string IPlayerAction.actionReferenceName { get; } = ActionConstants.ACTION_SAVEGAME;
 
-    void IPlayerAction.Execute(string[] inputTextArray)
+    void IPlayerAction.Execute(ActionInput actionInput)
     {
         SaveManager.SaveGame(WorldState.GetInstance());
     }

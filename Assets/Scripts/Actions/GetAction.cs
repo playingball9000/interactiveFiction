@@ -6,29 +6,20 @@ public class GetAction : IPlayerAction
     public string tooFewMessage { get; private set; } = "What are you trying to get?";
     public string tooManyMessage { get; private set; } = "Try the following: get [target]";
     public int minInputCount { get; private set; } = 2;
-    public int maxInputCount { get; private set; } = 2;
+    public int maxInputCount { get; private set; } = 3;
     string IPlayerAction.actionReferenceName { get; } = ActionConstants.ACTION_GET;
 
-    void IPlayerAction.Execute(string[] inputTextArray)
+    void IPlayerAction.Execute(ActionInput actionInput)
     {
         Player player = WorldState.GetInstance().player;
-        ItemLocation itemLocation = ItemLocation.room;
-        ContainerBase containerHoldingItem = null;
 
-        string target = inputTextArray[1];
-
-        List<IItem> roomItems = player.currentLocation.roomItems;
-        List<IItem> items = ActionUtil.FindItemsFieldContainsString(roomItems, item => item.referenceName, target);
-
-        // TODO: perhaps its better to make a dict of (ItemLocation -> list of items / containers). this is fine for now.
-        if (!items.Any())
+        List<IStorage> storage = new List<IStorage>
         {
-            itemLocation = ItemLocation.container;
-            // Check in open containers to get the item. INTELLIGENCE
-            (containerHoldingItem, items) = ActionUtil.FindItemsInContainers(roomItems, target);
-        }
-
-        ActionUtil.MatchZeroOneAndMany<IItem>(
+            player.currentLocation.roomItems
+        };
+        storage.AddRange(player.currentLocation.GetRoomContainers());
+        var (containerHoldingItem, items) = ActionUtil.FindItemsInAccessibleStorages(storage, actionInput.mainClause);
+        ActionUtil.MatchZeroOneAndMany(
             items,
             () => StoryTextHandler.invokeUpdateStoryDisplay("You can't get that"),
             item =>
@@ -37,20 +28,11 @@ public class GetAction : IPlayerAction
                 if (item.isGettable)
                 {
                     player.AddToInventory(item);
-
-                    switch (itemLocation)
-                    {
-                        case ItemLocation.container:
-                            containerHoldingItem.RemoveItem(item);
-                            break;
-                        case ItemLocation.room:
-                            player.currentLocation.RemoveItem(item);
-                            break;
-                    }
+                    containerHoldingItem.RemoveItem(item);
                 }
             },
             items => StoryTextHandler.invokeUpdateStoryDisplay(
-                "Are you trying to get " + string.Join(" or ", items.Select(item => item.referenceName)))
+                "Are you trying to get " + string.Join(" or ", items.Select(item => item.GetDisplayName())))
         );
     }
 }

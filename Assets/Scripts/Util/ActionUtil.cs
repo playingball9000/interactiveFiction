@@ -51,50 +51,173 @@ public static class ActionUtil
     public static List<T> FindItemsFieldContainsString<T>(IEnumerable<T> source, Func<T, string> propertySelector, string searchString)
     {
         // Look for exact match first
-        T exactMatch = source.SingleOrDefault(item => propertySelector(item).ToLower() == searchString.ToLower());
+        List<T> exactMatch = FindItemsFieldEqualsString(source, propertySelector, searchString);
 
-        if (exactMatch != null)
+        if (exactMatch.Count == 1)
         {
-            return new List<T>() { exactMatch };
+            return exactMatch;
         }
         return source.Where(item => propertySelector(item).ToLower().Contains(searchString.ToLower())).ToList();
     }
 
-    /// <summary>
-    /// Searches containers for an item that matches the searchString
-    /// </summary>
-    /// <param name="itemsToSearch">Takes in a list of IItems since containers are IItems</param>
-    /// <param name="searchString"></param>
-    /// <returns>The containing container and the item(s) matched</returns>
-    public static (ContainerBase, List<IItem>) FindItemsInContainers(List<IItem> itemsToSearch, string searchString)
+    public static List<T> FindItemsFieldEqualsString<T>(IEnumerable<T> source, Func<T, string> propertySelector, string searchString)
     {
-        ContainerBase containerHoldingItem = null;
-        List<IItem> finalMatchedItems = new();
-
-        List<IContainer> openContainers = itemsToSearch.OfType<IContainer>()
-                .Where(container => container.isOpen)
-                .ToList();
-
-        foreach (IContainer container in openContainers)
-        {
-            // Technically matches the first item name it matches in soonest container it searches, but shouldn't matter
-            List<IItem> matchedItems = FindItemsFieldContainsString(container.contents, item => item.referenceName, searchString);
-            if (matchedItems.Count == 1)
-            {
-                containerHoldingItem = (ContainerBase)container;
-                finalMatchedItems.Add(matchedItems[0]);
-                break;
-            }
-            else
-            {
-                // if 0 or many matches so the MatchZeroOneAndMany() will take care of it.
-                finalMatchedItems.AddRange(matchedItems);
-            }
-        }
-        ;
-        return (containerHoldingItem, finalMatchedItems);
+        List<T> matches = source.Where(x => propertySelector(x).ToLower() == searchString.ToLower()).ToList();
+        return matches;
     }
 
+
+    public static (IStorage, List<IItem>) FindItemsInAccessibleStorages(List<IStorage> containersToSearch, List<string> mainClause)
+    {
+        IStorage containerHoldingItem = null;
+        List<IItem> pm = new();
+
+        List<IStorage> openContainers = containersToSearch
+                .Where(container => container.isAccessible())
+                .ToList();
+        int processingCount = 1;
+
+        // Iterates from the front
+        while (mainClause.Count > 0 && processingCount < 3)
+        {
+            string word = DequeueFirstElement(mainClause);
+            foreach (IStorage container in openContainers)
+            {
+                // Technically matches the first item name it matches in soonest container it searches, but shouldn't matter
+                if (processingCount == 1)
+                {
+                    pm = FindItemsFieldContainsString(container.contents, item => item.adjective, word);
+                    if (!pm.Any())
+                    {
+                        pm = FindItemsFieldContainsString(container.contents, item => item.referenceName, word);
+                    }
+                }
+                else if (processingCount == 2)
+                {
+                    // Second time through, I want to disambiguate by adjectives
+                    pm = FindItemsFieldContainsString(pm, item => item.referenceName, word);
+                }
+
+                if (pm.Count == 1)
+                {
+                    containerHoldingItem = container;
+                    processingCount = processingCount + 9001;
+                    break;
+                }
+            }
+            processingCount++;
+        }
+    ;
+        return (containerHoldingItem, pm);
+    }
+
+    public static List<ContainerBase> FindContainersInRoom(Room room, List<string> mainClause)
+    {
+        List<IExaminable> openContainers = room.GetRoomItems().OfType<ContainerBase>()
+            .Cast<IExaminable>()
+            .ToList();
+        List<IExaminable> pm = ProcessMainClauseFromEnd(mainClause, openContainers);
+        return pm.Cast<ContainerBase>().ToList();
+    }
+
+    /// <summary>
+    /// Processes mainClause from the last item and modifies it as each element is processed
+    /// </summary>
+    /// <param name="mainClause"></param>
+    /// <param name="examinables"></param>
+    /// <returns>List of items matching the words in mainClause</returns>
+    public static List<IExaminable> ProcessMainClauseFromEnd(List<string> mainClause, List<IExaminable> examinables)
+    {
+        /*
+            I just need to walk myself through this logic.
+            - Process 2 at a time from the end because the player will only be actioning on
+            the pattern of [adjective] [object] or just [object].
+            - For the case where it's [object] [object] like 'put BOOK in BAG', I think it's
+            safe to assume direct object will never match the adjective of the indirect object and
+            even if it does, then it should error out anyway because then you will be left with nothing
+            left in the main clause after the processed element is removed or popped.
+        */
+        List<IExaminable> pm = new();
+        int processingCount = 1;
+        while (mainClause.Count > 0 && processingCount < 3)
+        {
+            // Process the last element in the list
+            string word = PopLastElement(mainClause);
+
+            if (processingCount == 1)
+            {
+                pm = FindItemsFieldContainsString(examinables, item => item.referenceName, word);
+                if (!pm.Any())
+                {
+                    pm = FindItemsFieldContainsString(examinables, item => item.adjective, word);
+                }
+            }
+            else if (processingCount == 2)
+            {
+                // Second time through, I want to disambiguate by adjectives
+                pm = FindItemsFieldContainsString(pm, item => item.adjective, word);
+            }
+            if (!pm.Any() || pm.Count == 1)
+            {
+                // Break if no elements or one element, if many elements, continue looping
+                break;
+            }
+            processingCount++;
+        }
+        return pm;
+    }
+
+    public static List<IExaminable> ProcessMainClauseFromStart(List<string> mainClause, List<IExaminable> examinables)
+    {
+        /*
+            - Process 2 at a time from the start because the player will only be actioning on
+            the pattern of [adjective] [object] or just [object].
+            - Since the input could be "put bar in duffel bag", the word bag matches and leaves duffel, 
+            which will fail if we keep going backwards
+        */
+        List<IExaminable> pm = new();
+        int processingCount = 1;
+        while (mainClause.Count > 0 && processingCount < 3)
+        {
+            // Process the last element in the list
+            string word = DequeueFirstElement(mainClause);
+
+            if (processingCount == 1)
+            {
+                pm = FindItemsFieldContainsString(examinables, item => item.adjective, word);
+                if (!pm.Any())
+                {
+                    pm = FindItemsFieldContainsString(examinables, item => item.referenceName, word);
+                }
+            }
+            else if (processingCount == 2)
+            {
+                // Second time through, I want to disambiguate by referenceName
+                pm = FindItemsFieldContainsString(pm, item => item.referenceName, word);
+            }
+            if (!pm.Any() || pm.Count == 1)
+            {
+                // Break if no elements or one element, if many elements, continue looping
+                break;
+            }
+            processingCount++;
+        }
+        return pm;
+    }
+
+    public static string PopLastElement(List<string> stringList)
+    {
+        string lastElement = stringList[stringList.Count - 1];
+        stringList.RemoveAt(stringList.Count - 1);
+        return lastElement;
+    }
+
+    public static string DequeueFirstElement(List<string> stringList)
+    {
+        string firstElement = stringList[0];
+        stringList.RemoveAt(0);
+        return firstElement;
+    }
 
     private static readonly string[] unknownCommandResponses =
     {

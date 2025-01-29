@@ -3,6 +3,7 @@ public class ItemBase : IItem
 {
     public string referenceName { get; set; }
     public string description { get; set; }
+    public string adjective { get; set; } = "";
     public bool isGettable { get; set; }
 
     // Backing field is needed otherwise C# auto props will get into an infinite loop
@@ -19,8 +20,13 @@ public class ItemBase : IItem
         return description;
     }
 
+    public string GetDisplayName()
+    {
+        return string.IsNullOrEmpty(adjective) ? referenceName : adjective + " " + referenceName;
+    }
+
     public override string ToString()
     {
-        return referenceName;
+        return GetDisplayName();
     }
 }

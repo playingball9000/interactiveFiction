@@ -6,7 +6,7 @@ public class LoadAction : IPlayerAction
     public int maxInputCount { get; private set; } = 1;
     string IPlayerAction.actionReferenceName { get; } = ActionConstants.ACTION_LOADGAME;
 
-    void IPlayerAction.Execute(string[] inputTextArray)
+    void IPlayerAction.Execute(ActionInput actionInput)
     {
         WorldState worldState = SaveManager.LoadGame();
         if (worldState == null)

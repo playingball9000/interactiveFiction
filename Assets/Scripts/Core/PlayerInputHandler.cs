@@ -12,8 +12,10 @@ public class PlayerInputHandler : MonoBehaviour
     private int currentHistoryIndex = -1;
     StringListMax inputHistory = new(20);
 
-    //TODO: for later complex inputs
-    private static readonly HashSet<string> prepositions = new() { "in", "on", "under", "into", "onto" };
+    HashSet<string> prepositions = new HashSet<string>
+        {
+            "a", "an", "the", "go", "into", "in",
+        };
 
     void Awake()
     {
@@ -74,23 +76,15 @@ public class PlayerInputHandler : MonoBehaviour
 
         string[] inputTextArray = inputText.Split(' ');
 
-        // remove go if it is the first input. ie. go north or go examine
-        if (inputTextArray[0].ToLower() == "go")
-        {
-            inputTextArray = inputTextArray.Skip(1).ToArray();
-        }
+        inputTextArray = inputTextArray.Where(word => !prepositions.Contains(word)).ToArray();
 
         string action = ActionSynonyms.SynonymsDict.ContainsKey(inputTextArray[0]) ? ActionSynonyms.SynonymsDict[inputTextArray[0]] : null;
 
-        // Putting this here for movement abbreviations so n is replaced by north
-        inputTextArray[0] = action;
-
         if (action != null)
         {
-            // LoggingUtil.Log("Player Action was : " + action + " | inputTextArray: " + inputTextArray.Length);
+            // LoggingUtil.Log("Player Action was : " + action + " | inputTextArray: " + actionInput.mainClause.Count);
             // LoggingUtil.LogList(inputTextArray.ToList());
 
-            //TODO: I should really parse the inputTextArray here and then send the relevant values (direct object, target, item, etc) to the action.
             IPlayerAction playerAction = ActionRegistry.ActionsDict[action];
 
             if (inputTextArray.Length < playerAction.minInputCount)
@@ -103,7 +97,11 @@ public class PlayerInputHandler : MonoBehaviour
             }
             else
             {
-                playerAction.Execute(inputTextArray);
+                playerAction.Execute(new ActionInput
+                {
+                    actionTaken = action,
+                    mainClause = inputTextArray.Skip(1).ToList()
+                });
             }
         }
         else
@@ -123,11 +121,9 @@ public class PlayerInputHandler : MonoBehaviour
     private string NormalizeInput(string input)
     {
         string normalized = input.ToLower().Trim();
-        normalized = Regex.Replace(normalized, @"\b(a|an|the)\b", "").Trim();
-        normalized = normalized.Replace("'s ", "").Replace("  ", " ");
+        normalized = Regex.Replace(normalized, @"\b('s)\b", "").Replace("  ", " ").Trim();
         return normalized;
     }
-
     private void NavigateInputHistory(int direction)
     {
         if (inputHistory.Count == 0 || (currentHistoryIndex == -1 && direction == 1)) return;

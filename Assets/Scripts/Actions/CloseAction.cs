@@ -6,22 +6,15 @@ public class CloseAction : IPlayerAction
     public string tooFewMessage { get; private set; } = "What are you trying to close?";
     public string tooManyMessage { get; private set; } = "Try the following: close [target]";
     public int minInputCount { get; private set; } = 2;
-    public int maxInputCount { get; private set; } = 2;
+    public int maxInputCount { get; private set; } = 3;
     string IPlayerAction.actionReferenceName { get; } = ActionConstants.ACTION_CLOSE;
 
-    void IPlayerAction.Execute(string[] inputTextArray)
+    void IPlayerAction.Execute(ActionInput actionInput)
     {
-        Player player = WorldState.GetInstance().player;
-        List<IItem> roomItems = player.currentLocation.roomItems;
+        List<ContainerBase> roomContainers = ActionUtil.FindContainersInRoom(WorldState.GetInstance().player.currentLocation, actionInput.mainClause);
 
-        List<IContainer> roomContainers = roomItems.OfType<IContainer>().ToList();
-
-        string target = inputTextArray[1];
-
-        List<IContainer> containers = ActionUtil.FindItemsFieldContainsString(roomContainers, item => item.referenceName, target);
-
-        ActionUtil.MatchZeroOneAndMany<IContainer>(
-            containers,
+        ActionUtil.MatchZeroOneAndMany(
+            roomContainers,
             () => StoryTextHandler.invokeUpdateStoryDisplay("You can't close that"),
             container =>
             {

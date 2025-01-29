@@ -6,7 +6,7 @@ public class LookAction : IPlayerAction
     public int maxInputCount { get; private set; } = 1;
     string IPlayerAction.actionReferenceName { get; } = ActionConstants.ACTION_LOOK;
 
-    void IPlayerAction.Execute(string[] inputTextArray)
+    void IPlayerAction.Execute(ActionInput actionInput)
     {
         WorldState.GetInstance().player.currentLocation.DisplayRoomStoryText();
     }
