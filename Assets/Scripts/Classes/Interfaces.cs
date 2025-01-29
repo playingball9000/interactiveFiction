@@ -10,7 +10,9 @@ public interface IClothing : IExaminable, IItem
 public interface IExaminable
 {
     string referenceName { get; set; }
+    string adjective { get; set; }
     string description { get; set; }
+    string GetDisplayName();
     string GetDescription();
 }
 
@@ -28,20 +30,27 @@ public interface IPlayerAction
     public string tooManyMessage { get; }
     public int minInputCount { get; }
     public int maxInputCount { get; }
-    public abstract void Execute(string[] inputTextArray);
+    public abstract void Execute(ActionInput actionInput);
 }
 
-public interface IContainer : IExaminable, IItem
+public interface IStorage
 {
-    bool isLocked { get; set; }
-    bool isOpen { get; set; }
     List<IItem> contents { get; set; }
-
 
     void AddItem(IItem item);
     void RemoveItem(IItem item);
     bool ContainsItem(IItem item);
     List<IItem> GetContents();
     string ContentsToString();
+    bool isAccessible();
 }
 
+public interface ILockable
+{
+    bool isLocked { get; set; }
+}
+
+public interface IOpenable
+{
+    bool isOpen { get; set; }
+}

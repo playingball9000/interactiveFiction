@@ -9,26 +9,21 @@ public class Room
 
     public List<Exit> exits = new();
     public List<NPC> npcs = new();
-    public List<IItem> roomItems = new();
+    public RoomItems roomItems = new();
     public List<IExaminable> roomScenery = new();
 
     public List<string> GetRoomInteractionDescriptions()
     {
         List<string> interactionDescriptionsInRoom = new();
 
-
-        if (npcs?.Any() == true)
+        if (npcs.Any())
         {
-            List<string> npcNames = npcs.Select(npc => npc.referenceName).ToList();
+            List<string> npcNames = npcs.Select(npc => npc.GetDisplayName()).ToList();
             interactionDescriptionsInRoom.Add("The following people are here: " + StringUtil.CreateCommaSeparatedString(npcNames) + "\n");
         }
 
-        if (roomItems?.Any() == true)
-        {
-            List<string> itemNames = roomItems.Select(item => item.referenceName).ToList();
-            interactionDescriptionsInRoom.Add("Items in room: " + StringUtil.CreateCommaSeparatedString(itemNames) + "\n");
+        interactionDescriptionsInRoom.Add(roomItems.ContentsToString());
 
-        }
         foreach (Exit exit in exits)
         {
             interactionDescriptionsInRoom.Add(exit.exitDescription);
@@ -39,11 +34,11 @@ public class Room
     public List<IExaminable> GetExaminableThings()
     {
         List<IExaminable> examinableThings = npcs.ToList<IExaminable>();
-        examinableThings.AddRange(roomItems.ToList<IExaminable>());
+        examinableThings.AddRange(roomItems.contents.ToList<IExaminable>());
         examinableThings.AddRange(roomScenery);
 
-        examinableThings.AddRange(roomItems.OfType<IContainer>()
-                                    .Where(container => container.isOpen)
+        examinableThings.AddRange(roomItems.contents.OfType<ContainerBase>()
+                                    .Where(container => container.isAccessible())
                                     .SelectMany(openContainer => openContainer.contents)
                                     .ToList());
 
@@ -67,28 +62,35 @@ public class Room
     {
         List<Fact> roomFacts = new();
         npcs.ForEach(npc => roomFacts.Add(new Fact { key = RuleConstants.KEY_IN_ROOM_NPC, value = npc.referenceName }));
-        roomItems.ForEach(item => roomFacts.Add(new Fact { key = RuleConstants.KEY_IN_ROOM_ITEM, value = item.referenceName }));
+        roomItems.contents.ForEach(item => roomFacts.Add(new Fact { key = RuleConstants.KEY_IN_ROOM_ITEM, value = item.referenceName }));
 
         return roomFacts;
     }
 
     public void RemoveItem(IItem item)
     {
-        if (roomItems.Contains(item))
-        {
-            roomItems.Remove(item);
-        }
+        roomItems.RemoveItem(item);
     }
 
     public void AddItem(IItem item)
     {
-        roomItems.Add(item);
+        roomItems.AddItem(item);
+    }
+
+    public List<IItem> GetRoomItems()
+    {
+        return roomItems.contents;
+    }
+
+    public List<ContainerBase> GetRoomContainers()
+    {
+        return roomItems.contents.OfType<ContainerBase>().ToList();
     }
 
     public override string ToString()
     {
         string npcNames = StringUtil.CreateCommaSeparatedString(npcs.Select(npc => npc.referenceName).ToList());
-        string itemNames = StringUtil.CreateCommaSeparatedString(roomItems.Select(item => item.referenceName).ToList());
+        string itemNames = StringUtil.CreateCommaSeparatedString(roomItems.contents.Select(item => item.referenceName).ToList());
         string exitsPaths = StringUtil.CreateCommaSeparatedString(exits.Select(ex => ex.ToString()).ToList());
 
         string toString = $@"

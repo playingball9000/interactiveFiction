@@ -7,41 +7,38 @@ public class Player
     public string playerName { get; set; }
     public string description { get; set; }
     public Room currentLocation { get; set; }
-    public List<IItem> inventory = new();
+    public Inventory inventory = new();
     List<IClothing> clothes { get; set; }
 
     public Memory playerMemory { get; set; } = new Memory();
 
     public void AddToInventory(IItem item)
     {
-        inventory.Add(item);
+        inventory.AddItem(item);
     }
 
     public void RemoveFromInventory(IItem item)
     {
-        if (inventory.Contains(item))
+        if (inventory.ContainsItem(item))
         {
-            inventory.Remove(item);
+            inventory.RemoveItem(item);
         }
     }
 
     public string GetInventoryString()
     {
-        if (inventory.Any() == true)
-        {
-            List<string> itemNames = inventory.Select(item => item.referenceName).ToList();
-            return "Inventory:\n - " + string.Join("\n - ", itemNames);
-        }
-        else
-        {
-            return "";
-        }
+        return inventory.ContentsToString();
+    }
+
+    public List<IItem> GetInventory()
+    {
+        return inventory.contents;
     }
 
     public List<Fact> GetPlayerFacts()
     {
         List<Fact> playerFacts = new();
-        playerFacts.AddRange(inventory.Select(item => new Fact { key = RuleConstants.KEY_IN_INVENTORY, value = item.referenceName }).ToList());
+        playerFacts.AddRange(inventory.contents.Select(item => new Fact { key = RuleConstants.KEY_IN_INVENTORY, value = item.referenceName }).ToList());
         playerFacts.AddRange(playerMemory.GetMemoryFacts());
         return playerFacts;
     }

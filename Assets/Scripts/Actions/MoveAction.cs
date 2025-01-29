@@ -8,9 +8,9 @@ public class MoveAction : IPlayerAction
     // Move is just the direction you are moving in, No ref action name.
     string IPlayerAction.actionReferenceName { get; }
 
-    void IPlayerAction.Execute(string[] inputTextArray)
+    void IPlayerAction.Execute(ActionInput actionInput)
     {
-        Exit exit = WorldState.GetInstance().player.currentLocation.exits.Find(e => e.exitDirection.ToString() == inputTextArray[0]);
+        Exit exit = WorldState.GetInstance().player.currentLocation.exits.Find(e => e.exitDirection.ToString() == actionInput.actionTaken);
         if (exit != null)
         {
             QueryRunner.RunMoveFacts(WorldState.GetInstance().player.currentLocation);

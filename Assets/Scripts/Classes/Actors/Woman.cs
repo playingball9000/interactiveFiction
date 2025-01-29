@@ -9,6 +9,7 @@ public class Woman : NPC
     public List<IClothing> clothes { get; set; } = new List<IClothing>();
     public string referenceName { get; set; }
     public string description { get; set; }
+    public string adjective { get; set; } = "";
 
     public Memory memory { get; set; }
 
@@ -36,5 +37,10 @@ public class Woman : NPC
         }
 
         return false;
+    }
+
+    public string GetDisplayName()
+    {
+        return string.IsNullOrEmpty(adjective) ? referenceName : adjective + " " + referenceName;
     }
 }

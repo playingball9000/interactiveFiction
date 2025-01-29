@@ -2,11 +2,11 @@ using System.Collections.Generic;
 using System.Linq;
 
 [System.Serializable]
-public class ContainerBase : IContainer
+public class ContainerBase : IStorage, IItem, IOpenable, IExaminable
 {
     public string referenceName { get; set; }
     public string description { get; set; }
-    public bool isLocked { get; set; } //TODO: I could probably create a lock class for different types of locks. Then replace this with "if lock exists"
+    public string adjective { get; set; } = "";
     public bool isOpen { get; set; }
     public bool isGettable { get; set; }
     // This is used for isGettable = false to display message
@@ -36,7 +36,6 @@ public class ContainerBase : IContainer
         else
         {
             fullDescription += "\nIt is closed.";
-            fullDescription += isLocked ? " It is locked." : "";
         }
 
         return fullDescription;
@@ -49,7 +48,7 @@ public class ContainerBase : IContainer
 
     public string ContentsToString()
     {
-        List<string> itemList = contents.Select(c => c.referenceName).ToList();
+        List<string> itemList = contents.Select(c => c.GetDisplayName()).ToList();
         return contents.Any() ? StringUtil.CreateCommaSeparatedString(itemList) : "empty";
     }
 
@@ -61,8 +60,23 @@ public class ContainerBase : IContainer
         }
     }
 
+    public string GetDisplayName()
+    {
+        return string.IsNullOrEmpty(adjective) ? referenceName : adjective + " " + referenceName;
+    }
+
+    public bool isAccessible()
+    {
+        return isOpen;
+    }
+
     public override string ToString()
     {
-        return referenceName;
+        string toString = $@"
+            GetDisplayName: {GetDisplayName()}
+            isAccessible: {isAccessible()}
+            {ContentsToString()}
+";
+        return toString;
     }
 }

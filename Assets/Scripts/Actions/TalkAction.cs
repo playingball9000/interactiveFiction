@@ -9,14 +9,12 @@ public class TalkAction : IPlayerAction
     public int maxInputCount { get; private set; } = 3;
     string IPlayerAction.actionReferenceName { get; } = ActionConstants.ACTION_TALK;
 
-    void IPlayerAction.Execute(string[] inputTextArray)
+    void IPlayerAction.Execute(ActionInput actionInput)
     {
-        string target = inputTextArray.Length == 2 ? inputTextArray[1] : (inputTextArray.Length == 3 && inputTextArray[1] == "to") ? inputTextArray[2] : null;
+        List<IExaminable> npcs = ActionUtil.ProcessMainClauseFromEnd(actionInput.mainClause, WorldState.GetInstance().player.currentLocation.npcs.Cast<IExaminable>().ToList());
 
-        List<NPC> npcs = ActionUtil.FindItemsFieldContainsString(WorldState.GetInstance().player.currentLocation.npcs, npc => npc.referenceName, target);
-
-        ActionUtil.MatchZeroOneAndMany<NPC>(
-            npcs,
+        ActionUtil.MatchZeroOneAndMany(
+            npcs.Cast<NPC>().ToList(),
             () => StoryTextHandler.invokeUpdateStoryDisplay("You can't talk to that"),
             npc =>
             {

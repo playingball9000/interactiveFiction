@@ -20,7 +20,7 @@ public static class LoggingUtil
         }
     }
 
-    public static void LogList<T>(List<T> objects, bool condition = true)
+    public static void LogList<T>(List<T> objects, string header = "", bool condition = true)
     {
         if (condition)
         {
@@ -30,29 +30,9 @@ public static class LoggingUtil
                 return;
             }
 
-            UnityEngine.Debug.Log(string.Join(", ", objects));
+            UnityEngine.Debug.Log(header + string.Join(", ", objects));
         }
     }
 
-    // Probably should just implement toString on everything and use that instead of fieldName
-    [Conditional("DEVELOPMENT_BUILD"), Conditional("UNITY_EDITOR")]
-    public static void LogList<T>(List<T> objects, string fieldName, bool condition = true)
-    {
-        if (condition)
-        {
-            if (objects == null || objects.Count == 0)
-                return;
-
-            PropertyInfo property = typeof(T).GetProperty(fieldName);
-            if (property == null)
-                throw new ArgumentException($"Field '{fieldName}' does not exist on type '{typeof(T).Name}'.");
-
-            string typeName = typeof(T).Name;
-            var fieldValues = objects.Select(obj => property.GetValue(obj)?.ToString()).ToList();
-            string result = StringUtil.CreateCommaSeparatedString(fieldValues);
-            string log = $"Type: {typeName}, Field: {fieldName}, Values: {result}";
-            UnityEngine.Debug.Log(log);
-        }
-    }
 
 }

@@ -7,7 +7,7 @@ public class InventoryAction : IPlayerAction
 
     string IPlayerAction.actionReferenceName { get; } = ActionConstants.ACTION_INVENTORY;
 
-    void IPlayerAction.Execute(string[] inputTextArray)
+    void IPlayerAction.Execute(ActionInput actionInput)
     {
         string inventoryString = WorldState.GetInstance().player.GetInventoryString();
         if (inventoryString.Length > 0)

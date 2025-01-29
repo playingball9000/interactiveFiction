@@ -6,17 +6,15 @@ public class DropAction : IPlayerAction
     public string tooFewMessage { get; private set; } = "What are you trying to drop?";
     public string tooManyMessage { get; private set; } = "Try the following: drop [target]";
     public int minInputCount { get; private set; } = 2;
-    public int maxInputCount { get; private set; } = 2;
+    public int maxInputCount { get; private set; } = 3;
     string IPlayerAction.actionReferenceName { get; } = ActionConstants.ACTION_DROP;
 
-    void IPlayerAction.Execute(string[] inputTextArray)
+    void IPlayerAction.Execute(ActionInput actionInput)
     {
-        string target = inputTextArray[1];
+        List<IExaminable> items = ActionUtil.ProcessMainClauseFromEnd(actionInput.mainClause, WorldState.GetInstance().player.GetInventory().Cast<IExaminable>().ToList());
 
-        List<IItem> items = ActionUtil.FindItemsFieldContainsString(WorldState.GetInstance().player.inventory, item => item.referenceName, target);
-
-        ActionUtil.MatchZeroOneAndMany<IItem>(
-            items,
+        ActionUtil.MatchZeroOneAndMany(
+            items.Cast<IItem>().ToList(),
             () => StoryTextHandler.invokeUpdateStoryDisplay("You can't drop that"),
             item =>
             {
