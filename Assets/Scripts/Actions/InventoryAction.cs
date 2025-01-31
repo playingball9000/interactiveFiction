@@ -10,13 +10,7 @@ public class InventoryAction : IPlayerAction
     void IPlayerAction.Execute(ActionInput actionInput)
     {
         string inventoryString = WorldState.GetInstance().player.GetInventoryString();
-        if (inventoryString.Length > 0)
-        {
-            StoryTextHandler.invokeUpdateStoryDisplay(inventoryString);
-        }
-        else
-        {
-            StoryTextHandler.invokeUpdateStoryDisplay("You have nothing in your inventory");
-        }
+        string relationsString = WorldState.GetInstance().player.GetRelationshipsToString();
+        StoryTextHandler.invokeUpdateStoryDisplay(inventoryString + "\n\n" + relationsString);
     }
 }

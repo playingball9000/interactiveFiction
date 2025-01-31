@@ -13,12 +13,14 @@ public class GetAction : IPlayerAction
     {
         Player player = WorldState.GetInstance().player;
 
-        List<IStorage> storage = new List<IStorage>
+        List<IStorage> storages = new List<IStorage>
         {
             player.currentLocation.roomItems
         };
-        storage.AddRange(player.currentLocation.GetRoomContainers());
-        var (containerHoldingItem, items) = ActionUtil.FindItemsInAccessibleStorages(storage, actionInput.mainClause);
+        storages.AddRange(player.currentLocation.GetRoomContainers());
+
+        var (containerHoldingItem, items) = ActionUtil.FindItemsInAccessibleStorages(storages, actionInput.mainClause);
+
         ActionUtil.MatchZeroOneAndMany(
             items,
             () => StoryTextHandler.invokeUpdateStoryDisplay("You can't get that"),

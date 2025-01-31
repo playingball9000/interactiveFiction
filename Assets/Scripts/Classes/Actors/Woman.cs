@@ -16,7 +16,7 @@ public class Woman : NPC
     public string GetDescription()
     {
 
-        string fullDescription = $@"{this.description}";
+        string fullDescription = $@"{description}";
 
         if (clothes.Any() == true)
         {
@@ -31,8 +31,14 @@ public class Woman : NPC
     {
         if (giftedItem.referenceName == "book")
         {
-            StoryTextHandler.invokeUpdateStoryDisplay("Thank you, but no thanks.");
-            this.currentLocation.AddItem(giftedItem);
+            StoryTextHandler.invokeUpdateStoryDisplay("The woman frowns. 'Thank you, but no thanks.' and puts it on the ground.");
+            currentLocation.AddItem(giftedItem);
+            return true;
+        }
+        else if (giftedItem.referenceName == "bar")
+        {
+            StoryTextHandler.invokeUpdateStoryDisplay("'Oh I love chocolate!' the woman exclaims. (+100)");
+            WorldState.GetInstance().player.Relationships[referenceName].points += 100;
             return true;
         }
 

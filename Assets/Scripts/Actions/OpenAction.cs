@@ -28,8 +28,6 @@ public class OpenAction : IPlayerAction
                 // }
                 else
                 {
-                    // TODO: Might be nice to have custom open text for each container
-
                     StoryTextHandler.invokeUpdateStoryDisplay("You open " + container.referenceName + "\nContents: " + container.ContentsToString());
                     container.isOpen = true;
                 }

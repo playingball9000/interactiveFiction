@@ -19,10 +19,16 @@ public class PutAction : IPlayerAction
             player.currentLocation.roomItems,
             player.inventory
         };
+        storages.AddRange(player.currentLocation.GetRoomContainers());
 
         var (containerHoldingItem, items) = ActionUtil.FindItemsInAccessibleStorages(storages, actionInput.mainClause);
-        items = items.Where(i => i.isGettable == true).ToList();
-        //TODO: Check open containers cuz you can move from one container to another
+
+        // Not gettable means not puttable. Also can't put containers in other containers for now.
+        items = items
+            .Where(i => i.isGettable == true)
+            .Where(i => i is not ContainerBase)
+            .ToList();
+
         ActionUtil.MatchZeroOneAndMany(
             items,
             () => StoryTextHandler.invokeUpdateStoryDisplay("You can't put that"),

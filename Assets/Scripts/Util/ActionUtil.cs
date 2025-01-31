@@ -116,6 +116,7 @@ public static class ActionUtil
         List<IExaminable> openContainers = room.GetRoomItems().OfType<ContainerBase>()
             .Cast<IExaminable>()
             .ToList();
+        // Searches from end becuse you "put stuff in x"
         List<IExaminable> pm = ProcessMainClauseFromEnd(mainClause, openContainers);
         return pm.Cast<ContainerBase>().ToList();
     }
@@ -179,7 +180,7 @@ public static class ActionUtil
         int processingCount = 1;
         while (mainClause.Count > 0 && processingCount < 3)
         {
-            // Process the last element in the list
+            // Process the first element in the list
             string word = DequeueFirstElement(mainClause);
 
             if (processingCount == 1)
