@@ -32,6 +32,8 @@ public class ExamineAction : IPlayerAction
         Get previous word, check adjectives list for match
         if still ambiguous, check npc list for match, then item list for match
         and then check npc adj finally
+
+        i can probably modify ProcessMainClauseFromEnd() to take in # of times to process. mostly 2, but this is 4 or until hte mainclause runs out
      * 
      */
     void IPlayerAction.Execute(ActionInput actionInput)
@@ -41,35 +43,11 @@ public class ExamineAction : IPlayerAction
 
         List<IExaminable> pm = ActionUtil.ProcessMainClauseFromEnd(actionInput.mainClause, examinables);
 
-        ActionUtil.MatchZeroOneAndMany<IExaminable>(
+        ActionUtil.MatchZeroOneAndMany(
              pm,
              () => StoryTextHandler.invokeUpdateStoryDisplay(CANT_ACTION_MESSAGE),
              thing => StoryTextHandler.invokeUpdateStoryDisplay(thing.GetDescription()),
              things => StoryTextHandler.invokeUpdateStoryDisplay("Are you trying to examine " + string.Join(" or ", things.Select(thing => thing.GetDisplayName())))
          );
-
-
-        // else if (actionInput.mainClause.Count == 2)
-        // {
-        //     string item = actionInput.mainClause[1];
-        //     List<NPC> matchedNpcsInRoom = ActionUtil.FindItemsFieldContainsString(WorldState.GetInstance().player.currentLocation.npcs, npc => npc.referenceName, target);
-
-        //     if (!matchedNpcsInRoom.Any())
-        //     {
-        //         StoryTextHandler.invokeUpdateStoryDisplay(CANT_ACTION_MESSAGE);
-        //     }
-        //     else if (matchedNpcsInRoom.Count >= 1)
-        //     {
-        //         List<IClothing> listOfAllClothes = matchedNpcsInRoom.SelectMany(npc => npc.clothes).ToList();
-        //         List<IExaminable> potentialMatches = ActionUtil.FindItemsFieldContainsString(listOfAllClothes, clothingItem => clothingItem.referenceName, item).ToList<IExaminable>();
-        //         ActionUtil.MatchZeroOneAndMany<IExaminable>(
-        //             potentialMatches,
-        //             () => StoryTextHandler.invokeUpdateStoryDisplay(CANT_ACTION_MESSAGE),
-        //             // TODO: If i want complex dynamic reactions, i probably need to use the rule engine here
-        //             thing => StoryTextHandler.invokeUpdateStoryDisplay(thing.GetDescription()),
-        //             things => StoryTextHandler.invokeUpdateStoryDisplay("Are you trying to examine " + string.Join(" or ", things.Select(thing => thing.referenceName)))
-        //         );
-        //     }
-        // }
     }
 }

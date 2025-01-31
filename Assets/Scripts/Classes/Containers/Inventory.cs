@@ -26,11 +26,11 @@ public class Inventory : IStorage
         if (contents.Any() == true)
         {
             List<string> itemNames = contents.Select(item => item.GetDisplayName()).ToList();
-            return "Inventory:\n - " + string.Join("\n - ", itemNames);
+            return "=== Inventory ===\n - " + string.Join("\n - ", itemNames);
         }
         else
         {
-            return "";
+            return "Your inventory is empty";
         }
     }
 

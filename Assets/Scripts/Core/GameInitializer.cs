@@ -110,7 +110,19 @@ public class GameInitializer : MonoBehaviour
             referenceName = "bag"
         };
 
+        ContainerBase bag2 = new()
+        {
+            contents = new List<IItem>(),
+            description = "A sleek looking back pack. There is a hole in the bottom.",
+            adjective = "back",
+            isGettable = false,
+            isOpen = true,
+            pickUpNarration = "This doesn't belong to you.",
+            referenceName = "pack"
+        };
+
         trainCarTwo.roomItems.AddItem(bag);
+        trainCarTwo.roomItems.AddItem(bag2);
         trainCarTwo.roomItems.AddItem(new ItemBase
         {
             referenceName = "bar",
@@ -119,6 +131,7 @@ public class GameInitializer : MonoBehaviour
             isGettable = true,
         });
 
+        player.Relationships.Add(woman.referenceName, new Relationship { points = 0 });
 
         WorldState.GetInstance().player = player;
 
