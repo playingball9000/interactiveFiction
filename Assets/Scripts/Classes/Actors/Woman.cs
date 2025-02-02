@@ -5,6 +5,7 @@ using System.Linq;
 public class Woman : NPC
 {
     public string dialogueFile { get; set; }
+    public string internalCode { get; set; }
     public Room currentLocation { get; set; }
     public List<IClothing> clothes { get; set; } = new List<IClothing>();
     public string referenceName { get; set; }
@@ -38,7 +39,7 @@ public class Woman : NPC
         else if (giftedItem.referenceName == "bar")
         {
             StoryTextHandler.invokeUpdateStoryDisplay("'Oh I love chocolate!' the woman exclaims. (+100)");
-            WorldState.GetInstance().player.Relationships[referenceName].points += 100;
+            WorldState.GetInstance().player.relationships[referenceName].points += 100;
             return true;
         }
 

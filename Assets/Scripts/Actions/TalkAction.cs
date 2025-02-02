@@ -18,6 +18,7 @@ public class TalkAction : IPlayerAction
             () => StoryTextHandler.invokeUpdateStoryDisplay("You can't talk to that"),
             npc =>
             {
+                StoryTextHandler.invokeUpdateStoryDisplay("You strike up a conversation...");
                 DialogueParser.invokeStartDialogue(npc);
             },
             npcs => StoryTextHandler.invokeUpdateStoryDisplay(

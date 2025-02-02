@@ -44,4 +44,10 @@ public static class Criterion
         Fact fact = FindFact(facts, key);
         return fact != null && !fact.value.Equals(value);
     }
+
+    public static bool FactDoesNotExist(IEnumerable<Fact> facts, string key, object value)
+    {
+        Fact fact = FindFact(facts, key);
+        return fact == null;
+    }
 }

@@ -11,7 +11,7 @@ public class Player
     List<IClothing> clothes { get; set; }
 
     public Memory playerMemory { get; set; } = new Memory();
-    public Dictionary<string, Relationship> Relationships { get; set; } = new Dictionary<string, Relationship>();
+    public Dictionary<string, Relationship> relationships { get; set; } = new Dictionary<string, Relationship>();
 
     public void AddToInventory(IItem item)
     {
@@ -38,16 +38,18 @@ public class Player
 
     public List<Fact> GetPlayerFacts()
     {
-        List<Fact> playerFacts = new();
+        List<Fact> playerFacts = new()
+            { new Fact { key = RuleConstants.KEY_CURRENT_ROOM, value = currentLocation.internalCode }};
         playerFacts.AddRange(inventory.contents.Select(item => new Fact { key = RuleConstants.KEY_IN_INVENTORY, value = item.referenceName }).ToList());
         playerFacts.AddRange(playerMemory.GetMemoryFacts());
+        playerFacts.AddRange(relationships.Select(kvp => new Fact { key = kvp.Key, value = kvp.Value.points }).ToList());
         return playerFacts;
     }
 
 
     public string GetRelationshipsToString()
     {
-        var formattedStrings = Relationships
+        var formattedStrings = relationships
             .Select(kvp => $"{kvp.Key}: {kvp.Value.points}")
             .ToList();
         return "=== Relationship Status ===\n - " + string.Join("\n - ", formattedStrings);

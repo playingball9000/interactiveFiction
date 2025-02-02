@@ -4,8 +4,9 @@ using System.Linq;
 [System.Serializable]
 public class Room
 {
-    public string description;
     public string roomName;
+    public string description;
+    public string internalCode { get; set; }
 
     public List<Exit> exits = new();
     public List<NPC> npcs = new();
@@ -19,10 +20,12 @@ public class Room
         if (npcs.Any())
         {
             List<string> npcNames = npcs.Select(npc => npc.GetDisplayName()).ToList();
-            interactionDescriptionsInRoom.Add("The following people are here: " + StringUtil.CreateCommaSeparatedString(npcNames) + "\n");
+            interactionDescriptionsInRoom.Add("The following people are here: " + TmpTextTagger.Color(StringUtil.CreateCommaSeparatedString(npcNames), UiConstants.TEXT_COLOR_STORY_NPC));
         }
-
-        interactionDescriptionsInRoom.Add(roomItems.ContentsToString());
+        if (roomItems.contents.Any())
+        {
+            interactionDescriptionsInRoom.Add(roomItems.ContentsToString());
+        }
 
         foreach (Exit exit in exits)
         {
@@ -49,10 +52,10 @@ public class Room
     {
         List<string> interactionDescriptionsInRoom = GetRoomInteractionDescriptions();
 
-        string joinedInteractionDescriptions = string.Join("\n", interactionDescriptionsInRoom.ToArray());
+        string joinedInteractionDescriptions = TmpTextTagger.LineHeight("\n" + string.Join("\n", interactionDescriptionsInRoom.ToArray()), 160);
 
         string combinedText = TmpTextTagger.Bold(roomName) + "\n"
-            + description + "\n\n"
+            + description
             + joinedInteractionDescriptions;
 
         StoryTextHandler.invokeUpdateStoryDisplay(combinedText);
@@ -61,7 +64,7 @@ public class Room
     public List<Fact> GetRoomFacts()
     {
         List<Fact> roomFacts = new();
-        npcs.ForEach(npc => roomFacts.Add(new Fact { key = RuleConstants.KEY_IN_ROOM_NPC, value = npc.referenceName }));
+        npcs.ForEach(npc => roomFacts.Add(new Fact { key = RuleConstants.KEY_IN_ROOM_NPC, value = npc.internalCode }));
         roomItems.contents.ForEach(item => roomFacts.Add(new Fact { key = RuleConstants.KEY_IN_ROOM_ITEM, value = item.referenceName }));
 
         return roomFacts;

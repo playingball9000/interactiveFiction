@@ -7,6 +7,7 @@ public class ContainerBase : IStorage, IItem, IOpenable, IExaminable
     public string referenceName { get; set; }
     public string description { get; set; }
     public string adjective { get; set; } = "";
+    public string internalCode { get; set; }
     public bool isOpen { get; set; }
     public bool isGettable { get; set; }
     // This is used for isGettable = false to display message
