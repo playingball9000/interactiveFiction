@@ -19,6 +19,14 @@ public static class TmpTextTagger
     }
 
     /// <summary>
+    /// Wraps the given text in an line-height tag.
+    /// </summary>
+    public static string LineHeight(string text, int lineHeight)
+    {
+        return $"<line-height={lineHeight}%>{text}</line-height={lineHeight}%>";
+    }
+
+    /// <summary>
     /// Wraps the given text in a color tag.
     /// </summary>
     /// <param name="text">The text to color.</param>

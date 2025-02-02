@@ -2,6 +2,7 @@
 public class ItemBase : IItem
 {
     public string referenceName { get; set; }
+    public string internalCode { get; set; }
     public string description { get; set; }
     public string adjective { get; set; } = "";
     public bool isGettable { get; set; }

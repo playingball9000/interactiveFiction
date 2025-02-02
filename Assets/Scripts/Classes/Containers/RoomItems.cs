@@ -26,7 +26,7 @@ public class RoomItems : IStorage
         if (contents.Any())
         {
             List<string> itemNames = contents.Select(item => item.GetDisplayName()).ToList();
-            return "Items in room: " + StringUtil.CreateCommaSeparatedString(itemNames) + "\n";
+            return "Items in room: " + TmpTextTagger.Color(StringUtil.CreateCommaSeparatedString(itemNames), UiConstants.TEXT_COLOR_STORY_ITEM);
         }
         else
         {

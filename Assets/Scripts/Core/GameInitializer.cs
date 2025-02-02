@@ -9,13 +9,15 @@ public class GameInitializer : MonoBehaviour
     {
         Room trainCarTwo = new()
         {
-            roomName = "TrainCarTwo",
+            roomName = "A Spacious Train Car",
+            internalCode = "room_carTwo",
             description = "The train car is modestly lit, with rows of cushioned seats lining both sides of the narrow aisle. Overhead, luggage racks brim with suitcases and duffel bags, one precariously teetering at the edge.  At the far end of the car, a service trolley rests unattended, its surface cluttered with various items."
         };
 
         Room startingRoom = new()
         {
-            roomName = "StartingTrainCar",
+            roomName = "Comfy Train Car",
+            internalCode = "room_start",
             description = "You are sitting in the booth seats of a cozy train car, the rhythmic clatter of the wheels filling the air like a steady heartbeat. The large window beside you frames a rolling countryside. Overhead, a luggage rack runs the length of the car. A small stack of folded newspapers lays forlorn on a nearby seat. The air carries a faint scent of leather, paper, and coffee."
         };
 
@@ -37,25 +39,26 @@ public class GameInitializer : MonoBehaviour
         {
             playerName = "Player",
             description = "description",
-            currentLocation = trainCarTwo
+            currentLocation = startingRoom
         };
 
 
-        NPC woman = new Woman
+        NPC npc_kate = new Woman
         {
-            referenceName = "Woman",
-            adjective = "thin",
+            referenceName = "Kate",
+            internalCode = "npc_kate",
             description = @"The woman is striking in a casual way. Her her auburn hair falling in loose waves around her shoulders, framing a face that was both striking and sincere.  Her outfit was casual yet put-together fitted jeans, a maroon sweater that hugged her frame, and black ankle boots that looked both practical and stylish.",
             currentLocation = startingRoom,
             dialogueFile = "womanDialogue"
         };
 
-        startingRoom.npcs.Add(woman);
+        startingRoom.npcs.Add(npc_kate);
 
         startingRoom.roomItems.AddItem(new ItemBase
         {
             referenceName = "book",
             adjective = "old",
+            internalCode = "item_old_book",
             description = "An old book with a worn cover. Inside, someone has doodled a mustache on a portrait of a very serious-looking duke.",
             isGettable = true,
         });
@@ -63,18 +66,22 @@ public class GameInitializer : MonoBehaviour
         startingRoom.roomScenery.AddRange(new List<Scenery>() {
             new Scenery {
                 referenceName = "seats",
+                adjective = "booth",
                 description = "The cushioned seats sag with the wear of countless journeys. The once-vibrant fabric now bears the muted imprint of many travelers' rear ends."
             },
             new Scenery {
                 referenceName = "window",
+                adjective = "large",
                 description = "The window offers a sweeping view of fields and distant hills. A lone cow stands in the middle of a pasture, staring directly at the train. You wonder what it could be thinking about."
             },
             new Scenery {
                 referenceName = "rack",
+                adjective = "luggage",
                 description = "The overhead luggage rack lies empty. You could have put your bag there, but you didn't."
             },
             new Scenery {
                 referenceName = "newspapers",
+                adjective = "folded",
                 description = "A stack of what seems to be old Chinese newspapers... 'Chiang Kai Shek died'."
             }
             });
@@ -85,7 +92,13 @@ public class GameInitializer : MonoBehaviour
                 description = "More train seats, nothing you haven't seen a lifetime of."
             },
             new Scenery {
+                referenceName = "rack",
+                adjective = "luggage",
+                description = "You see a few bags, nothing of interest except the duffel bag."
+            },
+            new Scenery {
                 referenceName = "trolley",
+                adjective = "service",
                 description = "The service trolley is a battlefield of abandoned beverages. Half-empty coffee cups form a sad little army waiting for reinforcements. A crumpled napkin lies in defeat, stained with the remains of what was probably a chocolate muffin — a tragic end for a noble pastry."
             }
             });
@@ -94,6 +107,7 @@ public class GameInitializer : MonoBehaviour
         {
             referenceName = "quill",
             adjective = "feather",
+            internalCode = "item_feather_quill",
             description = "A simple feather quill with many possibilities.",
             isGettable = true,
             pickUpNarration = "You pick up the feather quill. Carefully as to not get ink on you."
@@ -114,11 +128,11 @@ public class GameInitializer : MonoBehaviour
         {
             contents = new List<IItem>(),
             description = "A sleek looking back pack. There is a hole in the bottom.",
+            referenceName = "pack",
             adjective = "back",
             isGettable = false,
             isOpen = true,
             pickUpNarration = "This doesn't belong to you.",
-            referenceName = "pack"
         };
 
         trainCarTwo.roomItems.AddItem(bag);
@@ -127,11 +141,12 @@ public class GameInitializer : MonoBehaviour
         {
             referenceName = "bar",
             adjective = "chocolate",
+            internalCode = "item_chocolate_bar",
             description = "The label boasts a 'Rich, Decadent' experience. The ingredient list suggests otherwise.",
             isGettable = true,
         });
 
-        player.Relationships.Add(woman.referenceName, new Relationship { points = 0 });
+        player.relationships.Add(npc_kate.internalCode, new Relationship { points = 0 });
 
         WorldState.GetInstance().player = player;
 
