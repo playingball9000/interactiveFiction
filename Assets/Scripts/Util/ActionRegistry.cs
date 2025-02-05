@@ -25,7 +25,7 @@ public class ActionRegistry
     private static KeyValuePair<string, IPlayerAction> CreateAction<T>() where T : IPlayerAction, new()
     {
         IPlayerAction action = new T();
-        return new KeyValuePair<string, IPlayerAction>(action.actionReferenceName, action);
+        return new KeyValuePair<string, IPlayerAction>(action.playerActionCode, action);
     }
 
     private static KeyValuePair<string, IPlayerAction>[] CreateMoveActions<T>() where T : IPlayerAction, new()

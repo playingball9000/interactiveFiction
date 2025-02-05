@@ -40,7 +40,7 @@ public class Player
     {
         List<Fact> playerFacts = new()
             { new Fact { key = RuleConstants.KEY_CURRENT_ROOM, value = currentLocation.internalCode }};
-        playerFacts.AddRange(inventory.contents.Select(item => new Fact { key = RuleConstants.KEY_IN_INVENTORY, value = item.referenceName }).ToList());
+        playerFacts.AddRange(inventory.contents.Select(item => new Fact { key = RuleConstants.KEY_IN_INVENTORY, value = item.internalCode }).ToList());
         playerFacts.AddRange(playerMemory.GetMemoryFacts());
         playerFacts.AddRange(relationships.Select(kvp => new Fact { key = kvp.Key, value = kvp.Value.points }).ToList());
         return playerFacts;

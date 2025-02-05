@@ -7,7 +7,7 @@ public class GetAction : IPlayerAction
     public string tooManyMessage { get; private set; } = "Try the following: get [target]";
     public int minInputCount { get; private set; } = 2;
     public int maxInputCount { get; private set; } = 3;
-    string IPlayerAction.actionReferenceName { get; } = ActionConstants.ACTION_GET;
+    string IPlayerAction.playerActionCode { get; } = ActionConstants.ACTION_GET;
 
     void IPlayerAction.Execute(ActionInput actionInput)
     {

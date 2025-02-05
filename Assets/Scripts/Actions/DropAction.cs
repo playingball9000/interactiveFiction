@@ -7,7 +7,7 @@ public class DropAction : IPlayerAction
     public string tooManyMessage { get; private set; } = "Try the following: drop [target]";
     public int minInputCount { get; private set; } = 2;
     public int maxInputCount { get; private set; } = 3;
-    string IPlayerAction.actionReferenceName { get; } = ActionConstants.ACTION_DROP;
+    string IPlayerAction.playerActionCode { get; } = ActionConstants.ACTION_DROP;
 
     void IPlayerAction.Execute(ActionInput actionInput)
     {
@@ -18,12 +18,12 @@ public class DropAction : IPlayerAction
             () => StoryTextHandler.invokeUpdateStoryDisplay("You can't drop that"),
             item =>
             {
-                StoryTextHandler.invokeUpdateStoryDisplay("You drop " + item.referenceName);
+                StoryTextHandler.invokeUpdateStoryDisplay("You drop " + item.GetDisplayName());
                 WorldState.GetInstance().player.RemoveFromInventory(item);
                 WorldState.GetInstance().player.currentLocation.AddItem(item);
             },
             items => StoryTextHandler.invokeUpdateStoryDisplay(
-                "Are you trying to drop " + string.Join(" or ", items.Select(item => item.referenceName)))
+                "Are you trying to drop " + string.Join(" or ", items.Select(item => item.GetDisplayName())))
         );
     }
 }

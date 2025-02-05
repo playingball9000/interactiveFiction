@@ -39,7 +39,7 @@ public class Woman : NPC
         else if (giftedItem.referenceName == "bar")
         {
             StoryTextHandler.invokeUpdateStoryDisplay("'Oh I love chocolate!' the woman exclaims. (+100)");
-            WorldState.GetInstance().player.relationships[referenceName].points += 100;
+            WorldState.GetInstance().player.relationships[internalCode].points += 100;
             return true;
         }
 

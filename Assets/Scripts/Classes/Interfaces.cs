@@ -26,7 +26,7 @@ public interface IItem : IExaminable
 
 public interface IPlayerAction
 {
-    public string actionReferenceName { get; }
+    public string playerActionCode { get; }
     public string tooFewMessage { get; }
     public string tooManyMessage { get; }
     public int minInputCount { get; }

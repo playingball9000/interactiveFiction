@@ -7,7 +7,7 @@ public class CloseAction : IPlayerAction
     public string tooManyMessage { get; private set; } = "Try the following: close [target]";
     public int minInputCount { get; private set; } = 2;
     public int maxInputCount { get; private set; } = 3;
-    string IPlayerAction.actionReferenceName { get; } = ActionConstants.ACTION_CLOSE;
+    string IPlayerAction.playerActionCode { get; } = ActionConstants.ACTION_CLOSE;
 
     void IPlayerAction.Execute(ActionInput actionInput)
     {
@@ -21,7 +21,7 @@ public class CloseAction : IPlayerAction
                 if (container.isOpen)
                 {
                     // TODO: Might be nice to have custom close text for each container
-                    StoryTextHandler.invokeUpdateStoryDisplay("You close " + container.referenceName);
+                    StoryTextHandler.invokeUpdateStoryDisplay("You close " + container.GetDisplayName());
                     container.isOpen = false;
                 }
                 else
@@ -30,7 +30,7 @@ public class CloseAction : IPlayerAction
                 }
             },
             containers => StoryTextHandler.invokeUpdateStoryDisplay(
-                "Are you trying to close " + string.Join(" or ", containers.Select(item => item.referenceName)))
+                "Are you trying to close " + string.Join(" or ", containers.Select(item => item.GetDisplayName())))
         );
     }
 }
