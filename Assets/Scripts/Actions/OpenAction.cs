@@ -7,7 +7,7 @@ public class OpenAction : IPlayerAction
     public string tooManyMessage { get; private set; } = "Try the following: open [target]";
     public int minInputCount { get; private set; } = 2;
     public int maxInputCount { get; private set; } = 3;
-    string IPlayerAction.actionReferenceName { get; } = ActionConstants.ACTION_OPEN;
+    string IPlayerAction.playerActionCode { get; } = ActionConstants.ACTION_OPEN;
 
     void IPlayerAction.Execute(ActionInput actionInput)
     {
@@ -33,7 +33,7 @@ public class OpenAction : IPlayerAction
                 }
             },
             containers => StoryTextHandler.invokeUpdateStoryDisplay(
-                "Are you trying to open " + string.Join(" or ", containers.Select(item => item.referenceName)))
+                "Are you trying to open " + string.Join(" or ", containers.Select(item => item.GetDisplayName())))
         );
     }
 }

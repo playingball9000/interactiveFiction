@@ -6,7 +6,7 @@ public class MoveAction : IPlayerAction
     public int minInputCount { get; private set; } = 0;
     public int maxInputCount { get; private set; } = 2;
     // Move is just the direction you are moving in, No ref action name.
-    string IPlayerAction.actionReferenceName { get; }
+    string IPlayerAction.playerActionCode { get; }
 
     void IPlayerAction.Execute(ActionInput actionInput)
     {

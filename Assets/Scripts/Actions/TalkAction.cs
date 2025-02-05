@@ -7,7 +7,7 @@ public class TalkAction : IPlayerAction
     public string tooManyMessage { get; private set; } = "Try the following: talk [target]";
     public int minInputCount { get; private set; } = 2;
     public int maxInputCount { get; private set; } = 3;
-    string IPlayerAction.actionReferenceName { get; } = ActionConstants.ACTION_TALK;
+    string IPlayerAction.playerActionCode { get; } = ActionConstants.ACTION_TALK;
 
     void IPlayerAction.Execute(ActionInput actionInput)
     {
@@ -22,7 +22,7 @@ public class TalkAction : IPlayerAction
                 DialogueParser.invokeStartDialogue(npc);
             },
             npcs => StoryTextHandler.invokeUpdateStoryDisplay(
-                "Are you trying to talk to " + string.Join(" or ", npcs.Select(npc => npc.referenceName)))
+                "Are you trying to talk to " + string.Join(" or ", npcs.Select(npc => npc.GetDisplayName())))
         );
     }
 }

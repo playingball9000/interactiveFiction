@@ -7,7 +7,7 @@ public class GiveAction : IPlayerAction
     public string tooManyMessage { get; private set; } = "Try the following: give [item] [target]";
     public int minInputCount { get; private set; } = 3;
     public int maxInputCount { get; private set; } = 5;
-    string IPlayerAction.actionReferenceName { get; } = ActionConstants.ACTION_GIVE;
+    string IPlayerAction.playerActionCode { get; } = ActionConstants.ACTION_GIVE;
 
 
     //TODO: Should probably handle "give man the bar" phrasing as well
@@ -49,11 +49,11 @@ public class GiveAction : IPlayerAction
                         }
                     },
                     npcs => StoryTextHandler.invokeUpdateStoryDisplay(
-                        "Are you trying to give the item to " + string.Join(" or ", npcs.Select(npc => npc.referenceName)))
+                        "Are you trying to give the item to " + string.Join(" or ", npcs.Select(npc => npc.GetDisplayName())))
                 );
             },
             items => StoryTextHandler.invokeUpdateStoryDisplay(
-                "Are you trying to give " + string.Join(" or ", items.Select(item => item.referenceName)))
+                "Are you trying to give " + string.Join(" or ", items.Select(item => item.GetDisplayName())))
         );
 
 

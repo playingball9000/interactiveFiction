@@ -5,7 +5,7 @@ public class InventoryAction : IPlayerAction
     public int minInputCount { get; private set; } = 0;
     public int maxInputCount { get; private set; } = 1;
 
-    string IPlayerAction.actionReferenceName { get; } = ActionConstants.ACTION_INVENTORY;
+    string IPlayerAction.playerActionCode { get; } = ActionConstants.ACTION_INVENTORY;
 
     void IPlayerAction.Execute(ActionInput actionInput)
     {
