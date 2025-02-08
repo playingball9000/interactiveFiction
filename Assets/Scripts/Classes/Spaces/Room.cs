@@ -26,12 +26,19 @@ public class Room
         {
             interactionDescriptionsInRoom.Add(roomItems.ContentsToString());
         }
+        return interactionDescriptionsInRoom;
+    }
+
+
+    public string GetExitDescriptions()
+    {
+        List<string> otherRooms = new();
 
         foreach (Exit exit in exits)
         {
-            interactionDescriptionsInRoom.Add(exit.exitDescription);
+            otherRooms.Add($"{exit.targetRoom.roomName} [{exit.exitDirection}]");
         }
-        return interactionDescriptionsInRoom;
+        return string.Join("\n", otherRooms.ToArray());
     }
 
     public List<IExaminable> GetExaminableThings()
@@ -52,11 +59,16 @@ public class Room
     {
         List<string> interactionDescriptionsInRoom = GetRoomInteractionDescriptions();
 
-        string joinedInteractionDescriptions = TmpTextTagger.LineHeight("\n" + string.Join("\n", interactionDescriptionsInRoom.ToArray()), 160);
+        string joinedInteractionDescriptions = "\n" +
+            (interactionDescriptionsInRoom.Any() ? (string.Join("\n", interactionDescriptionsInRoom.ToArray()) + "\n") : "");
+        joinedInteractionDescriptions = TmpTextTagger.LineHeight(joinedInteractionDescriptions, 160);
+
+        string exitDescription = GetExitDescriptions();
 
         string combinedText = TmpTextTagger.Bold(roomName) + "\n"
             + description
-            + joinedInteractionDescriptions;
+            + joinedInteractionDescriptions
+            + exitDescription;
 
         StoryTextHandler.invokeUpdateStoryDisplay(combinedText);
     }

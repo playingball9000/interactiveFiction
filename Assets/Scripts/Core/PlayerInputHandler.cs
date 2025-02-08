@@ -69,16 +69,18 @@ public class PlayerInputHandler : MonoBehaviour
         }
 
         AddToInputHistory(inputText);
-        inputText = NormalizeInput(inputText);
-
         // Updates the main story display with text
         StoryTextHandler.invokeUpdateStoryDisplay("> " + TmpTextTagger.Color(inputText, UiConstants.TEXT_COLOR_PLAYER_ACTION));
 
+        inputText = NormalizeInput(inputText);
+
         string[] inputTextArray = inputText.Split(' ');
+
+        inputTextArray = ParseEnterPhrases(inputTextArray);
 
         inputTextArray = inputTextArray.Where(word => !prepositions.Contains(word)).ToArray();
 
-        string action = ActionSynonyms.SynonymsDict.ContainsKey(inputTextArray[0]) ? ActionSynonyms.SynonymsDict[inputTextArray[0]] : null;
+        string action = ActionSynonyms.SynonymsDict.TryGetValue(inputTextArray[0], out string actionString) ? actionString : null;
 
         if (action != null)
         {
@@ -116,6 +118,27 @@ public class PlayerInputHandler : MonoBehaviour
     {
         UI_playerInputBox.ActivateInputField();
         UI_playerInputBox.text = "";
+    }
+
+    private string[] ParseEnterPhrases(string[] inputTextArray)
+    {
+        (string[] first, string[] second) enterPhrases =
+            (
+                new string[] { "go", "walk", "move", "step" },
+                new string[] { "in", "into" }
+            );
+
+        if (inputTextArray.Length >= 2)
+        {
+            bool firstMatches = enterPhrases.first.Contains(inputTextArray[0]);
+            bool secondMatches = enterPhrases.second.Contains(inputTextArray[1]);
+
+            if (firstMatches && secondMatches)
+            {
+                inputTextArray = new string[] { "enter" }.Concat(inputTextArray.Skip(2)).ToArray();
+            }
+        }
+        return inputTextArray;
     }
 
     private string NormalizeInput(string input)

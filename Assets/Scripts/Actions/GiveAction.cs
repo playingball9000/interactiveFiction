@@ -49,11 +49,11 @@ public class GiveAction : IPlayerAction
                         }
                     },
                     npcs => StoryTextHandler.invokeUpdateStoryDisplay(
-                        "Are you trying to give the item to " + string.Join(" or ", npcs.Select(npc => npc.GetDisplayName())))
+                        "Are you trying to give the item to " + StringUtil.CreateOrSeparatedString(npcs.Select(npc => npc.GetDisplayName())))
                 );
             },
             items => StoryTextHandler.invokeUpdateStoryDisplay(
-                "Are you trying to give " + string.Join(" or ", items.Select(item => item.GetDisplayName())))
+                "Are you trying to give " + StringUtil.CreateOrSeparatedString(items.Select(item => item.GetDisplayName())))
         );
 
 

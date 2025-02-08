@@ -75,3 +75,7 @@
 2. Query - List of facts representing the state (player, player memory, world, etc.)
 3. Criteria - A test for a Fact. ex. equals("in_inventory", "book")
 4. Rule - A list of criteria. When a query satisfies the rule, a corresponding action will be done.
+
+## Other
+
+1. Certain classes have an internalCode field. This is for use for referencing it in the code, for example in the rule engine as opposed what is displayed on the UI.

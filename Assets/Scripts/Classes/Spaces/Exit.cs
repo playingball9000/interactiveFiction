@@ -8,17 +8,23 @@ public class Exit
     public override string ToString()
     {
         string toString = $@"
-exitDirection: {exitDirection.ToString()}
-targetRoomName: {targetRoom.roomName}
-";
+            exitDirection: {exitDirection.ToString()}
+            targetRoomName: {targetRoom.roomName}
+            ";
         return toString;
     }
 }
 
 public enum ExitDirection
 {
-    north,
-    south,
-    east,
-    west
+    North,
+    Northwest,
+    Northeast,
+    South,
+    Southwest,
+    Southeast,
+    East,
+    West,
+    Enter
+
 }

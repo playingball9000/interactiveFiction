@@ -8,33 +8,10 @@ public class Player
     public string description { get; set; }
     public Room currentLocation { get; set; }
     public Inventory inventory = new();
-    List<IClothing> clothes { get; set; }
+    public List<IWearable> equipment { get; set; } = new();
 
     public Memory playerMemory { get; set; } = new Memory();
     public Dictionary<string, Relationship> relationships { get; set; } = new Dictionary<string, Relationship>();
-
-    public void AddToInventory(IItem item)
-    {
-        inventory.AddItem(item);
-    }
-
-    public void RemoveFromInventory(IItem item)
-    {
-        if (inventory.ContainsItem(item))
-        {
-            inventory.RemoveItem(item);
-        }
-    }
-
-    public string GetInventoryString()
-    {
-        return inventory.ContentsToString();
-    }
-
-    public List<IItem> GetInventory()
-    {
-        return inventory.contents;
-    }
 
     public List<Fact> GetPlayerFacts()
     {
@@ -46,13 +23,37 @@ public class Player
         return playerFacts;
     }
 
-
     public string GetRelationshipsToString()
     {
         var formattedStrings = relationships
             .Select(kvp => $"{kvp.Key}: {kvp.Value.points}")
             .ToList();
-        return "=== Relationship Status ===\n - " + string.Join("\n - ", formattedStrings);
+        return StringUtil.CreateBulletedListString("=== Relationship Status ===", formattedStrings);
+    }
+
+    public List<IItem> GetInventory()
+    {
+        return inventory.contents;
+    }
+
+    public void AddToInventory(IItem item)
+    {
+        inventory.AddItem(item);
+    }
+
+    public void AddToInventory(List<IItem> items)
+    {
+        inventory.AddRange(items);
+    }
+
+    public void RemoveFromInventory(IItem item)
+    {
+        inventory.RemoveItem(item);
+    }
+
+    public string GetInventoryString()
+    {
+        return inventory.ContentsToString();
     }
 
     public override string ToString()

@@ -3,6 +3,8 @@ using UnityEngine;
 /*
 Overall list of stuff I'm thinking about
 
+- Should I have a IHideable for stuff i don't want to immediately show
+- how to implement skill checks
 
 */
 

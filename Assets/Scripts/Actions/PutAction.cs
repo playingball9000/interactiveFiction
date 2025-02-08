@@ -46,11 +46,11 @@ public class PutAction : IPlayerAction
                         container.AddItem(item);
                     },
                     containers => StoryTextHandler.invokeUpdateStoryDisplay(
-                        "Are you trying to put in " + string.Join(" or ", containers.Select(item => item.GetDisplayName())))
+                        "Are you trying to put in " + StringUtil.CreateOrSeparatedString(containers.Select(item => item.GetDisplayName())))
                 );
             },
             items => StoryTextHandler.invokeUpdateStoryDisplay(
-                "Are you trying to put " + string.Join(" or ", items.Select(item => item.GetDisplayName())))
+                "Are you trying to put " + StringUtil.CreateOrSeparatedString(items.Select(item => item.GetDisplayName())))
         );
 
 

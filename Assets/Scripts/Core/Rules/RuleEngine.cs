@@ -11,8 +11,8 @@ public static class RuleEngine
     {
         rules.Add(new Rule()
             .AddCriteria(facts => Criterion.FactValueEquals(facts, RuleConstants.KEY_CONCEPT, RuleConstants.CONCEPT_ON_MOVE))
-            .AddCriteria(facts => Criterion.FactValueEquals(facts, RuleConstants.KEY_IN_INVENTORY, "item_old_book"))
-            .AddCriteria(facts => Criterion.FactValueEquals(facts, RuleConstants.KEY_IN_ROOM_NPC, "npc_kate"))
+            .AddCriteria(facts => Criterion.FactExists(facts, RuleConstants.KEY_IN_INVENTORY, "item_old_book"))
+            .AddCriteria(facts => Criterion.FactExists(facts, RuleConstants.KEY_IN_ROOM_NPC, "npc_kate"))
             .SetAction(facts =>
             {
                 StoryTextHandler.invokeUpdateStoryDisplay(

@@ -17,6 +17,7 @@ public class ActionRegistry
         CreateAction<OpenAction>(),
         CreateAction<CloseAction>(),
         CreateAction<PutAction>(),
+        CreateAction<EquipAction>(),
     }
     .Concat(CreateMoveActions<MoveAction>())
     .ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
@@ -33,14 +34,15 @@ public class ActionRegistry
         IPlayerAction moveAction = new T();
         KeyValuePair<string, IPlayerAction>[] keyValuePairs = new KeyValuePair<string, IPlayerAction>[]
         {
-            new("n", moveAction),
-            new("north", moveAction),
-            new("s", moveAction),
-            new("south", moveAction),
-            new("e", moveAction),
-            new("east", moveAction),
-            new("w", moveAction),
-            new("west", moveAction),
+            new(ExitDirection.North.ToString(), moveAction),
+            new(ExitDirection.Northeast.ToString(), moveAction),
+            new(ExitDirection.Northwest.ToString(), moveAction),
+            new(ExitDirection.South.ToString(), moveAction),
+            new(ExitDirection.Southeast.ToString(), moveAction),
+            new(ExitDirection.Southwest.ToString(), moveAction),
+            new(ExitDirection.East.ToString(), moveAction),
+            new(ExitDirection.West.ToString(), moveAction),
+            new(ExitDirection.Enter.ToString(), moveAction),
         };
         return keyValuePairs;
     }

@@ -2,13 +2,18 @@ using System.Collections.Generic;
 using System.Linq;
 
 [System.Serializable]
-public class RoomItems : IStorage
+public class Inventory : IStorage
 {
     public List<IItem> contents { get; set; } = new List<IItem>();
 
     public void AddItem(IItem item)
     {
         contents.Add(item);
+    }
+
+    public void AddRange(List<IItem> items)
+    {
+        contents.AddRange(items);
     }
 
     public bool ContainsItem(IItem item)
@@ -23,23 +28,20 @@ public class RoomItems : IStorage
 
     public string ContentsToString()
     {
-        if (contents.Any())
+        if (contents.Any() == true)
         {
             List<string> itemNames = contents.Select(item => item.GetDisplayName()).ToList();
-            return "Items in room: " + TmpTextTagger.Color(StringUtil.CreateCommaSeparatedString(itemNames), UiConstants.TEXT_COLOR_STORY_ITEM);
+            return StringUtil.CreateBulletedListString("=== Inventory ===", itemNames);
         }
         else
         {
-            return "";
+            return "Your inventory is empty";
         }
     }
 
     public void RemoveItem(IItem item)
     {
-        if (contents.Contains(item))
-        {
-            contents.Remove(item);
-        }
+        contents.Remove(item);
     }
 
     public bool isAccessible()

@@ -17,7 +17,7 @@ public class DialogueGraph
 
     public DialogueNode GetNode(string id)
     {
-        return nodes.ContainsKey(id) ? nodes[id] : null;
+        return nodes.TryGetValue(id, out DialogueNode dialogueNode) ? dialogueNode : null;
     }
 
     public void SetCurrentNode(string id)

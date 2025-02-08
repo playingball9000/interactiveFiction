@@ -21,16 +21,35 @@ public class GameInitializer : MonoBehaviour
             description = "You are sitting in the booth seats of a cozy train car, the rhythmic clatter of the wheels filling the air like a steady heartbeat. The large window beside you frames a rolling countryside. Overhead, a luggage rack runs the length of the car. A small stack of folded newspapers lays forlorn on a nearby seat. The air carries a faint scent of leather, paper, and coffee."
         };
 
+        Room startingRoom_berth = new()
+        {
+            roomName = "Room 100",
+            internalCode = "room_start_berth",
+            description = "You are in a compact sleeper berth. The space is just big enough for a narrow bed, a small storage compartment, and a dim overhead light casting a warm glow. The air is still, carrying the faint scent of fabric and metal. A thin door separates you from the rest of the hallway."
+        };
+
+        startingRoom_berth.exits.Add(new()
+        {
+            exitDirection = ExitDirection.Enter,
+            targetRoom = startingRoom,
+        });
+
         startingRoom.exits.Add(new()
         {
-            exitDirection = ExitDirection.north,
+            exitDirection = ExitDirection.Enter,
+            targetRoom = startingRoom_berth,
+        });
+
+        startingRoom.exits.Add(new()
+        {
+            exitDirection = ExitDirection.North,
             exitDescription = "There is a doorway to another car to the north",
-            targetRoom = trainCarTwo
+            targetRoom = trainCarTwo,
         });
 
         trainCarTwo.exits.Add(new()
         {
-            exitDirection = ExitDirection.south,
+            exitDirection = ExitDirection.South,
             exitDescription = "There is a doorway to another car to the south",
             targetRoom = startingRoom
         });
@@ -60,7 +79,6 @@ public class GameInitializer : MonoBehaviour
             adjective = "old",
             internalCode = "item_old_book",
             description = "An old book with a worn cover. Inside, someone has doodled a mustache on a portrait of a very serious-looking duke.",
-            isGettable = true,
         });
 
         startingRoom.roomScenery.AddRange(new List<Scenery>() {
@@ -109,7 +127,6 @@ public class GameInitializer : MonoBehaviour
             adjective = "feather",
             internalCode = "item_feather_quill",
             description = "A simple feather quill with many possibilities.",
-            isGettable = true,
             pickUpNarration = "You pick up the feather quill. Carefully as to not get ink on you."
         };
 
@@ -143,10 +160,28 @@ public class GameInitializer : MonoBehaviour
             adjective = "chocolate",
             internalCode = "item_chocolate_bar",
             description = "The label boasts a 'Rich, Decadent' experience. The ingredient list suggests otherwise.",
-            isGettable = true,
         });
 
         player.relationships.Add(npc_kate.internalCode, new Relationship { points = 0 });
+
+        IWearable gasMask = new WearableBase()
+        {
+            referenceName = "mask",
+            adjective = "gas",
+            internalCode = "wearable_gas_mask",
+            description = "Your trusty gas mask, protects you from all kinds of gas. The filter is one you stole from the UN.",
+            layer = ClothingLayer.Outer,
+            slotsTaken = new() { EquipmentSlot.Face },
+            attributes = new() {
+                new Attribute() {
+                    displayName = "Gas Immunity",
+                    internalCode = "ability_gas_immunity",
+                    type = AttributeType.Ability,
+                }
+            }
+        };
+
+        player.inventory.AddItem(gasMask);
 
         WorldState.GetInstance().player = player;
 

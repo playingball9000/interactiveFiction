@@ -23,7 +23,7 @@ public class DropAction : IPlayerAction
                 WorldState.GetInstance().player.currentLocation.AddItem(item);
             },
             items => StoryTextHandler.invokeUpdateStoryDisplay(
-                "Are you trying to drop " + string.Join(" or ", items.Select(item => item.GetDisplayName())))
+                "Are you trying to drop " + StringUtil.CreateOrSeparatedString(items.Select(item => item.GetDisplayName())))
         );
     }
 }

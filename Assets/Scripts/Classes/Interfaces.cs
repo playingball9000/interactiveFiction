@@ -1,10 +1,11 @@
 using System.Collections.Generic;
 
-public interface IClothing : IExaminable, IItem
+public interface IWearable : IExaminable, IItem
 {
     bool isWearable { get; set; }
-    string color { get; set; }
-
+    List<EquipmentSlot> slotsTaken { get; set; }
+    ClothingLayer layer { get; set; }
+    List<Attribute> attributes { get; set; }
 }
 
 public interface IExaminable
@@ -39,6 +40,7 @@ public interface IStorage
     List<IItem> contents { get; set; }
 
     void AddItem(IItem item);
+    void AddRange(List<IItem> items);
     void RemoveItem(IItem item);
     bool ContainsItem(IItem item);
     List<IItem> GetContents();
