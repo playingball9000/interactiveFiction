@@ -46,6 +46,7 @@
 9. Movement
 10. Open / Close
 11. Put
+12. Equip / Unequip
 
 ### Inventory
 
@@ -57,6 +58,12 @@
 1. Stuff that holds stuff, has a list of IItems in it.
 2. Anything that can be a container needs to extend ContainerBase.
 3. You can put containers in Inventory, but can toggle with isGettable
+
+### Wearable ie. clothing
+1. Use WearableBase
+2. Wearables have a slot (head, body, legs, etc) and layer (base, mid, outer)
+3. You can have Socks (feet, base) and Shoes (feet, outer) or shirt(body, mid) and jacket (body, outer)
+4. Wearables can have multiple slots like Jumpsuit would take up (body, legs)
 
 ### Examine
 
@@ -73,7 +80,7 @@
 
 1. Fact - flat data field representing the world in key:value form. ex. "in_inventory":"book"
 2. Query - List of facts representing the state (player, player memory, world, etc.)
-3. Criteria - A test for a Fact. ex. equals("in_inventory", "book")
+3. Criteria - A test for a Fact. ex. exists("in_inventory", "book") or equals("concept", "onMove")
 4. Rule - A list of criteria. When a query satisfies the rule, a corresponding action will be done.
 
 ## Other
