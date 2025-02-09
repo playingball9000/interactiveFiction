@@ -33,7 +33,7 @@ public class OpenAction : IPlayerAction
                 }
             },
             containers => StoryTextHandler.invokeUpdateStoryDisplay(
-                "Are you trying to open " + string.Join(" or ", containers.Select(item => item.GetDisplayName())))
+                "Are you trying to open " + StringUtil.CreateOrSeparatedString(containers.Select(item => item.GetDisplayName())))
         );
     }
 }

@@ -2,13 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-public enum ItemLocation
-{
-    inventory,
-    room,
-    container,
-}
-
 public static class ActionUtil
 {
     /// <summary>
@@ -52,12 +45,14 @@ public static class ActionUtil
     {
         // Look for exact match first
         List<T> exactMatch = FindItemsFieldEqualsString(source, propertySelector, searchString);
-
         if (exactMatch.Count == 1)
         {
             return exactMatch;
         }
-        return source.Where(item => propertySelector(item).ToLower().Contains(searchString.ToLower())).ToList();
+        exactMatch = source.Where(item => propertySelector(item).ToLower().Contains(searchString.ToLower())).ToList();
+        // LoggingUtil.LogList(source, "source");
+
+        return exactMatch;
     }
 
     public static List<T> FindItemsFieldEqualsString<T>(IEnumerable<T> source, Func<T, string> propertySelector, string searchString)
@@ -121,6 +116,25 @@ public static class ActionUtil
         return pm.Cast<ContainerBase>().ToList();
     }
 
+    public static List<Exit> FindPossibleExits(List<Exit> exits, List<string> mainClause)
+    {
+        List<Exit> pe = exits.ToList();
+        int processingCount = 1;
+
+        while (mainClause.Count > 0 && processingCount < 3)
+        {
+            string word = DequeueFirstElement(mainClause);
+            pe = FindItemsFieldContainsString(pe, e => e.targetRoom.roomName, word);
+
+            if (!pe.Any() || pe.Count == 1)
+            {
+                break;
+            }
+            processingCount++;
+        }
+       ;
+        return pe;
+    }
     /// <summary>
     /// Processes mainClause from the last item and modifies it as each element is processed
     /// </summary>
@@ -222,26 +236,34 @@ public static class ActionUtil
 
     private static readonly string[] unknownCommandResponses =
     {
-        "I'm sorry, Dave, I can't do that. Mostly because I'm not HAL.",
-        "That's an interesting idea. Let me file it in my *totally hypothetical suggestions* drawer.",
-        "You might as well have typed *turnup salsa*. It makes about as much sense.",
-        "Did you mean to type that, or did a monkey just escape with your keyboard?",
-        "Ah, I see you've discovered the secret command for doing absolutely nothing.",
-        "There are 42 ways to be confused, and you've just unlocked a new one.",
-        "The universe is vast, but unfortunately, I have no idea what you want.",
-        "If I had a million dollars for every time that command worked, I'd still be broke.",
-        "The improbability of that command working approaches infinite tea-making failure.",
-        "Perhaps you're using a special dialect only understood by hyperintelligent shades of the color blue.",
-        "In an alternate universe, that command would start a conga line. Sadly, this isn't that universe.",
-        "I'm not sure what you meant, but congratulations on confusing even me!",
-        "The mice are laughing at you. Just thought you'd like to know.",
-        "That command looks suspiciously like middle school poetry. Please don't do that again.",
-        "I could try that, but I'd probably end up inventing a new kind of disaster.",
-        "I'll add that to my list of strange human behaviors. It's getting very long.",
-        "That's a bold move, Cotton. Let's see not do that.",
-        "Was that a command or a sneeze? Hard to tell.",
-        "The ship's computer would like a word with you mostly to say No.",
-        "It's entirely possible that command worked in a dream you once had."
+        "You've discovered the secret command for doing absolutely nothing.",
+        "Perhaps you're using a special dialect only understood by people of your intelligence.",
+        "Better not, you'd probably end up inventing a new kind of disaster.",
+        "It's entirely possible that worked in a dream you once had.",
+        "There is apparently no crisis so imminent that will deter you from contemplating idiotic and frivolous actions.",
+        "This is the dumbest idea you've had in weeks!!! STUPID STUPID STUPID. And yet the polished surface of your desk... It beckons.",
+        "Ugh, what a terrible idea! The thought alone makes you sick to your stomach.",
+        "You would only resort to such an embarrassing activity while no one was watching!!!",
+        "What? No! That sounds incredibly dangerous!",
+        "Now you're just being a pest. Which turnip truck did you just tumble out of, anyway?",
+        "Pipe down, you. This is Rose's decision, not yours!",
+        "What, you think this is some kind of game where you can just type anything and something cool happens?",
+        "sigh.",
+        "You briefly consider following through with this nonsense, however, even you have your limits.",
+        "That would also be a preposterous waste of time!!!",
+        "nah",
+        "That is the sort of thing that only stupid idiots do in stupid idiot movies.",
+        "You find this grisly abomination utterly detestable.",
+        "This is incredibly silly, and you're not sure how it fits into your campaign.",
+        "Oh God dammit, that's just what you need.",
+        "You totally abjure the hell out of that idea.",
+        "You refuse outright!",
+        "It's just not going to happen buddy!",
+        "This is COMPLETE BULLSHIT.",
+        "Thank God your sanity has returned so you can entertain extremely rational, coherent thoughts like this one.",
+        "This is incredibly dangerous!",
+        "It is unfortunate. I guess. What are we talking about again?",
+        "Seriously, just think for a second!"
     };
 
     public static string GetUnknownCommandResponse()

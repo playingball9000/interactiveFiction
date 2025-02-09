@@ -1,22 +1,16 @@
 using System.Collections.Generic;
 using System.Linq;
 
+[System.Serializable]
 public class Memory
 {
     private Dictionary<string, object> memory = new();
 
     public void Update(string key, object value)
     {
-        if (memory.ContainsKey(key))
+        if (memory.TryGetValue(key, out var existingValue) && existingValue is int existingIntValue && value is int intValue)
         {
-            if (memory[key] is int existingIntValue && value is int intValue)
-            {
-                memory[key] = existingIntValue + intValue;
-            }
-            else
-            {
-                memory[key] = value;
-            }
+            memory[key] = existingIntValue + intValue;
         }
         else
         {
@@ -31,10 +25,7 @@ public class Memory
 
     public void Delete(string key)
     {
-        if (memory.ContainsKey(key))
-        {
-            memory.Remove(key);
-        }
+        memory.Remove(key);
     }
 
     public void Clear()

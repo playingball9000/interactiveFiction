@@ -69,16 +69,18 @@ public class PlayerInputHandler : MonoBehaviour
         }
 
         AddToInputHistory(inputText);
-        inputText = NormalizeInput(inputText);
-
         // Updates the main story display with text
         StoryTextHandler.invokeUpdateStoryDisplay("> " + TmpTextTagger.Color(inputText, UiConstants.TEXT_COLOR_PLAYER_ACTION));
 
+        inputText = NormalizeInput(inputText);
+
         string[] inputTextArray = inputText.Split(' ');
+
+        inputTextArray = ActionPhraseSynonyms.getInstance().Parse(inputTextArray);
 
         inputTextArray = inputTextArray.Where(word => !prepositions.Contains(word)).ToArray();
 
-        string action = ActionSynonyms.SynonymsDict.ContainsKey(inputTextArray[0]) ? ActionSynonyms.SynonymsDict[inputTextArray[0]] : null;
+        string action = ActionWordSynonyms.SynonymsDict.TryGetValue(inputTextArray[0], out string actionString) ? actionString : null;
 
         if (action != null)
         {

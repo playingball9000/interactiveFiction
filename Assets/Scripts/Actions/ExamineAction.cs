@@ -47,7 +47,7 @@ public class ExamineAction : IPlayerAction
              pm,
              () => StoryTextHandler.invokeUpdateStoryDisplay(CANT_ACTION_MESSAGE),
              thing => StoryTextHandler.invokeUpdateStoryDisplay(thing.GetDescription()),
-             things => StoryTextHandler.invokeUpdateStoryDisplay("Are you trying to examine " + string.Join(" or ", things.Select(thing => thing.GetDisplayName())))
+             things => StoryTextHandler.invokeUpdateStoryDisplay("Are you trying to examine " + StringUtil.CreateOrSeparatedString(things.Select(thing => thing.GetDisplayName())))
          );
     }
 }

@@ -22,7 +22,7 @@ public class TalkAction : IPlayerAction
                 DialogueParser.invokeStartDialogue(npc);
             },
             npcs => StoryTextHandler.invokeUpdateStoryDisplay(
-                "Are you trying to talk to " + string.Join(" or ", npcs.Select(npc => npc.GetDisplayName())))
+                "Are you trying to talk to " + StringUtil.CreateOrSeparatedString(npcs.Select(npc => npc.GetDisplayName())))
         );
     }
 }

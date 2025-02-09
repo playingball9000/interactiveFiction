@@ -34,7 +34,7 @@ public class GetAction : IPlayerAction
                 }
             },
             items => StoryTextHandler.invokeUpdateStoryDisplay(
-                "Are you trying to get " + string.Join(" or ", items.Select(item => item.GetDisplayName())))
+                "Are you trying to get " + StringUtil.CreateOrSeparatedString(items.Select(item => item.GetDisplayName())))
         );
     }
 }

@@ -1,16 +1,27 @@
 using System.Collections.Generic;
-public class ActionSynonyms
+public class ActionWordSynonyms
 {
     public static readonly Dictionary<string, string> SynonymsDict = new()
     {
-        { "n", ExitDirection.north.ToString() },
-        { "north", ExitDirection.north.ToString() },
-        { "south", ExitDirection.south.ToString() },
-        { "s", ExitDirection.south.ToString() },
-        { "east", ExitDirection.east.ToString() },
-        { "e", ExitDirection.east.ToString() },
-        { "west", ExitDirection.west.ToString() },
-        { "w", ExitDirection.west.ToString() },
+        { "n", ExitDirection.North.ToString() },
+        { "north", ExitDirection.North.ToString() },
+        { "nw", ExitDirection.Northwest.ToString() },
+        { "northwest", ExitDirection.Northwest.ToString() },
+        { "ne", ExitDirection.Northeast.ToString() },
+        { "northeast", ExitDirection.Northeast.ToString() },
+        { "south", ExitDirection.South.ToString() },
+        { "sw", ExitDirection.Southwest.ToString() },
+        { "southwest", ExitDirection.Southwest.ToString() },
+        { "se", ExitDirection.Southeast.ToString() },
+        { "southeast", ExitDirection.Southeast.ToString() },
+        { "s", ExitDirection.South.ToString() },
+        { "east", ExitDirection.East.ToString() },
+        { "e", ExitDirection.East.ToString() },
+        { "west", ExitDirection.West.ToString() },
+        { "w", ExitDirection.West.ToString() },
+        { "enter", ExitDirection.Enter.ToString() },
+        { "exit", ExitDirection.Enter.ToString() },
+        { "leave", ExitDirection.Enter.ToString() },
 
         { "talk", ActionConstants.ACTION_TALK },
 
@@ -36,6 +47,13 @@ public class ActionSynonyms
         { "present", ActionConstants.ACTION_GIVE },
         { "grant", ActionConstants.ACTION_GIVE },
         { "deliver", ActionConstants.ACTION_GIVE },
+
+        { "equip", ActionConstants.ACTION_EQUIP },
+        { "wear", ActionConstants.ACTION_EQUIP },
+        { "don", ActionConstants.ACTION_EQUIP },
+
+        { "unequip", ActionConstants.ACTION_UNEQUIP },
+        { "remove", ActionConstants.ACTION_UNEQUIP },
 
         { "open", ActionConstants.ACTION_OPEN },
 

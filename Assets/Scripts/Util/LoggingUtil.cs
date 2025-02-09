@@ -20,11 +20,11 @@ public static class LoggingUtil
         }
     }
 
-    public static void LogList<T>(List<T> objects, string header = "", bool condition = true)
+    public static void LogList<T>(IEnumerable<T> objects, string header = "", bool condition = true)
     {
         if (condition)
         {
-            if (objects == null || objects.Count == 0)
+            if (objects == null || !objects.Any())
             {
                 UnityEngine.Debug.Log("The list is empty or null.");
                 return;

@@ -8,9 +8,9 @@ public class ContainerBase : IStorage, IItem, IOpenable, IExaminable
     public string description { get; set; }
     public string adjective { get; set; } = "";
     public string internalCode { get; set; }
-    public bool isOpen { get; set; }
-    public bool isGettable { get; set; }
-    // This is used for isGettable = false to display message
+    public bool isOpen { get; set; } = true;
+    public bool isGettable { get; set; } = true;
+    // This is used for isGettable = false to display message todo: probably a better way to do this
     public string pickUpNarration { get; set; }
 
     public List<IItem> contents { get; set; }
@@ -18,6 +18,11 @@ public class ContainerBase : IStorage, IItem, IOpenable, IExaminable
     public void AddItem(IItem item)
     {
         contents.Add(item);
+    }
+
+    public void AddRange(List<IItem> items)
+    {
+        contents.AddRange(items);
     }
 
     public bool ContainsItem(IItem item)
@@ -55,10 +60,7 @@ public class ContainerBase : IStorage, IItem, IOpenable, IExaminable
 
     public void RemoveItem(IItem item)
     {
-        if (contents.Contains(item))
-        {
-            contents.Remove(item);
-        }
+        contents.Remove(item);
     }
 
     public string GetDisplayName()

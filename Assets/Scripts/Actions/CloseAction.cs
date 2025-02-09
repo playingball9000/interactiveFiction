@@ -26,11 +26,11 @@ public class CloseAction : IPlayerAction
                 }
                 else
                 {
-                    StoryTextHandler.invokeUpdateStoryDisplay("That's already closed");
+                    StoryTextHandler.invokeUpdateStoryDisplay(container.GetDisplayName() + " is already closed");
                 }
             },
             containers => StoryTextHandler.invokeUpdateStoryDisplay(
-                "Are you trying to close " + string.Join(" or ", containers.Select(item => item.GetDisplayName())))
+                "Are you trying to close " + StringUtil.CreateOrSeparatedString(containers.Select(item => item.GetDisplayName())))
         );
     }
 }
