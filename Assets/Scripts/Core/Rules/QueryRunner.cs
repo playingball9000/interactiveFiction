@@ -15,7 +15,7 @@ public static class QueryRunner
         facts.AddRange(movedFrom.GetRoomFacts());
         facts.AddRange(WorldState.GetInstance().player.GetPlayerFacts());
 
-        LoggingUtil.LogList(facts);
+        // LoggingUtil.LogList(facts);
 
         RuleEngine.Execute(facts);
     }

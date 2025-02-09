@@ -1,4 +1,5 @@
 
+[System.Serializable]
 public class Fact
 {
     public string key { get; set; }

@@ -5,6 +5,7 @@ public enum AttributeType
     Stat
 }
 
+[System.Serializable]
 public class Attribute
 {
     public string displayName { get; set; }

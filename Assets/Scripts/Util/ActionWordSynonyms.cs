@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-public class ActionSynonyms
+public class ActionWordSynonyms
 {
     public static readonly Dictionary<string, string> SynonymsDict = new()
     {
@@ -51,6 +51,9 @@ public class ActionSynonyms
         { "equip", ActionConstants.ACTION_EQUIP },
         { "wear", ActionConstants.ACTION_EQUIP },
         { "don", ActionConstants.ACTION_EQUIP },
+
+        { "unequip", ActionConstants.ACTION_UNEQUIP },
+        { "remove", ActionConstants.ACTION_UNEQUIP },
 
         { "open", ActionConstants.ACTION_OPEN },
 

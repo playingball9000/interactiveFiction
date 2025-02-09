@@ -1,5 +1,6 @@
 using System;
 
+[System.Serializable]
 public class Relationship
 {
     public int points { get; set; }

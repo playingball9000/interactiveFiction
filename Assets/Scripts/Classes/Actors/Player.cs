@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -29,6 +30,20 @@ public class Player
             .Select(kvp => $"{kvp.Key}: {kvp.Value.points}")
             .ToList();
         return StringUtil.CreateBulletedListString("=== Relationship Status ===", formattedStrings);
+    }
+
+    public string GetEquipmentToString()
+    {
+
+        var equipmentList = Enum.GetValues(typeof(EquipmentSlot)).Cast<EquipmentSlot>()
+            .Select(slot =>
+            {
+                var gear = equipment.FirstOrDefault(e => e.slotsTaken.Contains(slot));
+                string gearString = gear != null ? $"{gear.GetDisplayName()} ({StringUtil.CreateCommaSeparatedString(gear.attributes)})" : "empty";
+                string fullGearString = $"[{slot}] {gearString}";
+                return fullGearString;
+            });
+        return StringUtil.CreateBulletedListString("=== Equipment ===", equipmentList);
     }
 
     public List<IItem> GetInventory()

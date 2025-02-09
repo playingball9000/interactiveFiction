@@ -2,13 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-public enum ItemLocation
-{
-    inventory,
-    room,
-    container,
-}
-
 public static class ActionUtil
 {
     /// <summary>
@@ -52,12 +45,14 @@ public static class ActionUtil
     {
         // Look for exact match first
         List<T> exactMatch = FindItemsFieldEqualsString(source, propertySelector, searchString);
-
         if (exactMatch.Count == 1)
         {
             return exactMatch;
         }
-        return source.Where(item => propertySelector(item).ToLower().Contains(searchString.ToLower())).ToList();
+        exactMatch = source.Where(item => propertySelector(item).ToLower().Contains(searchString.ToLower())).ToList();
+        // LoggingUtil.LogList(source, "source");
+
+        return exactMatch;
     }
 
     public static List<T> FindItemsFieldEqualsString<T>(IEnumerable<T> source, Func<T, string> propertySelector, string searchString)
