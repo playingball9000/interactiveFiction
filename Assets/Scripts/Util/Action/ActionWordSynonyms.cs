@@ -23,6 +23,8 @@ public class ActionWordSynonyms
         { "exit", ExitDirection.Enter.ToString() },
         { "leave", ExitDirection.Enter.ToString() },
 
+        { "unlock", ActionConstants.ACTION_UNLOCK },
+
         { "talk", ActionConstants.ACTION_TALK },
 
         { "take", ActionConstants.ACTION_GET },

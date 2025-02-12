@@ -34,7 +34,7 @@ public static class RuleEngine
     /// <returns>List of rules activated</returns>
     public static List<string> Execute(IEnumerable<Fact> facts)
     {
-        // LoggingUtil.LogList(facts.ToList());
+        // LoggingUtil.LogList(facts);
 
         List<string> executedRules = new();
         foreach (Rule rule in rules)

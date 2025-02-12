@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class GameInitializer : MonoBehaviour
 {
@@ -9,50 +10,35 @@ public class GameInitializer : MonoBehaviour
     {
         Room trainCarTwo = new()
         {
-            roomName = "A Spacious Train Car",
+            displayName = "A Spacious Train Car",
             internalCode = "room_carTwo",
             description = "The train car is modestly lit, with rows of cushioned seats lining both sides of the narrow aisle. Overhead, luggage racks brim with suitcases and duffel bags, one precariously teetering at the edge.  At the far end of the car, a service trolley rests unattended, its surface cluttered with various items."
         };
 
         Room startingRoom = new()
         {
-            roomName = "Comfy Train Car",
+            displayName = "Comfy Train Car",
             internalCode = "room_start",
             description = "You are sitting in the booth seats of a cozy train car, the rhythmic clatter of the wheels filling the air like a steady heartbeat. The large window beside you frames a rolling countryside. Overhead, a luggage rack runs the length of the car. A small stack of folded newspapers lays forlorn on a nearby seat. The air carries a faint scent of leather, paper, and coffee."
         };
 
         Room startingRoom_berth = new()
         {
-            roomName = "Room 100",
+            displayName = "Room 100",
             internalCode = "room_start_berth",
             description = "You are in a compact sleeper berth. The space is just big enough for a narrow bed, a small storage compartment, and a dim overhead light casting a warm glow. The air is still, carrying the faint scent of fabric and metal. A thin door separates you from the rest of the hallway."
         };
 
-        startingRoom_berth.exits.Add(new()
+        Room startingRoom_kate_berth = new()
         {
-            exitDirection = ExitDirection.Enter,
-            targetRoom = startingRoom,
-        });
+            displayName = "Room 102",
+            internalCode = "room_start_kate_berth",
+            description = "You are in a compact sleeper berth. The space is just big enough for a narrow bed, a small storage compartment, and a dim overhead light casting a warm glow. The air is still, carrying the faint scent of fabric and metal. A thin door separates you from the rest of the hallway."
+        };
 
-        startingRoom.exits.Add(new()
-        {
-            exitDirection = ExitDirection.Enter,
-            targetRoom = startingRoom_berth,
-        });
-
-        startingRoom.exits.Add(new()
-        {
-            exitDirection = ExitDirection.North,
-            exitDescription = "There is a doorway to another car to the north",
-            targetRoom = trainCarTwo,
-        });
-
-        trainCarTwo.exits.Add(new()
-        {
-            exitDirection = ExitDirection.South,
-            exitDescription = "There is a doorway to another car to the south",
-            targetRoom = startingRoom
-        });
+        RoomFactory.LinkRoomsTwoWay(startingRoom, startingRoom_kate_berth, ExitDirection.Enter, false, "The door is locked, you will need a key to enter.", "item_master_key");
+        RoomFactory.LinkRoomsTwoWay(startingRoom, startingRoom_berth, ExitDirection.Enter);
+        RoomFactory.LinkRoomsTwoWay(startingRoom, trainCarTwo, ExitDirection.North);
 
         Player player = new()
         {
@@ -62,7 +48,7 @@ public class GameInitializer : MonoBehaviour
         };
 
 
-        NPC npc_kate = new Woman
+        NPC npc_kate = new Kate
         {
             referenceName = "Kate",
             internalCode = "npc_kate",
@@ -71,15 +57,13 @@ public class GameInitializer : MonoBehaviour
             dialogueFile = "womanDialogue"
         };
 
-        startingRoom.npcs.Add(npc_kate);
+        startingRoom.AddNpc(npc_kate);
 
-        startingRoom.roomItems.AddItem(new ItemBase
-        {
-            referenceName = "book",
-            adjective = "old",
-            internalCode = "item_old_book",
-            description = "An old book with a worn cover. Inside, someone has doodled a mustache on a portrait of a very serious-looking duke.",
-        });
+        startingRoom.AddItem(ItemFactory.CreateItem(
+            "book",
+            "old",
+            "An old book with a worn cover. Inside, someone has doodled a mustache on a portrait of a very serious-looking duke."
+        ));
 
         startingRoom.roomScenery.AddRange(new List<Scenery>() {
             new Scenery {
@@ -121,14 +105,11 @@ public class GameInitializer : MonoBehaviour
             }
             });
 
-        IItem quill = new ItemBase
-        {
-            referenceName = "quill",
-            adjective = "feather",
-            internalCode = "item_feather_quill",
-            description = "A simple feather quill with many possibilities.",
-            pickUpNarration = "You pick up the feather quill. Carefully as to not get ink on you."
-        };
+        IItem quill = ItemFactory.CreateItem(
+            "quill",
+            "feather",
+            "A simple feather quill with many possibilities."
+            );
 
         ContainerBase bag = new()
         {
@@ -152,15 +133,13 @@ public class GameInitializer : MonoBehaviour
             pickUpNarration = "This doesn't belong to you.",
         };
 
-        trainCarTwo.roomItems.AddItem(bag);
-        trainCarTwo.roomItems.AddItem(bag2);
-        trainCarTwo.roomItems.AddItem(new ItemBase
-        {
-            referenceName = "bar",
-            adjective = "chocolate",
-            internalCode = "item_chocolate_bar",
-            description = "The label boasts a 'Rich, Decadent' experience. The ingredient list suggests otherwise.",
-        });
+        trainCarTwo.AddItem(bag);
+        trainCarTwo.AddItem(bag2);
+        trainCarTwo.AddItem(ItemFactory.CreateItem(
+            "bar",
+            "chocolate",
+            "The label boasts a 'Rich, Decadent' experience. The ingredient list suggests otherwise."
+        ));
 
         player.relationships.Add(npc_kate.internalCode, new Relationship { points = 0 });
 
@@ -181,7 +160,17 @@ public class GameInitializer : MonoBehaviour
             }
         };
 
-        player.inventory.AddItem(gasMask);
+        player.AddToInventory(gasMask);
+        IItem masterKey = new KeyBase
+        {
+            referenceName = "key",
+            adjective = "master",
+            unlocks = "door_room_102",
+            internalCode = "item_master_key",
+            description = "A key to all doors.",
+        };
+
+        player.AddToInventory(masterKey);
 
         WorldState.GetInstance().player = player;
 

@@ -6,21 +6,6 @@ public class RoomItems : IStorage
 {
     public List<IItem> contents { get; set; } = new List<IItem>();
 
-    public void AddItem(IItem item)
-    {
-        contents.Add(item);
-    }
-
-    public void AddRange(List<IItem> items)
-    {
-        contents.AddRange(items);
-    }
-
-    public bool ContainsItem(IItem item)
-    {
-        return contents.Contains(item);
-    }
-
     public List<IItem> GetContents()
     {
         return contents;
@@ -39,13 +24,13 @@ public class RoomItems : IStorage
         }
     }
 
-    public void RemoveItem(IItem item)
-    {
-        contents.Remove(item);
-    }
-
     public bool isAccessible()
     {
         return true;
+    }
+
+    public void RemoveItem(IItem item)
+    {
+        contents.Remove(item);
     }
 }

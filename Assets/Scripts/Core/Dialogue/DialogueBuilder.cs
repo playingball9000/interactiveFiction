@@ -24,7 +24,7 @@ public static class DialogueBuilder
         dg.GetNode("node1").AddChoice("I think they're relaxing. What about you?", "node11");
         dg.GetNode("node1").AddChoice("Honestly, they can be a bit boring sometimes.", "node12");
         dg.GetNode("node1").AddChoice("What did you think of this book?", "node13",
-           new Rule().AddCriteria(facts => Criterion.FactValueEquals(facts, "in_inventory", "book")),
+           new Rule().AddCriteria(facts => Criterion.FactExists(facts, "in_inventory", "item_old_book")),
            () => { StoryTextHandler.invokeUpdateStoryDisplay("D'OH"); });
         dg.GetNode("node1").AddChoice(EndConversation());
 

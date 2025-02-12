@@ -39,10 +39,7 @@ public interface IStorage
 {
     List<IItem> contents { get; set; }
 
-    void AddItem(IItem item);
-    void AddRange(List<IItem> items);
     void RemoveItem(IItem item);
-    bool ContainsItem(IItem item);
     List<IItem> GetContents();
     string ContentsToString();
     bool isAccessible();
@@ -56,4 +53,19 @@ public interface ILockable
 public interface IOpenable
 {
     bool isOpen { get; set; }
+}
+
+public interface IActor
+{ }
+
+public interface NPC : IExaminable, IActor
+{
+    public string dialogueFile { get; set; }
+    public string internalCode { get; set; }
+    Room currentLocation { get; set; }
+    List<IWearable> clothes { get; set; }
+    public Memory memory { get; set; }
+
+    bool GetGiveReaction(IItem giftedItem);
+
 }
