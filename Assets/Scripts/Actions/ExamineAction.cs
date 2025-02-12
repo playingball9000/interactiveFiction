@@ -11,8 +11,6 @@ public class ExamineAction : IPlayerAction
 
     private string CANT_ACTION_MESSAGE = "You can't examine that";
 
-    //TODO: How do i handle something like "Bar of soap" without being "soap bar"
-
     /*
      * TODO: What this needs to do in the future is something like
      * 

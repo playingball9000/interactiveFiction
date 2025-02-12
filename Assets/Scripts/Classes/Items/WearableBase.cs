@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-//TODO: update player facts for equips, update player inventory for equips
 [System.Serializable]
 public class WearableBase : IWearable
 {

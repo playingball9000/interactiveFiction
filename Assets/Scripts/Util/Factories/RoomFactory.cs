@@ -24,14 +24,14 @@ public static class RoomFactory
         };
     }
 
-    public static void LinkRooms(Room from, Room to, ExitDirection direction, bool isTargetAccessible = true, string lockedText = "", string keyInternalCode = "")
+    public static void LinkRooms(Room from, Room to, ExitDirection direction, bool isLocked = false, string lockedText = "", string keyInternalCode = "")
     {
-        from.exits.Add(new Exit { exitDirection = direction, targetRoom = to, isTargetAccessible = isTargetAccessible, lockedText = lockedText, keyInternalCode = keyInternalCode });
+        from.exits.Add(new Exit { exitDirection = direction, targetRoom = to, isLocked = isLocked, lockedText = lockedText, keyInternalCode = keyInternalCode });
     }
 
-    public static void LinkRoomsTwoWay(Room from, Room to, ExitDirection direction, bool isTargetAccessible = true, string lockedText = "", string keyInternalCode = "")
+    public static void LinkRoomsTwoWay(Room from, Room to, ExitDirection direction, bool isLocked = false, string lockedText = "", string keyInternalCode = "")
     {
-        LinkRooms(from, to, direction, isTargetAccessible, lockedText, keyInternalCode);
-        LinkRooms(to, from, ExitHelper.GetOpposite(direction), isTargetAccessible, lockedText, keyInternalCode);
+        LinkRooms(from, to, direction, isLocked, lockedText, keyInternalCode);
+        LinkRooms(to, from, ExitHelper.GetOpposite(direction), isLocked, lockedText, keyInternalCode);
     }
 }

@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class GameInitializer : MonoBehaviour
 {
@@ -36,7 +35,7 @@ public class GameInitializer : MonoBehaviour
             description = "You are in a compact sleeper berth. The space is just big enough for a narrow bed, a small storage compartment, and a dim overhead light casting a warm glow. The air is still, carrying the faint scent of fabric and metal. A thin door separates you from the rest of the hallway."
         };
 
-        RoomFactory.LinkRoomsTwoWay(startingRoom, startingRoom_kate_berth, ExitDirection.Enter, false, "The door is locked, you will need a key to enter.", "item_master_key");
+        RoomFactory.LinkRoomsTwoWay(startingRoom, startingRoom_kate_berth, ExitDirection.Enter, true, "The door is locked, you will need a key to enter.", "item_master_key");
         RoomFactory.LinkRoomsTwoWay(startingRoom, startingRoom_berth, ExitDirection.Enter);
         RoomFactory.LinkRoomsTwoWay(startingRoom, trainCarTwo, ExitDirection.North);
 

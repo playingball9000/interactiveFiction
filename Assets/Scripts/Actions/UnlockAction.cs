@@ -20,7 +20,7 @@ public class UnlockAction : IPlayerAction
             () => StoryTextHandler.invokeUpdateStoryDisplay("You can't unlock that"),
             exit =>
             {
-                if (exit.isTargetAccessible)
+                if (!exit.isLocked)
                 {
                     StoryTextHandler.invokeUpdateStoryDisplay("That exit way is not locked.");
                 }
@@ -32,11 +32,11 @@ public class UnlockAction : IPlayerAction
                     {
                         StoryTextHandler.invokeUpdateStoryDisplay("You unlock the way to " + exit.targetRoom.displayName);
 
-                        exit.isTargetAccessible = true;
+                        exit.isLocked = false;
                         Exit exitBack = exit.targetRoom.exits.FirstOrDefault(e => e.targetRoom == player.currentLocation);
                         if (exitBack != null)
                         {
-                            exitBack.isTargetAccessible = true;
+                            exitBack.isLocked = false;
                         }
                     }
                     else
