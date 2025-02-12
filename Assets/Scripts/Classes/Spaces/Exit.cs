@@ -1,15 +1,38 @@
 using System.Collections.Generic;
 
 [System.Serializable]
-public class Exit
+public class Exit : ILockable
 {
     public ExitDirection exitDirection;
     public Room targetRoom { get; set; }
 
     // I found it easier for now, to put the key code on Exit instead of vice versa
-    public bool isTargetAccessible { get; set; } = true;
+    public bool isLocked { get; set; } = false;
     public string lockedText { get; set; }
     public string keyInternalCode { get; set; } = "";
+
+    public bool isTargetAccessible()
+    {
+        return !isLocked;
+    }
+
+    public string getNotAccessibleReason()
+    {
+        if (isLocked)
+        {
+            return $"Path to {targetRoom.displayName} is locked.";
+        }
+        return $"Path to {targetRoom.displayName} is not accessible.";
+    }
+
+    public string getNotAccessibleTag()
+    {
+        if (isLocked)
+        {
+            return $"-Locked-";
+        }
+        return $"-Inaccessible-";
+    }
 
     public override string ToString()
     {

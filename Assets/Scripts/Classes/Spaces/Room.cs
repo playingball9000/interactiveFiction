@@ -36,7 +36,7 @@ public class Room
 
         foreach (Exit exit in exits)
         {
-            otherRooms.Add($"{exit.targetRoom.displayName} [{(exit.isTargetAccessible ? exit.exitDirection : "-Locked-")}]");
+            otherRooms.Add($"{exit.targetRoom.displayName} [{(exit.isTargetAccessible() ? exit.exitDirection : exit.getNotAccessibleTag())}]");
         }
         return string.Join("\n", otherRooms.ToArray());
     }

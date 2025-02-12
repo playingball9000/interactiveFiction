@@ -48,8 +48,9 @@ public interface IStorage
 public interface ILockable
 {
     bool isLocked { get; set; }
+    public string lockedText { get; set; }
+    public string keyInternalCode { get; set; }
 }
-
 public interface IOpenable
 {
     bool isOpen { get; set; }

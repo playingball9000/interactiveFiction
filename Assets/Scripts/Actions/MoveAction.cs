@@ -25,7 +25,7 @@ public class MoveAction : IPlayerAction
             () => StoryTextHandler.invokeUpdateStoryDisplay("You can't go that way"),
             exit =>
             {
-                if (exit.isTargetAccessible)
+                if (exit.isTargetAccessible())
                 {
                     QueryRunner.RunMoveFacts(WorldState.GetInstance().player.currentLocation);
                     WorldState.GetInstance().player.currentLocation = exit.targetRoom;
@@ -33,7 +33,7 @@ public class MoveAction : IPlayerAction
                 }
                 else
                 {
-                    StoryTextHandler.invokeUpdateStoryDisplay(exit.lockedText);
+                    StoryTextHandler.invokeUpdateStoryDisplay(exit.getNotAccessibleReason());
                 }
             },
             exits => StoryTextHandler.invokeUpdateStoryDisplay(
