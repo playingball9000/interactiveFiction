@@ -1,3 +1,8 @@
+/*
+Ability - like immune to something or flying. Value Doesn't apply here.
+Buff - like elemental resistance
+Stat - like Strength + 10
+*/
 public enum AttributeType
 {
     Ability,

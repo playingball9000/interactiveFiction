@@ -25,7 +25,7 @@ public class PutAction : IPlayerAction
 
         // Not gettable means not puttable. Also can't put containers in other containers for now.
         items = items
-            .Where(i => i.isGettable == true)
+            .Where(i => i.isGettable)
             .Where(i => i is not ContainerBase)
             .ToList();
 

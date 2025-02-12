@@ -13,19 +13,19 @@ public static class ActionUtil
     /// <param name="multipleMatchesAction"></param>
     /// <typeparam name="T"></typeparam>
     public static void MatchZeroOneAndMany<T>(
-        List<T> filteredItems,
+        IEnumerable<T> filteredItems,
         Action noMatchAction,
         Action<T> singleMatchAction,
-        Action<List<T>> multipleMatchesAction)
+        Action<IEnumerable<T>> multipleMatchesAction)
     {
 
         if (!filteredItems.Any())
         {
             noMatchAction();
         }
-        else if (filteredItems.Count == 1)
+        else if (filteredItems.Count() == 1)
         {
-            singleMatchAction(filteredItems[0]);
+            singleMatchAction(filteredItems.First());
         }
         else
         {
@@ -124,7 +124,7 @@ public static class ActionUtil
         while (mainClause.Count > 0 && processingCount < 3)
         {
             string word = DequeueFirstElement(mainClause);
-            pe = FindItemsFieldContainsString(pe, e => e.targetRoom.roomName, word);
+            pe = FindItemsFieldContainsString(pe, e => e.targetRoom.displayName, word);
 
             if (!pe.Any() || pe.Count == 1)
             {

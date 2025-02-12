@@ -25,12 +25,19 @@ public class MoveAction : IPlayerAction
             () => StoryTextHandler.invokeUpdateStoryDisplay("You can't go that way"),
             exit =>
             {
-                QueryRunner.RunMoveFacts(WorldState.GetInstance().player.currentLocation);
-                WorldState.GetInstance().player.currentLocation = exit.targetRoom;
-                WorldState.GetInstance().player.currentLocation.DisplayRoomStoryText();
+                if (exit.isTargetAccessible)
+                {
+                    QueryRunner.RunMoveFacts(WorldState.GetInstance().player.currentLocation);
+                    WorldState.GetInstance().player.currentLocation = exit.targetRoom;
+                    WorldState.GetInstance().player.currentLocation.DisplayRoomStoryText();
+                }
+                else
+                {
+                    StoryTextHandler.invokeUpdateStoryDisplay(exit.lockedText);
+                }
             },
             exits => StoryTextHandler.invokeUpdateStoryDisplay(
-                "Are you trying to go to " + StringUtil.CreateOrSeparatedString(exits.Select(item => item.targetRoom.roomName)))
+                "Are you trying to go to " + StringUtil.CreateOrSeparatedString(exits.Select(item => item.targetRoom.displayName)))
         );
     }
 }

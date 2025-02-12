@@ -4,7 +4,7 @@ using System.Linq;
 [System.Serializable]
 public class Room
 {
-    public string roomName;
+    public string displayName;
     public string description;
     public string internalCode { get; set; }
 
@@ -36,7 +36,7 @@ public class Room
 
         foreach (Exit exit in exits)
         {
-            otherRooms.Add($"{exit.targetRoom.roomName} [{exit.exitDirection}]");
+            otherRooms.Add($"{exit.targetRoom.displayName} [{(exit.isTargetAccessible ? exit.exitDirection : "-Locked-")}]");
         }
         return string.Join("\n", otherRooms.ToArray());
     }
@@ -65,7 +65,7 @@ public class Room
 
         string exitDescription = GetExitDescriptions();
 
-        string combinedText = TmpTextTagger.Bold(roomName) + "\n"
+        string combinedText = TmpTextTagger.Bold(displayName) + "\n"
             + description
             + joinedInteractionDescriptions
             + exitDescription;
@@ -84,12 +84,12 @@ public class Room
 
     public void RemoveItem(IItem item)
     {
-        roomItems.RemoveItem(item);
+        roomItems.contents.Remove(item);
     }
 
     public void AddItem(IItem item)
     {
-        roomItems.AddItem(item);
+        roomItems.contents.Add(item);
     }
 
     public List<IItem> GetRoomItems()
@@ -102,6 +102,12 @@ public class Room
         return roomItems.contents.OfType<ContainerBase>().ToList();
     }
 
+    public void AddNpc(NPC npc)
+    {
+        npc.currentLocation = this;
+        this.npcs.Add(npc);
+    }
+
     public override string ToString()
     {
         string npcNames = StringUtil.CreateCommaSeparatedString(npcs.Select(npc => npc.referenceName).ToList());
@@ -109,7 +115,7 @@ public class Room
         string exitsPaths = StringUtil.CreateCommaSeparatedString(exits.Select(ex => ex.ToString()).ToList());
 
         string toString = $@"
-            roomName: {roomName}
+            roomName: {displayName}
             description: {description}
             npcNames: {npcNames}
             itemNames: {itemNames}

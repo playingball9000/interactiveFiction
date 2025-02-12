@@ -9,5 +9,6 @@ public class SaveAction : IPlayerAction
     void IPlayerAction.Execute(ActionInput actionInput)
     {
         SaveManager.SaveGame(WorldState.GetInstance());
+        StoryTextHandler.invokeUpdateStoryDisplay("Game saved successfully");
     }
 }

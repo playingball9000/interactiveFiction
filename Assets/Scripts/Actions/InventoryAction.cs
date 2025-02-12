@@ -9,9 +9,16 @@ public class InventoryAction : IPlayerAction
 
     void IPlayerAction.Execute(ActionInput actionInput)
     {
-        string inventoryString = WorldState.GetInstance().player.GetInventoryString();
-        string equipString = WorldState.GetInstance().player.GetEquipmentToString();
-        string relationsString = WorldState.GetInstance().player.GetRelationshipsToString();
-        StoryTextHandler.invokeUpdateStoryDisplay(inventoryString + "\n\n" + equipString + "\n\n" + relationsString);
+        Player player = WorldState.GetInstance().player;
+        string moneyString = $"Money: {player.money}";
+        string inventoryString = player.GetInventoryString();
+        string equipString = player.GetEquipmentToString();
+        string relationsString = player.GetRelationshipsToString();
+        StoryTextHandler.invokeUpdateStoryDisplay(
+            moneyString + "\n" +
+            inventoryString + "\n\n" +
+            equipString + "\n\n" +
+            relationsString
+            );
     }
 }
