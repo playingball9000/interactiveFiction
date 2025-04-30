@@ -86,3 +86,10 @@
 ## Other
 
 1. Certain classes have an internalCode field. This is for use for referencing it in the code, for example in the rule engine as opposed what is displayed on the UI.
+
+# Deploy to itch.io
+1. File > Build Profiles
+2. Select "Web" and then click the "Build" button (may need to install some build packs)
+3. Export to whatever folder you want
+4. Zip all the items in that folder (not the folder itself)
+5. Upload the zip file (Create/Edit game > upload)
