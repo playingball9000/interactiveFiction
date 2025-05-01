@@ -7,7 +7,7 @@ public static class ItemFactory
         {
             referenceName = referenceName,
             adjective = adjective,
-            internalCode = "item_" + adjective.Replace(" ", "_") + referenceName.Replace(" ", "_"),
+            internalCode = "item_" + adjective.Replace(" ", "_") + "_" + referenceName.Replace(" ", "_"),
             description = description
         };
     }
