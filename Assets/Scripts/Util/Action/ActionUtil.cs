@@ -135,6 +135,7 @@ public static class ActionUtil
        ;
         return pe;
     }
+
     /// <summary>
     /// Processes mainClause from the last item and modifies it as each element is processed
     /// </summary>
@@ -232,6 +233,30 @@ public static class ActionUtil
         string firstElement = stringList[0];
         stringList.RemoveAt(0);
         return firstElement;
+    }
+
+
+    public static List<NPC> FindMatchingNpcs(List<string> mainClause, List<NPC> npcs)
+    {
+        //TODO: Probably should make it match multiple words like adj
+
+        // Honestly just hard code checking hte first and 2nd words... any more complicated is not worth it
+        string firstWord = mainClause[0];
+        string secondWord = mainClause[0];
+
+        List<NPC> possibleMatches = FindItemsFieldContainsString(npcs, item => item.adjective, firstWord);
+        if (!possibleMatches.Any())
+        {
+            possibleMatches = FindItemsFieldContainsString(npcs, item => item.referenceName, firstWord);
+        }
+        if (possibleMatches.Count <= 1)
+        {
+            return possibleMatches;
+        }
+
+        // if hasn't returned here, then possible matches are many so disambiguate
+        return FindItemsFieldContainsString(possibleMatches, item => item.referenceName, secondWord);
+
     }
 
     private static readonly string[] unknownCommandResponses =

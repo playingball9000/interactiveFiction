@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 [System.Serializable]
+//TODO: Should this also extend ItemBase?
 public class WearableBase : IWearable
 {
     public string referenceName { get; set; }
