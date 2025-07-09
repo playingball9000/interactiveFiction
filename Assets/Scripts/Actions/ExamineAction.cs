@@ -33,6 +33,11 @@ public class ExamineAction : IPlayerAction
 
         i can probably modify ProcessMainClauseFromEnd() to take in # of times to process. mostly 2, but this is 4 or until hte mainclause runs out
      * 
+
+     New 5/1 - maybe the thing to do is construct a searchable string from each item. so you get the examinables from an npc
+     so its like "name" + "adj" + "item"
+
+     Or maybe start with a check for the first word in the clause, if it's an npc, go from there.
      */
     void IPlayerAction.Execute(ActionInput actionInput)
     {

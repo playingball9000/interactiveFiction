@@ -25,6 +25,8 @@ public class ActionWordSynonyms
 
         { "unlock", ActionConstants.ACTION_UNLOCK },
 
+        { "tickle", ActionConstants.ACTION_TICKLE },
+
         { "talk", ActionConstants.ACTION_TALK },
 
         { "take", ActionConstants.ACTION_GET },
