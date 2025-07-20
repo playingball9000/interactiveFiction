@@ -27,8 +27,9 @@ public class MoveAction : IPlayerAction
             {
                 if (exit.isTargetAccessible())
                 {
-                    QueryRunner.RunMoveFacts(WorldState.GetInstance().player.currentLocation);
+                    QueryRunner.RunPreMoveFacts(WorldState.GetInstance().player.currentLocation);
                     WorldState.GetInstance().player.currentLocation = exit.targetRoom;
+                    QueryRunner.RunPostMoveFacts(WorldState.GetInstance().player.currentLocation);
                     WorldState.GetInstance().player.currentLocation.DisplayRoomStoryText();
                 }
                 else
