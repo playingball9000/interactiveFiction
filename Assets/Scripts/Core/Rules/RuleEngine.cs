@@ -20,6 +20,14 @@ public static class RuleEngine
                     UiConstants.EFFECT_TYPEWRITER);
             }));
 
+        rules.Add(new Rule()
+            .AddCriteria(facts => Criterion.FactValueEquals(facts, RuleConstants.KEY_CONCEPT, RuleConstants.CONCEPT_ON_MOVE))
+            .AddCriteria(facts => Criterion.FactExists(facts, RuleConstants.KEY_ACTION_MOVED_TO_ROOM, RoomConstants.THE_ABYSS))
+            .SetAction(facts =>
+            {
+                GameController.invokeShowExploreCanvas();
+            }));
+
     }
 
     public static void AddRule(Rule rule)

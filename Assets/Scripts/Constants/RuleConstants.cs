@@ -12,4 +12,6 @@ public static class RuleConstants
     public const string KEY_IN_ROOM_ITEM = "in_room_item";
 
     public const string KEY_ACTION_TARGET_NPC = "action_target_npc";
+    public const string KEY_ACTION_MOVED_TO_ROOM = "action_moved_to_room";
+    public const string KEY_ACTION_MOVED_FROM_ROOM = "action_moved_from_room";
 }

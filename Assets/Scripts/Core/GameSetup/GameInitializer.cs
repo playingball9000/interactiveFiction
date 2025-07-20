@@ -17,13 +17,21 @@ public class GameInitializer : MonoBehaviour
 
         Room abyssEntrance = new()
         {
-            displayName = "Hallowed Entrance",
+            displayName = "Abyss Entrance",
             internalCode = RoomConstants.ABYSS_ENTRANCE,
             description = @"Here, the ground falls away into a vast, gaping darkness. Jagged rock walls curve inward, forming what looks like an enormous throat. Peering down, you catch glimpses of the first layer: lush, tangled vegetation clings to sheer walls."
         };
-
-
         RoomFactory.LinkRoomsTwoWay(abyssEntrance, startingCamp, ExitDirection.North);
+
+        Room theAbyss = new()
+        {
+            displayName = "The Abyss",
+            internalCode = RoomConstants.THE_ABYSS,
+            description = @"Once more into the fray..."
+        };
+
+        RoomFactory.LinkRoomsTwoWay(abyssEntrance, theAbyss, ExitDirection.Enter);
+
 
         Player player = new()
         {
