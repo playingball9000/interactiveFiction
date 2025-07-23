@@ -1,14 +1,16 @@
 using System.Collections.Generic;
 
 [System.Serializable]
-public class Area
+public class Area : ILocation
 {
-    public string areaName;
+    public string displayName { get; set; }
     public List<Card> cards = new List<Card>();
+    public string internalCode { get; set; }
 
-    public Area(string areaName)
+    public Area(string displayName, string internalCode)
     {
-        this.areaName = areaName;
+        this.displayName = displayName;
+        this.internalCode = internalCode;
     }
 
     public void AddCard(Card card)

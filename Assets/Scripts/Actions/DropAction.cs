@@ -20,7 +20,7 @@ public class DropAction : IPlayerAction
             {
                 StoryTextHandler.invokeUpdateStoryDisplay("You drop " + item.GetDisplayName());
                 WorldState.GetInstance().player.RemoveFromInventory(item);
-                WorldState.GetInstance().player.currentLocation.AddItem(item);
+                WorldState.GetInstance().player.currentRoom.AddItem(item);
             },
             items => StoryTextHandler.invokeUpdateStoryDisplay(
                 "Are you trying to drop " + StringUtil.CreateOrSeparatedString(items.Select(item => item.GetDisplayName())))

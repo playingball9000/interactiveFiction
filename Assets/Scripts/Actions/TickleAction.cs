@@ -11,7 +11,7 @@ public class TickleAction : IPlayerAction
 
     void IPlayerAction.Execute(ActionInput actionInput)
     {
-        List<NPC> npcs = ActionUtil.FindMatchingNpcs(actionInput.mainClause, WorldState.GetInstance().player.currentLocation.npcs.ToList());
+        List<NPC> npcs = ActionUtil.FindMatchingNpcs(actionInput.mainClause, WorldState.GetInstance().player.currentRoom.npcs.ToList());
 
         ActionUtil.MatchZeroOneAndMany(
             npcs.Cast<NPC>().ToList(),

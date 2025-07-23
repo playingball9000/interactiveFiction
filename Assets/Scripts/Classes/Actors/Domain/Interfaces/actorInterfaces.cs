@@ -4,6 +4,7 @@ using System.Collections.Generic;
 public interface IActor
 { }
 
+//TODO: Probably should be an abstract class
 public interface NPC : IExaminable, IActor
 {
     public string dialogueFile { get; set; }

@@ -11,7 +11,7 @@ public class CloseAction : IPlayerAction
 
     void IPlayerAction.Execute(ActionInput actionInput)
     {
-        List<ContainerBase> roomContainers = ActionUtil.FindContainersInRoom(WorldState.GetInstance().player.currentLocation, actionInput.mainClause);
+        List<ContainerBase> roomContainers = ActionUtil.FindContainersInRoom(WorldState.GetInstance().player.currentRoom, actionInput.mainClause);
 
         ActionUtil.MatchZeroOneAndMany(
             roomContainers,

@@ -1,5 +1,4 @@
 
-using System.Collections.Generic;
 using System.Linq;
 
 public class UnlockAction : IPlayerAction
@@ -13,7 +12,7 @@ public class UnlockAction : IPlayerAction
     void IPlayerAction.Execute(ActionInput actionInput)
     {
         Player player = WorldState.GetInstance().player;
-        var roomExits = ActionUtil.FindPossibleExits(player.currentLocation.exits, actionInput.mainClause);
+        var roomExits = ActionUtil.FindPossibleExits(player.currentRoom.exits, actionInput.mainClause);
 
         ActionUtil.MatchZeroOneAndMany(
             roomExits,
@@ -30,10 +29,10 @@ public class UnlockAction : IPlayerAction
 
                     if (matchingKey)
                     {
-                        StoryTextHandler.invokeUpdateStoryDisplay("You unlock the way to " + exit.targetRoom.displayName);
+                        StoryTextHandler.invokeUpdateStoryDisplay("You unlock the way to " + exit.targetDestination.displayName);
 
                         exit.isLocked = false;
-                        Exit exitBack = exit.targetRoom.exits.FirstOrDefault(e => e.targetRoom == player.currentLocation);
+                        Exit exitBack = exit.DestinationRoom.exits.FirstOrDefault(e => e.targetDestination == player.currentRoom);
                         if (exitBack != null)
                         {
                             exitBack.isLocked = false;
@@ -41,12 +40,12 @@ public class UnlockAction : IPlayerAction
                     }
                     else
                     {
-                        StoryTextHandler.invokeUpdateStoryDisplay("You do not have the right key for " + exit.targetRoom.displayName);
+                        StoryTextHandler.invokeUpdateStoryDisplay("You do not have the right key for " + exit.targetDestination.displayName);
                     }
                 }
             },
             exits => StoryTextHandler.invokeUpdateStoryDisplay(
-                "Are you trying to unlock " + StringUtil.CreateOrSeparatedString(exits.Select(item => item.targetRoom.displayName)))
+                "Are you trying to unlock " + StringUtil.CreateOrSeparatedString(exits.Select(item => item.targetDestination.displayName)))
         );
     }
 }

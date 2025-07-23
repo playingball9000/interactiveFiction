@@ -41,7 +41,7 @@ public class ExamineAction : IPlayerAction
      */
     void IPlayerAction.Execute(ActionInput actionInput)
     {
-        List<IExaminable> examinables = WorldState.GetInstance().player.currentLocation.GetExaminableThings();
+        List<IExaminable> examinables = WorldState.GetInstance().player.currentRoom.GetExaminableThings();
         examinables.AddRange(WorldState.GetInstance().player.GetInventory());
 
         List<IExaminable> pm = ActionUtil.ProcessMainClauseFromEnd(actionInput.mainClause, examinables);

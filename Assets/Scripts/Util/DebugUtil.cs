@@ -7,7 +7,7 @@ public static class DebugUtil
     {
         LoggingUtil.Log($@" DEBUGUTIL - {System.Reflection.MethodBase.GetCurrentMethod().Name}
             {WorldState.GetInstance().player.ToString()}
-            {WorldState.GetInstance().player.currentLocation.ToString()}
+            {WorldState.GetInstance().player.currentRoom.ToString()}
             ");
 
     }

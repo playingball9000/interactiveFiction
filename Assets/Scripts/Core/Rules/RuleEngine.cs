@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using UnityEngine.EventSystems;
 
 // For multiple rules, use the rule engine, for single rule, can use rule.Evaluate()
 public static class RuleEngine
@@ -22,10 +21,21 @@ public static class RuleEngine
 
         rules.Add(new Rule()
             .AddCriteria(facts => Criterion.FactValueEquals(facts, RuleConstants.KEY_CONCEPT, RuleConstants.CONCEPT_ON_MOVE))
-            .AddCriteria(facts => Criterion.FactExists(facts, RuleConstants.KEY_ACTION_MOVED_TO_ROOM, RoomConstants.THE_ABYSS))
+            .AddCriteria(facts => Criterion.FactExists(facts, RuleConstants.KEY_ACTION_PLAYER_MOVED_TO_AREA, true))
             .SetAction(facts =>
             {
+                //TODO: Probably should be an event that does stuff
                 GameController.invokeShowExploreCanvas();
+            }));
+
+        rules.Add(new Rule()
+            .AddCriteria(facts => Criterion.FactValueEquals(facts, RuleConstants.KEY_CONCEPT, RuleConstants.CONCEPT_ON_MOVE))
+            .AddCriteria(facts => Criterion.FactExists(facts, RuleConstants.KEY_ACTION_PLAYER_MOVED_TO_ROOM, true))
+            .SetAction(facts =>
+            {
+                //TODO: Probably should be an event that does stuff
+                WorldState.GetInstance().player.currentRoom.DisplayRoomStoryText();
+
             }));
 
     }

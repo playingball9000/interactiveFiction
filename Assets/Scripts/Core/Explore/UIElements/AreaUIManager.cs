@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -18,9 +17,6 @@ public class AreaUIManager : MonoBehaviour
 
     public TaskMessageUI taskMessageUI;
 
-    // private Queue<UICard> cardQueue = new Queue<UICard>();
-    // private bool isWorking = false;
-
     public Transform cardContainer; // Parent object to hold card buttons
     public GameObject cardButtonPrefab; // Prefab for each card button
 
@@ -32,11 +28,6 @@ public class AreaUIManager : MonoBehaviour
         LoggingUtil.Log("AreaUIManager Enable");
 
         // Create example area and cards
-        currentArea = new Area("Castle");
-
-        currentArea.AddCard(new Card("Find the key", 10f));
-        currentArea.AddCard(new Card("Unlock the door", 5f));
-        currentArea.AddCard(new Card("Defeat the guard", 15f));
         GameController.invokeShowExploreCanvas += ShowCurrentArea;
     }
 
@@ -44,7 +35,9 @@ public class AreaUIManager : MonoBehaviour
 
     public void ShowCurrentArea()
     {
-        ShowArea(currentArea);
+        ExploreControl.IsTimeRunning = false;
+        // Assuming the player is in an area
+        ShowArea(WorldState.GetInstance().player.currentArea);
     }
 
     public void ShowArea(Area area)
@@ -73,20 +66,8 @@ public class AreaUIManager : MonoBehaviour
             Card selectedCard = card;
 
             // Set button callback
-            // cardUI.startButton.onClick.AddListener(() => StartCoroutine(StartCardTimer(selectedCard, cardUI)));
             cardUI.startButton.onClick.AddListener(() => EnqueueCard(selectedCard, cardUI));
 
-
-            // // Button btn = buttonObj.GetComponent<Button>();
-            // // Text btnText = buttonObj.GetComponentInChildren<Text>();
-            // // LoggingUtil.Log(card.title);
-            // // LoggingUtil.Log(btnText);// <---this is null
-
-            // // btnText.text = card.title;
-
-            // // Capture card in a local variable for closure
-            // Card selectedCard = card;
-            // btn.onClick.AddListener(() => StartCoroutine(StartCardTimer(selectedCard, buttonObj)));
         }
     }
 
@@ -112,12 +93,6 @@ public class AreaUIManager : MonoBehaviour
 
     void OnQueueItemCanceled(CardQueueUIEntry entry)
     {
-        // If it’s the currently running one, skip removal
-        // if (cardQueue.Count > 0 && cardQueue.Peek() == entry && isWorking)
-        // {
-        //     Debug.Log("Can't cancel running task.");
-        //     return;
-        // }
         CardQueueUIEntry currentRunningEntry = cardQueue.Peek();
         if (entry == currentRunningEntry)
         {
@@ -185,33 +160,11 @@ public class AreaUIManager : MonoBehaviour
         if (cardQueue.Count > 0)
         {
             ExploreControl.IsTimeRunning = true;
-            // isWorking = true;
         }
         else if (cardQueue.Count == 0)
         {
             ExploreControl.IsTimeRunning = false;
-            // isWorking = false;
         }
     }
 
-
-    private IEnumerator StartCardTimer(Card card, CardUI buttonObj)
-    {
-        buttonObj.startButton.interactable = false;
-        // Button btn = buttonObj.GetComponent<Button>();
-        // btn.interactable = false;
-
-        float timeRemaining = card.timeToComplete;
-
-        // Text btnText = buttonObj.GetComponentInChildren<Text>();
-
-        while (timeRemaining > 0)
-        {
-            buttonObj.progressText.text = $"{card.title} ({timeRemaining:F1}s)";
-            timeRemaining -= Time.deltaTime;
-            yield return null;
-        }
-
-        buttonObj.titleText.text = $"{card.title} (Completed!)";
-    }
 }

@@ -12,14 +12,14 @@ public class PutAction : IPlayerAction
     void IPlayerAction.Execute(ActionInput actionInput)
     {
         Player player = WorldState.GetInstance().player;
-        List<IItem> roomItems = player.currentLocation.GetRoomItems();
+        List<IItem> roomItems = player.currentRoom.GetRoomItems();
 
         List<IStorage> storages = new List<IStorage>
         {
-            player.currentLocation.roomItems,
+            player.currentRoom.roomItems,
             player.inventory
         };
-        storages.AddRange(player.currentLocation.GetRoomContainers());
+        storages.AddRange(player.currentRoom.GetRoomContainers());
 
         var (containerHoldingItem, items) = ActionUtil.FindItemsInAccessibleStorages(storages, actionInput.mainClause);
 
@@ -34,7 +34,7 @@ public class PutAction : IPlayerAction
             () => StoryTextHandler.invokeUpdateStoryDisplay("You can't put that"),
             item =>
             {
-                List<ContainerBase> containers = ActionUtil.FindContainersInRoom(player.currentLocation, actionInput.mainClause);
+                List<ContainerBase> containers = ActionUtil.FindContainersInRoom(player.currentRoom, actionInput.mainClause);
 
                 ActionUtil.MatchZeroOneAndMany(
                     containers,

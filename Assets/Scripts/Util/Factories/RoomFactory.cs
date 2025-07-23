@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 public static class RoomFactory
 {
-    // DO I need this?
+    //QUESTION: DO I need this?
     public static Room CreateRoom(
        string displayName,
        string description,
@@ -26,7 +26,7 @@ public static class RoomFactory
 
     public static void LinkRooms(Room from, Room to, ExitDirection direction, bool isLocked = false, string lockedText = "", string keyInternalCode = "")
     {
-        from.exits.Add(new Exit { exitDirection = direction, targetRoom = to, isLocked = isLocked, lockedText = lockedText, keyInternalCode = keyInternalCode });
+        from.exits.Add(new Exit { exitDirection = direction, targetDestination = to, isLocked = isLocked, lockedText = lockedText, keyInternalCode = keyInternalCode });
     }
 
     public static void LinkRoomsTwoWay(Room from, Room to, ExitDirection direction, bool isLocked = false, string lockedText = "", string keyInternalCode = "")

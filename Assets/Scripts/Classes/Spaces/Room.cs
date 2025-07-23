@@ -2,9 +2,9 @@ using System.Collections.Generic;
 using System.Linq;
 
 [System.Serializable]
-public class Room
+public class Room : ILocation
 {
-    public string displayName;
+    public string displayName { get; set; }
     public string description;
     public string internalCode { get; set; }
 
@@ -36,7 +36,7 @@ public class Room
 
         foreach (Exit exit in exits)
         {
-            otherRooms.Add($"{exit.targetRoom.displayName} [{(exit.isTargetAccessible() ? exit.exitDirection : exit.getNotAccessibleTag())}]");
+            otherRooms.Add($"{exit.targetDestination.displayName} [{(exit.isTargetAccessible() ? exit.exitDirection : exit.getNotAccessibleTag())}]");
         }
         return string.Join("\n", otherRooms.ToArray());
     }
@@ -115,11 +115,11 @@ public class Room
         string exitsPaths = StringUtil.CreateCommaSeparatedString(exits.Select(ex => ex.ToString()).ToList());
 
         string toString = $@"
-            roomName: {displayName}
-            description: {description}
-            npcNames: {npcNames}
-            itemNames: {itemNames}
-            exitsPaths: {exitsPaths}
+        roomName: {displayName}
+            -description: {description}
+            -npcNames: {npcNames}
+            -itemNames: {itemNames}
+            -exitsPaths: {exitsPaths}
         ";
 
         return toString;

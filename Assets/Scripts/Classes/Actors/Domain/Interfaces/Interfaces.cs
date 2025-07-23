@@ -55,3 +55,9 @@ public interface IOpenable
 {
     bool isOpen { get; set; }
 }
+
+public interface ILocation
+{
+    string displayName { get; }
+    string internalCode { get; }
+}
