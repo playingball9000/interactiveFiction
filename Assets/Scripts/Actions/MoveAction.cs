@@ -13,8 +13,13 @@ public class MoveAction : IPlayerAction
 
     void IPlayerAction.Execute(ActionInput actionInput)
     {
+        Player player = WorldState.GetInstance().player;
         string movement = actionInput.actionTaken;
-        List<Exit> roomExits = WorldState.GetInstance().player.currentLocation.exits.Where(e => StringUtil.EqualsIgnoreCase(e.exitDirection.ToString(), movement)).ToList();
+        LoggingUtil.Log(player.currentRoom);
+        List<Exit> roomExits = player.currentRoom.exits
+            .Where(e => StringUtil.EqualsIgnoreCase(e.exitDirection.ToString(), movement))
+            .ToList();
+
         if (StringUtil.EqualsIgnoreCase(movement, ExitDirection.Enter.ToString()))
         {
             roomExits = ActionUtil.FindPossibleExits(roomExits, actionInput.mainClause);
@@ -27,10 +32,10 @@ public class MoveAction : IPlayerAction
             {
                 if (exit.isTargetAccessible())
                 {
-                    QueryRunner.RunPreMoveFacts(WorldState.GetInstance().player.currentLocation);
-                    WorldState.GetInstance().player.currentLocation = exit.targetRoom;
-                    QueryRunner.RunPostMoveFacts(WorldState.GetInstance().player.currentLocation);
-                    WorldState.GetInstance().player.currentLocation.DisplayRoomStoryText();
+                    QueryRunner.RunPreMoveFacts(player.currentLocation);
+                    player.currentLocation = exit.targetDestination;
+                    // Display room text description used to be here but was moved to rules engine
+                    QueryRunner.RunPostMoveFacts(player.currentLocation);
                 }
                 else
                 {
@@ -38,7 +43,7 @@ public class MoveAction : IPlayerAction
                 }
             },
             exits => StoryTextHandler.invokeUpdateStoryDisplay(
-                "Are you trying to go to " + StringUtil.CreateOrSeparatedString(exits.Select(item => item.targetRoom.displayName)))
+                "Are you trying to go to " + StringUtil.CreateOrSeparatedString(exits.Select(item => item.targetDestination.displayName)))
         );
     }
 }

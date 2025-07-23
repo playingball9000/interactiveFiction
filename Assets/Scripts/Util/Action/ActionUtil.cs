@@ -36,7 +36,7 @@ public static class ActionUtil
     /// <summary>
     /// Searches a list of objects for a field value that matches the searchString
     /// </summary>
-    /// <param name="source">list to search ex. player.currentLocation.npcs </param>
+    /// <param name="source">list to search ex. player.currentRoom.npcs </param>
     /// <param name="propertySelector">field name on object to check ex. npc => npc.referenceName</param>
     /// <param name="searchString">word you are looking for ex. man</param>
     /// <typeparam name="T"></typeparam>
@@ -124,7 +124,7 @@ public static class ActionUtil
         while (mainClause.Count > 0 && processingCount < 3)
         {
             string word = DequeueFirstElement(mainClause);
-            pe = FindItemsFieldContainsString(pe, e => e.targetRoom.displayName, word);
+            pe = FindItemsFieldContainsString(pe, e => e.targetDestination.displayName, word);
 
             if (!pe.Any() || pe.Count == 1)
             {

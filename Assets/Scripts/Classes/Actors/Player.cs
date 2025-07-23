@@ -7,7 +7,12 @@ public class Player : IActor
 {
     public string playerName { get; set; }
     public string description { get; set; }
-    public Room currentLocation { get; set; }
+
+    public ILocation currentLocation;
+
+    public Room currentRoom => currentLocation as Room;
+    public Area currentArea => currentLocation as Area;
+
     public Inventory inventory = new();
     public List<IWearable> equipment { get; set; } = new();
     public int money { get; set; }
@@ -17,8 +22,11 @@ public class Player : IActor
 
     public List<Fact> GetPlayerFacts()
     {
-        List<Fact> playerFacts = new()
-            { new Fact { key = RuleConstants.KEY_CURRENT_ROOM, value = currentLocation.internalCode }};
+        List<Fact> playerFacts = new() {
+            new Fact { key = RuleConstants.KEY_CURRENT_ROOM, value = currentRoom?.internalCode ?? "None"},
+            new Fact { key = RuleConstants.KEY_CURRENT_AREA, value = currentArea?.internalCode ?? "None"}
+            };
+
         playerFacts.AddRange(inventory.contents.Select(item => new Fact { key = RuleConstants.KEY_IN_INVENTORY, value = item.internalCode }).ToList());
         playerFacts.AddRange(playerMemory.GetMemoryFacts());
         playerFacts.AddRange(relationships.Select(kvp => new Fact { key = "relationship_" + kvp.Key, value = kvp.Value.points }).ToList());
@@ -86,7 +94,7 @@ public class Player : IActor
     public override string ToString()
     {
         string toString = $@"
-            playerName: {playerName}
+        playerName: {playerName}
             description: {description}
             currentLocation: {currentLocation.displayName}
             {GetInventoryString()}

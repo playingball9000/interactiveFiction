@@ -23,14 +23,14 @@ public class GameInitializer : MonoBehaviour
         };
         RoomFactory.LinkRoomsTwoWay(abyssEntrance, startingCamp, ExitDirection.North);
 
-        Room theAbyss = new()
-        {
-            displayName = "The Abyss",
-            internalCode = RoomConstants.THE_ABYSS,
-            description = @"Once more into the fray..."
-        };
+        // Create example area and cards
+        Area currentArea = new Area("Abyss", "abyss_area");
 
-        RoomFactory.LinkRoomsTwoWay(abyssEntrance, theAbyss, ExitDirection.Enter);
+        currentArea.AddCard(new Card("Find the key", 10f));
+        currentArea.AddCard(new Card("Unlock the door", 5f));
+        currentArea.AddCard(new Card("Defeat the guard", 15f));
+
+        abyssEntrance.exits.Add(new Exit { exitDirection = ExitDirection.Enter, targetDestination = currentArea });
 
 
         Player player = new()
@@ -41,7 +41,7 @@ public class GameInitializer : MonoBehaviour
         };
 
 
-        // This is silly, i set npc.currentLocation but also room.addNpc also sets it... should be able to do it once...
+        // TODO:This is silly, i set npc.currentLocation but also room.addNpc also sets it... should be able to do it once...
         NPC npcGrace = new Grace
         {
             referenceName = "Grace",

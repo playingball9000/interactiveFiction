@@ -14,15 +14,15 @@ public class GiveAction : IPlayerAction
     void IPlayerAction.Execute(ActionInput actionInput)
     {
         Player player = WorldState.GetInstance().player;
-        List<IItem> roomItems = player.currentLocation.GetRoomItems();
+        List<IItem> roomItems = player.currentRoom.GetRoomItems();
 
         List<IStorage> storages = new List<IStorage>
         {
-            player.currentLocation.roomItems,
+            player.currentRoom.roomItems,
             player.inventory
         };
 
-        storages.AddRange(player.currentLocation.GetRoomContainers());
+        storages.AddRange(player.currentRoom.GetRoomContainers());
 
         var (containerHoldingItem, items) = ActionUtil.FindItemsInAccessibleStorages(storages, actionInput.mainClause);
 
@@ -31,7 +31,7 @@ public class GiveAction : IPlayerAction
             () => StoryTextHandler.invokeUpdateStoryDisplay("You can't give that"),
             item =>
             {
-                List<IExaminable> npcs = ActionUtil.ProcessMainClauseFromEnd(actionInput.mainClause, player.currentLocation.npcs.Cast<IExaminable>().ToList());
+                List<IExaminable> npcs = ActionUtil.ProcessMainClauseFromEnd(actionInput.mainClause, player.currentRoom.npcs.Cast<IExaminable>().ToList());
 
                 ActionUtil.MatchZeroOneAndMany(
                     npcs.Cast<NPC>().ToList(),

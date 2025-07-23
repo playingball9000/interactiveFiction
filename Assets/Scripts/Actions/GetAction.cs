@@ -15,9 +15,9 @@ public class GetAction : IPlayerAction
 
         List<IStorage> storages = new List<IStorage>
         {
-            player.currentLocation.roomItems
+            player.currentRoom.roomItems
         };
-        storages.AddRange(player.currentLocation.GetRoomContainers());
+        storages.AddRange(player.currentRoom.GetRoomContainers());
 
         var (containerHoldingItem, items) = ActionUtil.FindItemsInAccessibleStorages(storages, actionInput.mainClause);
 

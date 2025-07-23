@@ -11,7 +11,7 @@ public class TalkAction : IPlayerAction
 
     void IPlayerAction.Execute(ActionInput actionInput)
     {
-        List<IExaminable> npcs = ActionUtil.ProcessMainClauseFromEnd(actionInput.mainClause, WorldState.GetInstance().player.currentLocation.npcs.Cast<IExaminable>().ToList());
+        List<IExaminable> npcs = ActionUtil.ProcessMainClauseFromEnd(actionInput.mainClause, WorldState.GetInstance().player.currentRoom.npcs.Cast<IExaminable>().ToList());
 
         ActionUtil.MatchZeroOneAndMany(
             npcs.Cast<NPC>().ToList(),
