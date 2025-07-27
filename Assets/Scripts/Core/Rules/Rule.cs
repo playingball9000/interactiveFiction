@@ -9,19 +9,24 @@ A fact is a flat data structure (k/v pair) representing info about the game stat
 */
 public class Rule
 {
-    private readonly List<Func<IEnumerable<Fact>, bool>> criteria = new();
+    private readonly List<Criterion> criteria = new();
 
-    private Action<IEnumerable<Fact>> action;
+    private Action action;
 
     public string ruleName { get; set; }
 
-    public Rule AddCriteria(Func<IEnumerable<Fact>, bool> criterion)
+    public static Rule Create(string name = "")
+    {
+        return new Rule { ruleName = name };
+    }
+
+    public Rule AddCriteria(Criterion criterion)
     {
         this.criteria.Add(criterion);
         return this;
     }
 
-    public Rule SetAction(Action<IEnumerable<Fact>> action)
+    public Rule SetAction(Action action)
     {
         this.action = action;
         return this;
@@ -29,11 +34,24 @@ public class Rule
 
     public bool Evaluate(IEnumerable<Fact> facts)
     {
-        if (criteria.All(condition => condition(facts)))
+        if (criteria.All(c => c.Evaluate(facts)))
         {
-            action?.Invoke(facts);
+            action?.Invoke();
             return true;
         }
         return false;
+    }
+
+    public override string ToString()
+    {
+        string criteriaLogString = $"<b><color=orange>[Criteria]</color></b> {criteria.Count} total:\n";
+
+        for (int i = 0; i < criteria.Count; i++)
+        {
+            criteriaLogString += $"  • {criteria[i]}\n";
+        }
+        return $"<b><color=#FFD700>[Rule]</color></b>\n" +
+               $"  • Rule Name: <b>{ruleName}</b>\n" +
+               $"  • <b>{criteriaLogString}</b>\n";
     }
 }

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 
 //TODO: I feel like this should be some sort of interceptor or events driven thing...
 public static class QueryRunner
@@ -21,7 +22,7 @@ public static class QueryRunner
 
         // LoggingUtil.LogList(facts);
 
-        RuleEngine.Execute(facts);
+        RuleEngineRegistry.Get(RuleConstants.RULE_ENGINE_GENERAL).Execute(facts);
     }
 
     public static void RunPostMoveFacts(ILocation movedTo)
@@ -44,7 +45,7 @@ public static class QueryRunner
         }
         facts.AddRange(WorldState.GetInstance().player.GetPlayerFacts());
 
-        RuleEngine.Execute(facts);
+        RuleEngineRegistry.Get(RuleConstants.RULE_ENGINE_GENERAL).Execute(facts);
     }
 
     // public static void RunGiveFacts()
@@ -59,4 +60,27 @@ public static class QueryRunner
 
     //     RuleEngine.Execute(facts);
     // }
+
+    public static void RunCardCompleteFacts(List<Card> completedCards, List<Card> lockedCards)
+    {
+        List<Fact> facts = new()
+        {
+            Fact.Create(RuleConstants.KEY_CONCEPT, RuleConstants.CONCEPT_ON_CARD_COMPLETE)
+        };
+
+        facts.AddRange(completedCards.Select(c => Fact.Create(RuleConstants.KEY_CARD_COMPLETED, c.internalCode)).ToList());
+        facts.AddRange(WorldState.GetInstance().player.GetPlayerFacts());
+
+        // Set isLocked to NOT isUnlocked basically
+        lockedCards.ForEach(c => c.isLocked = !CardUnlocked(c, facts));
+        // Log.LogList(facts);
+
+    }
+
+    public static bool CardUnlocked(Card card, List<Fact> facts)
+    {
+        Rule rule = CardRulesRegistry.GetRule(card.internalCode);
+        return rule == null || rule.Evaluate(facts);
+    }
+
 }

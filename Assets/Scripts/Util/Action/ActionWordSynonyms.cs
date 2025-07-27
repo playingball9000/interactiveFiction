@@ -81,4 +81,9 @@ public class ActionWordSynonyms
         { "loadgame", ActionConstants.ACTION_LOADGAME },
         { "load", ActionConstants.ACTION_LOADGAME },
     };
+
+    public static string Get(string name)
+    {
+        return SynonymsDict.TryGetValue(name, out var action) ? action : null;
+    }
 }

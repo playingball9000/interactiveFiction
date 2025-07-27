@@ -42,8 +42,8 @@ public class GameController : MonoBehaviour
     {
         // LoggingUtil.Log("GameController Start");
         // using the delegate here to do other stuff attached to delegate
-        invokeShowMainCanvas();
-        // invokeShowExploreCanvas();
+        // invokeShowMainCanvas();
+        invokeShowExploreCanvas();
     }
 
 

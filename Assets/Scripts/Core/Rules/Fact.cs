@@ -5,8 +5,19 @@ public class Fact
     public string key { get; set; }
     public object value { get; set; }
 
+    public static Fact Create(string key, object value)
+    {
+        return new Fact { key = key, value = value };
+    }
+
     public override string ToString()
     {
-        return key + " : " + value;
+        string valueType = value != null ? value.GetType().Name : "null";
+        string displayValue = value != null ? value.ToString() : "<i>null</i>";
+
+        return $"<b><color=#87CEFA>[Fact]</color></b>\n" +
+               $"  • Key: <b>{key}</b>\n" +
+               $"  • Value: {displayValue}\n" +
+               $"  • Type: <i>{valueType}</i>";
     }
 }

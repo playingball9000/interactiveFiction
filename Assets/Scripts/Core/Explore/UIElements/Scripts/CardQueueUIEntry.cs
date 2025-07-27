@@ -14,10 +14,11 @@ public class CardQueueUIEntry : MonoBehaviour
     [HideInInspector] public Card cardData;
     [HideInInspector] public System.Action<CardQueueUIEntry> onCancelClicked;
 
-    public void Init(Card card, System.Action<CardQueueUIEntry> cancelCallback)
+    public void Init(CardUI cardUI, System.Action<CardQueueUIEntry> cancelCallback)
     {
-        cardData = card;
-        titleText.text = card.title;
+        cardData = cardUI.cardReference;
+        originalCardUI = cardUI;
+        titleText.text = cardUI.cardReference.title;
         onCancelClicked = cancelCallback;
         progressBar.value = 0f;
 
@@ -35,4 +36,11 @@ public class CardQueueUIEntry : MonoBehaviour
         progressBar.value = 1f;
         cancelButton.gameObject.SetActive(false);
     }
+
+    public override string ToString()
+    {
+        return $"<b><color=#FFD700>[CardQueueUIEntry]</color></b>\n" +
+               $"  • Title: <b>{titleText.text}</b>\n";
+    }
+
 }

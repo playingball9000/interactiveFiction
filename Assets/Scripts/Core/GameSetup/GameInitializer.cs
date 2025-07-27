@@ -7,6 +7,11 @@ public class GameInitializer : MonoBehaviour
     //Setup for the game here
     void Awake()
     {
+        CardRulesRegistry.Initialize(); // This needs to be run before the CardRegistry
+        CardRegistry.Initialize();
+        AreaRegistry.Initialize(); // Run after CardRegistry
+
+
         //TODO: probably a good idea to make a hashmap of all the rooms for easy lookup
         Room startingCamp = new()
         {
@@ -23,21 +28,17 @@ public class GameInitializer : MonoBehaviour
         };
         RoomFactory.LinkRoomsTwoWay(abyssEntrance, startingCamp, ExitDirection.North);
 
-        // Create example area and cards
-        Area currentArea = new Area("Abyss", "abyss_area");
 
-        currentArea.AddCard(new Card("Find the key", 10f));
-        currentArea.AddCard(new Card("Unlock the door", 5f));
-        currentArea.AddCard(new Card("Defeat the guard", 15f));
+        Area startArea = AreaRegistry.GetArea("abyss_area");
 
-        abyssEntrance.exits.Add(new Exit { exitDirection = ExitDirection.Enter, targetDestination = currentArea });
+        abyssEntrance.exits.Add(new Exit { exitDirection = ExitDirection.Enter, targetDestination = startArea });
 
 
         Player player = new()
         {
             playerName = "Player",
             description = "description",
-            currentLocation = startingCamp
+            currentLocation = startArea
         };
 
 
