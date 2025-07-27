@@ -80,14 +80,14 @@ public class PlayerInputHandler : MonoBehaviour
 
         inputTextArray = inputTextArray.Where(word => !prepositions.Contains(word)).ToArray();
 
-        string action = ActionWordSynonyms.SynonymsDict.TryGetValue(inputTextArray[0], out string actionString) ? actionString : null;
+        string action = ActionWordSynonyms.Get(inputTextArray[0]);
 
         if (action != null)
         {
             // LoggingUtil.Log("Player Action was : " + action + " | inputTextArray: " + actionInput.mainClause.Count);
             // LoggingUtil.LogList(inputTextArray.ToList());
 
-            IPlayerAction playerAction = ActionRegistry.ActionsDict[action];
+            IPlayerAction playerAction = ActionRegistry.Get(action);
 
             if (inputTextArray.Length < playerAction.minInputCount)
             {
@@ -108,7 +108,7 @@ public class PlayerInputHandler : MonoBehaviour
         }
         else
         {
-            LoggingUtil.Log("Action was null, no corresponding action for: " + inputTextArray[0]);
+            Log.Debug("Action was null, no corresponding action for: " + inputTextArray[0]);
             StoryTextHandler.invokeUpdateStoryDisplay(ActionUtil.GetUnknownCommandResponse());
         }
         ActivateAndClearField();

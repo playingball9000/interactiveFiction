@@ -25,6 +25,10 @@ public class ActionRegistry
     .Concat(CreateMoveActions<MoveAction>())
     .ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
 
+    public static IPlayerAction Get(string name)
+    {
+        return ActionsDict.TryGetValue(name, out var action) ? action : null;
+    }
 
     private static KeyValuePair<string, IPlayerAction> CreateAction<T>() where T : IPlayerAction, new()
     {

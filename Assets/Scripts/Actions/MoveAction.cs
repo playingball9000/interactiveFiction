@@ -15,7 +15,7 @@ public class MoveAction : IPlayerAction
     {
         Player player = WorldState.GetInstance().player;
         string movement = actionInput.actionTaken;
-        LoggingUtil.Log(player.currentRoom);
+        Log.Debug(player.currentRoom);
         List<Exit> roomExits = player.currentRoom.exits
             .Where(e => StringUtil.EqualsIgnoreCase(e.exitDirection.ToString(), movement))
             .ToList();

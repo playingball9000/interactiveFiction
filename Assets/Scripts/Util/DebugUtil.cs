@@ -5,7 +5,7 @@ public static class DebugUtil
 {
     public static void printPlayer()
     {
-        LoggingUtil.Log($@" DEBUGUTIL - {System.Reflection.MethodBase.GetCurrentMethod().Name}
+        Log.Debug($@" DEBUGUTIL - {System.Reflection.MethodBase.GetCurrentMethod().Name}
             {WorldState.GetInstance().player.ToString()}
             {WorldState.GetInstance().player.currentRoom.ToString()}
             ");
@@ -26,6 +26,6 @@ public static class DebugUtil
         Stopwatch stopwatch = Stopwatch.StartNew();
         action();
         stopwatch.Stop();
-        LoggingUtil.Log($"{description} completed in {stopwatch.ElapsedMilliseconds} ms");
+        Log.Debug($"{description} completed in {stopwatch.ElapsedMilliseconds} ms");
     }
 }

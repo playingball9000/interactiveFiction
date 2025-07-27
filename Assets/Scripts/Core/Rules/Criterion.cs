@@ -1,9 +1,32 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
-public static class Criterion
+public class Criterion
 {
+
+    public string Description { get; }
+    private readonly Func<IEnumerable<Fact>, bool> evaluator;
+
+    public Criterion(string description, Func<IEnumerable<Fact>, bool> evaluator)
+    {
+        Description = description;
+        this.evaluator = evaluator;
+    }
+
+    public static Criterion Create(string description, Func<IEnumerable<Fact>, bool> evaluator)
+    {
+        return new Criterion(description, evaluator);
+    }
+
+    public bool Evaluate(IEnumerable<Fact> facts) => evaluator(facts);
+
+    public override string ToString()
+    {
+        return $"<b><color=#FFA07A>[Criterion]</color></b> {Description}";
+    }
+
     public static Fact FindFirstFact(IEnumerable<Fact> facts, string key)
     {
         return facts.FirstOrDefault(f => f.key == key);
@@ -12,12 +35,6 @@ public static class Criterion
     public static List<Fact> FindAllFacts(IEnumerable<Fact> facts, string key)
     {
         return facts.Where(f => f.key == key).ToList();
-    }
-
-    public static bool FactValueEquals(IEnumerable<Fact> facts, string key, object value)
-    {
-        Fact fact = FindFirstFact(facts, key);
-        return fact != null && fact.value.Equals(value);
     }
 
     public static bool FactValueGreaterThan<T>(IEnumerable<Fact> facts, string key, T value) where T : IComparable

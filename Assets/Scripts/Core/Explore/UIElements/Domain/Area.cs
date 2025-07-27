@@ -17,4 +17,12 @@ public class Area : ILocation
     {
         cards.Add(card);
     }
+
+    public override string ToString()
+    {
+        return $@"
+        displayName: {displayName}
+        internalCode: {internalCode}
+        ";
+    }
 }

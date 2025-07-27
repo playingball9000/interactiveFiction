@@ -17,7 +17,7 @@ public static class SaveManager
         string dataToSave = Convert.ToBase64String(memoryStream.ToArray());
         PlayerPrefs.SetString(SaveKey, dataToSave);
         PlayerPrefs.Save();
-        LoggingUtil.Log("Game saved successfully.");
+        Log.Debug("Game saved successfully.");
     }
 
     public static WorldState LoadGame()
@@ -43,7 +43,7 @@ public static class SaveManager
             {
                 dataToReturn = default;
             }
-            LoggingUtil.Log("Game loaded successfully.");
+            Log.Debug("Game loaded successfully.");
             return dataToReturn;
         }
         Debug.Log("No save found.");
