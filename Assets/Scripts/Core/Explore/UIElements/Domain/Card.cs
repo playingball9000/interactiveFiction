@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-
 [System.Serializable]
 public class Card
 {
@@ -9,21 +7,12 @@ public class Card
 
     public bool isLocked = true;
     public bool isComplete = false;
-    public Rule unlockRule;
 
     public Card(string title, float timeToComplete, string internalCode)
     {
         this.title = title;
         this.timeToComplete = timeToComplete;
-        this.unlockRule = CardRulesRegistry.GetRule(internalCode);
         this.internalCode = internalCode;
-
-        isLocked = unlockRule != null;
-    }
-
-    public void RefreshIsLocked(List<Fact> cardFacts)
-    {
-        isLocked = !unlockRule.Evaluate(cardFacts);
     }
 
     public override string ToString()
@@ -33,8 +22,7 @@ public class Card
                $"  • Code: {internalCode}\n" +
                $"  • Time to Complete: {timeToComplete:F1}s\n" +
                $"  • Locked: {(isLocked ? "<color=red>Yes</color>" : "<color=green>No</color>")}\n" +
-               $"  • Complete: {(isComplete ? "<color=green>Yes</color>" : "<color=grey>No</color>")}\n" +
-               $"  • Rule: {(unlockRule != null ? unlockRule.GetType().Name : "<i>None</i>")}";
+               $"  • Complete: {(isComplete ? "<color=green>Yes</color>" : "<color=grey>No</color>")}\n";
     }
 
 }

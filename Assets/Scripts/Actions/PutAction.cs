@@ -11,8 +11,7 @@ public class PutAction : IPlayerAction
 
     void IPlayerAction.Execute(ActionInput actionInput)
     {
-        Player player = WorldState.GetInstance().player;
-        List<IItem> roomItems = player.currentRoom.GetRoomItems();
+        Player player = PlayerContext.Get;
 
         List<IStorage> storages = new List<IStorage>
         {

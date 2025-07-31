@@ -4,7 +4,8 @@ using System.Collections.Generic;
 public class WorldState
 {
     public Player player;
-    public List<Room> rooms = new();
+    public List<Room> roomsData = new();
+    public List<Area> areasData = new();
     public List<NPC> npcs = new();
 
     public bool FLAG_dialogWindowActive = false;
@@ -24,4 +25,9 @@ public class WorldState
     {
         instance = worldState;
     }
+}
+
+public static class PlayerContext
+{
+    public static Player Get => WorldState.GetInstance().player;
 }

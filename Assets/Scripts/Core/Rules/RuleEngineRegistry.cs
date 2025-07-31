@@ -37,9 +37,9 @@ public static class RuleEngineRegistry
                     UiConstants.EFFECT_TYPEWRITER);
             }));
 
-        engine.AddRule(Rule.Create()
+        engine.AddRule(Rule.Create("Player moves from Room to Area")
             .WhenAll(
-                FactIsEqual(KEY_CONCEPT, CONCEPT_ON_MOVE),
+                FactExists(KEY_CONCEPT, CONCEPT_ON_MOVE),
                 FactIsTrue(KEY_ACTION_PLAYER_MOVED_TO_AREA)
             )
             .Do(() =>
@@ -48,15 +48,15 @@ public static class RuleEngineRegistry
                 GameController.invokeShowExploreCanvas();
             }));
 
-        engine.AddRule(Rule.Create()
+        engine.AddRule(Rule.Create("Player moves from Room to ROom")
             .WhenAll(
-                FactIsEqual(KEY_CONCEPT, CONCEPT_ON_MOVE),
+                FactExists(KEY_CONCEPT, CONCEPT_ON_MOVE),
                 FactIsTrue(KEY_ACTION_PLAYER_MOVED_TO_ROOM)
             )
             .Do(() =>
             {
                 //TODO: Probably should be an event that does stuff
-                WorldState.GetInstance().player.currentRoom.DisplayRoomStoryText();
+                PlayerContext.Get.currentRoom.DisplayRoomStoryText();
             }));
 
         Register(RULE_ENGINE_GENERAL, engine);

@@ -1,6 +1,8 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
+
+using static FactExtensions;
+using static RuleConstants;
 
 public static class RuleExtensions
 {
@@ -31,7 +33,13 @@ public static class RuleExtensions
             rule = rule.And(condition);
         }
         return rule;
-        // return rule.AddCriteria(Criterion.Create("", facts => conditions.All(condition => condition.Evaluate(facts))));
-        // return rule.AddCriteria(facts => conditions.All(condition => condition(facts)));
+    }
+
+    public static Rule CardIsComplete(this Rule rule, string cardCode)
+    {
+        return rule.WhenAll(
+            FactExists(KEY_CONCEPT, CONCEPT_ON_CARD_COMPLETE),
+            FactExists(KEY_CARD_COMPLETED, cardCode)
+        );
     }
 }

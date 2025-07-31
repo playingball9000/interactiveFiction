@@ -9,7 +9,7 @@ public class InventoryAction : IPlayerAction
 
     void IPlayerAction.Execute(ActionInput actionInput)
     {
-        Player player = WorldState.GetInstance().player;
+        Player player = PlayerContext.Get;
         string moneyString = $"Money: {player.money}";
         string inventoryString = player.GetInventoryString();
         string equipString = player.GetEquipmentToString();

@@ -11,14 +11,17 @@ public class GetAction : IPlayerAction
 
     void IPlayerAction.Execute(ActionInput actionInput)
     {
-        Player player = WorldState.GetInstance().player;
+        Player player = PlayerContext.Get;
 
+        // roomItems is itself a type of IStorage that holds the items in the room
         List<IStorage> storages = new List<IStorage>
         {
             player.currentRoom.roomItems
         };
+        // GetRoomContainers gets the containers in the room like bags
         storages.AddRange(player.currentRoom.GetRoomContainers());
 
+        // We want to search all items in the room and accessible containers
         var (containerHoldingItem, items) = ActionUtil.FindItemsInAccessibleStorages(storages, actionInput.mainClause);
 
         ActionUtil.MatchZeroOneAndMany(

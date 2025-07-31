@@ -7,10 +7,10 @@ public class GameInitializer : MonoBehaviour
     //Setup for the game here
     void Awake()
     {
-        CardRulesRegistry.Initialize(); // This needs to be run before the CardRegistry
         CardRegistry.Initialize();
         AreaRegistry.Initialize(); // Run after CardRegistry
 
+        CardUtil.InitialUnlockCards();
 
         //TODO: probably a good idea to make a hashmap of all the rooms for easy lookup
         Room startingCamp = new()
@@ -26,6 +26,10 @@ public class GameInitializer : MonoBehaviour
             internalCode = RoomConstants.ABYSS_ENTRANCE,
             description = @"Here, the ground falls away into a vast, gaping darkness. Jagged rock walls curve inward, forming what looks like an enormous throat. Peering down, you catch glimpses of the first layer: lush, tangled vegetation clings to sheer walls."
         };
+
+        RoomRegistry.Register(startingCamp);
+        RoomRegistry.Register(abyssEntrance);
+
         RoomFactory.LinkRoomsTwoWay(abyssEntrance, startingCamp, ExitDirection.North);
 
 
@@ -38,7 +42,8 @@ public class GameInitializer : MonoBehaviour
         {
             playerName = "Player",
             description = "description",
-            currentLocation = startArea
+            // currentLocation = startArea
+            currentLocation = abyssEntrance
         };
 
 
@@ -144,9 +149,7 @@ public class GameInitializer : MonoBehaviour
         // player.AddToInventory(masterKey);
 
         WorldState.GetInstance().player = player;
-
-        WorldState.GetInstance().rooms.Add(abyssEntrance);
-        WorldState.GetInstance().rooms.Add(startingCamp);
+        WorldState.GetInstance().roomsData.AddRange(RoomRegistry.GetAllRooms());
     }
 
     // Put stuff that happens at the start of the game here

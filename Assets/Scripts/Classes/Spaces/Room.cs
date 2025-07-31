@@ -114,13 +114,14 @@ public class Room : ILocation
         string itemNames = StringUtil.CreateCommaSeparatedString(roomItems.contents.Select(item => item.referenceName).ToList());
         string exitsPaths = StringUtil.CreateCommaSeparatedString(exits.Select(ex => ex.ToString()).ToList());
 
-        string toString = $@"
-        roomName: {displayName}
-            -description: {description}
-            -npcNames: {npcNames}
-            -itemNames: {itemNames}
-            -exitsPaths: {exitsPaths}
-        ";
+        string toString =
+            $"<b><color=#8B4513>[Room]</color></b>\n" +
+            $"  • Name: <b>{displayName}</b>\n" +
+            $"  • Code: {internalCode}\n" +
+            $"  • Description: {description}\n" +
+            $"  • NPCs: {npcNames}\n" +
+            $"  • Items: {itemNames}\n" +
+            $"  • Exits: {exitsPaths}\n";
 
         return toString;
     }

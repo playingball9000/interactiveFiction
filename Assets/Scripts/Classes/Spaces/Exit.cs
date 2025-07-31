@@ -18,10 +18,10 @@ public class Exit : Portal
 
     public override string ToString()
     {
-        string toString = $@"
-            -exitDirection: {exitDirection.ToString()}
-            -targetRoomName: {targetDestination.displayName}
-            ";
+        string toString =
+            $"<b><color=#8B4513>[Room]</color></b>\n" +
+            $"  • Direction: <b>{exitDirection}</b>\n" +
+            $"  • Target Room: {targetDestination.displayName}\n";
         return toString;
     }
 }

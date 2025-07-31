@@ -12,8 +12,8 @@ public class UnequipAction : IPlayerAction
     void IPlayerAction.Execute(ActionInput actionInput)
     {
         //TODO: how to unequip npcs?
-        Player player = WorldState.GetInstance().player;
-        List<IExaminable> items = ActionUtil.ProcessMainClauseFromEnd(actionInput.mainClause, player.equipment.Cast<IExaminable>().ToList());
+        Player player = PlayerContext.Get;
+        List<IExaminable> items = ActionUtil.ProcessMainClauseFromEnd(actionInput.mainClause, player.equipment.Cast<IExaminable>());
         List<WearableBase> wearables = items.OfType<WearableBase>().ToList();
 
         ActionUtil.MatchZeroOneAndMany(

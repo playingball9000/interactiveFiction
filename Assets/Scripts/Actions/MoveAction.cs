@@ -13,13 +13,13 @@ public class MoveAction : IPlayerAction
 
     void IPlayerAction.Execute(ActionInput actionInput)
     {
-        Player player = WorldState.GetInstance().player;
+        Player player = PlayerContext.Get;
         string movement = actionInput.actionTaken;
-        Log.Debug(player.currentRoom);
         List<Exit> roomExits = player.currentRoom.exits
             .Where(e => StringUtil.EqualsIgnoreCase(e.exitDirection.ToString(), movement))
             .ToList();
 
+        // Enter is special because you need to enter "somewhere"
         if (StringUtil.EqualsIgnoreCase(movement, ExitDirection.Enter.ToString()))
         {
             roomExits = ActionUtil.FindPossibleExits(roomExits, actionInput.mainClause);

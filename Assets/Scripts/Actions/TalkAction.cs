@@ -11,10 +11,11 @@ public class TalkAction : IPlayerAction
 
     void IPlayerAction.Execute(ActionInput actionInput)
     {
-        List<IExaminable> npcs = ActionUtil.ProcessMainClauseFromEnd(actionInput.mainClause, WorldState.GetInstance().player.currentRoom.npcs.Cast<IExaminable>().ToList());
+        var npcs = PlayerContext.Get.currentRoom.npcs.Cast<IExaminable>();
+        List<IExaminable> npcMatch = ActionUtil.ProcessMainClauseFromEnd(actionInput.mainClause, npcs);
 
         ActionUtil.MatchZeroOneAndMany(
-            npcs.Cast<NPC>().ToList(),
+            npcMatch.Cast<NPC>().ToList(),
             () => StoryTextHandler.invokeUpdateStoryDisplay("You can't talk to that"),
             npc =>
             {

@@ -9,4 +9,12 @@ public class CardUI : MonoBehaviour
     public Button startButton;
     public Slider progressBar;
     public Card cardReference;
+
+    public void Init(Card card, System.Action<CardUI> callback)
+    {
+        cardReference = card;
+        titleText.text = card.title;
+        progressText.text = $"Ready";
+        startButton.onClick.AddListener(() => callback?.Invoke(this));
+    }
 }

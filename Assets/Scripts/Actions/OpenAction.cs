@@ -11,7 +11,7 @@ public class OpenAction : IPlayerAction
 
     void IPlayerAction.Execute(ActionInput actionInput)
     {
-        List<ContainerBase> roomContainers = ActionUtil.FindContainersInRoom(WorldState.GetInstance().player.currentRoom, actionInput.mainClause);
+        List<ContainerBase> roomContainers = ActionUtil.FindContainersInRoom(PlayerContext.Get.currentRoom, actionInput.mainClause);
         ActionUtil.MatchZeroOneAndMany(
             roomContainers,
             () => StoryTextHandler.invokeUpdateStoryDisplay("You can't open that"),
