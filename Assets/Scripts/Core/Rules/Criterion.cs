@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEngine;
 
 public class Criterion
 {
@@ -24,7 +23,7 @@ public class Criterion
 
     public override string ToString()
     {
-        return $"<b><color=#FFA07A>[Criterion]</color></b> {Description}";
+        return $"<b><color=#FFA07A>[Criterion]</color></b>={Description}";
     }
 
     public static Fact FindFirstFact(IEnumerable<Fact> facts, string key)

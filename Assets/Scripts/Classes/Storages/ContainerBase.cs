@@ -75,11 +75,11 @@ public class ContainerBase : IStorage, IItem, IOpenable, IExaminable
 
     public override string ToString()
     {
-        string toString = $@"
-            GetDisplayName: {GetDisplayName()}
-            isAccessible: {isAccessible()}
-            {ContentsToString()}
-";
+        string toString =
+            $"<b><color=#8B4513>[Container]</color></b>\n" +
+            $"  • Name: <b>{GetDisplayName()}</b>\n" +
+            $"  • Accessible: {isAccessible()}\n" +
+            $"  • Contents: {ContentsToString()}\n";
         return toString;
     }
 }

@@ -18,7 +18,7 @@ public static class QueryRunner
             Room r = (Room)movedFrom;
             facts.AddRange(r.GetRoomFacts());
         }
-        facts.AddRange(WorldState.GetInstance().player.GetPlayerFacts());
+        facts.AddRange(PlayerContext.Get.GetPlayerFacts());
 
         // LoggingUtil.LogList(facts);
 
@@ -43,7 +43,7 @@ public static class QueryRunner
         {
             facts.Add(new Fact { key = RuleConstants.KEY_ACTION_PLAYER_MOVED_TO_AREA, value = true });
         }
-        facts.AddRange(WorldState.GetInstance().player.GetPlayerFacts());
+        facts.AddRange(PlayerContext.Get.GetPlayerFacts());
 
         RuleEngineRegistry.Get(RuleConstants.RULE_ENGINE_GENERAL).Execute(facts);
     }
@@ -69,18 +69,14 @@ public static class QueryRunner
         };
 
         facts.AddRange(completedCards.Select(c => Fact.Create(RuleConstants.KEY_CARD_COMPLETED, c.internalCode)).ToList());
-        facts.AddRange(WorldState.GetInstance().player.GetPlayerFacts());
+        facts.AddRange(PlayerContext.Get.GetPlayerFacts());
 
         // Set isLocked to NOT isUnlocked basically
-        lockedCards.ForEach(c => c.isLocked = !CardUnlocked(c, facts));
+        lockedCards.ForEach(c => c.isLocked = !CardUtil.IsCardUnlocked(c, facts));
         // Log.LogList(facts);
 
     }
 
-    public static bool CardUnlocked(Card card, List<Fact> facts)
-    {
-        Rule rule = CardRulesRegistry.GetRule(card.internalCode);
-        return rule == null || rule.Evaluate(facts);
-    }
+
 
 }

@@ -69,8 +69,7 @@ public class QueueManager : MonoBehaviour
         while (cardQueue.Count > 0)
         {
             CardQueueUIEntry currentQueueUIEntry = cardQueue.Peek();
-            Log.Debug("PEEK" + currentQueueUIEntry);
-            Log.GameObject(currentQueueUIEntry.originalCardUI.gameObject);
+            // Log.Debug("PEEK" + currentQueueUIEntry);
 
             float duration = currentQueueUIEntry.cardData.timeToComplete;
             float timeLeft = duration;
@@ -83,8 +82,7 @@ public class QueueManager : MonoBehaviour
                 timeLeft -= Time.deltaTime;
                 yield return null;
             }
-            Log.Debug("POST COMPLETE CARD" + currentQueueUIEntry.originalCardUI.cardReference);
-            Log.GameObject(currentQueueUIEntry.originalCardUI.gameObject);
+            // Log.Debug("POST COMPLETE CARD" + currentQueueUIEntry.originalCardUI.cardReference);
 
             currentQueueUIEntry.MarkComplete();
             cardQueue.Dequeue();
@@ -102,7 +100,6 @@ public class QueueManager : MonoBehaviour
 
     void OnQueueStateChanged()
     {
-        // LoggingUtil.Log("OnQueueStateChanged - cardQueue=" + cardQueue.Count);
         if (cardQueue.Count > 0)
         {
             ExploreControl.IsTimeRunning = true;

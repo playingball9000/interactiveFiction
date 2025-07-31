@@ -93,12 +93,11 @@ public class Player : IActor
 
     public override string ToString()
     {
-        string toString = $@"
-        playerName: {playerName}
-            description: {description}
-            currentLocation: {currentLocation.displayName}
-            {GetInventoryString()}
-";
+        string toString =
+            $"<b><color=#8B4513>[Player]</color></b>\n" +
+            $"  • Location: {currentLocation.displayName}\n" +
+            $"  • Inventory: {GetInventoryString()}\n";
+
         return toString;
     }
 }

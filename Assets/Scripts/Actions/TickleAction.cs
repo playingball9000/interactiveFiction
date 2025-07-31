@@ -11,10 +11,11 @@ public class TickleAction : IPlayerAction
 
     void IPlayerAction.Execute(ActionInput actionInput)
     {
-        List<NPC> npcs = ActionUtil.FindMatchingNpcs(actionInput.mainClause, WorldState.GetInstance().player.currentRoom.npcs.ToList());
+        var npcs = PlayerContext.Get.currentRoom.npcs.Cast<IExaminable>();
+        List<IExaminable> npcMatch = ActionUtil.ProcessMainClauseFromEnd(actionInput.mainClause, npcs);
 
         ActionUtil.MatchZeroOneAndMany(
-            npcs.Cast<NPC>().ToList(),
+            npcMatch.Cast<NPC>().ToList(),
             () => StoryTextHandler.invokeUpdateStoryDisplay("You can't tickle that"),
             npc =>
             {

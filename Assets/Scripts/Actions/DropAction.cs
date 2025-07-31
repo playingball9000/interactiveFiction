@@ -11,16 +11,18 @@ public class DropAction : IPlayerAction
 
     void IPlayerAction.Execute(ActionInput actionInput)
     {
-        List<IExaminable> items = ActionUtil.ProcessMainClauseFromEnd(actionInput.mainClause, WorldState.GetInstance().player.GetInventory().Cast<IExaminable>().ToList());
+        Player player = PlayerContext.Get;
+        var inventory = player.GetInventory().OfType<IExaminable>();
+        List<IExaminable> items = ActionUtil.ProcessMainClauseFromEnd(actionInput.mainClause, inventory);
 
         ActionUtil.MatchZeroOneAndMany(
-            items.Cast<IItem>().ToList(),
+            items.OfType<IItem>().ToList(),
             () => StoryTextHandler.invokeUpdateStoryDisplay("You can't drop that"),
             item =>
             {
                 StoryTextHandler.invokeUpdateStoryDisplay("You drop " + item.GetDisplayName());
-                WorldState.GetInstance().player.RemoveFromInventory(item);
-                WorldState.GetInstance().player.currentRoom.AddItem(item);
+                player.RemoveFromInventory(item);
+                player.currentRoom.AddItem(item);
             },
             items => StoryTextHandler.invokeUpdateStoryDisplay(
                 "Are you trying to drop " + StringUtil.CreateOrSeparatedString(items.Select(item => item.GetDisplayName())))

@@ -17,12 +17,11 @@ public class Area : ILocation
     {
         cards.Add(card);
     }
-
     public override string ToString()
     {
-        return $@"
-        displayName: {displayName}
-        internalCode: {internalCode}
-        ";
+        return $"<b><color=#1E90FF>[Area]</color></b>\n" +
+               $"  • Name: <b>{displayName}</b>\n" +
+               $"  • Code: {internalCode}\n" +
+               $"  • Cards: {cards?.Count ?? 0}";
     }
 }

@@ -74,8 +74,8 @@ public class DialogueParser : MonoBehaviour
         GameController.invokeShowDialogueCanvas();
 
         //TODO: Finish gathering facts here, npc, location, world, context, etc
-        dialogueFacts.AddRange(WorldState.GetInstance().player.currentRoom.GetRoomFacts());
-        dialogueFacts.AddRange(WorldState.GetInstance().player.GetPlayerFacts());
+        dialogueFacts.AddRange(PlayerContext.Get.currentRoom.GetRoomFacts());
+        dialogueFacts.AddRange(PlayerContext.Get.GetPlayerFacts());
 
         dialogueGraph = DialogueBuilder.BuildDialogue(npc.dialogueFile);
         DisplayDialogue();

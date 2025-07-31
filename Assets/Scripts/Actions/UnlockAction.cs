@@ -11,7 +11,7 @@ public class UnlockAction : IPlayerAction
 
     void IPlayerAction.Execute(ActionInput actionInput)
     {
-        Player player = WorldState.GetInstance().player;
+        Player player = PlayerContext.Get;
         var roomExits = ActionUtil.FindPossibleExits(player.currentRoom.exits, actionInput.mainClause);
 
         ActionUtil.MatchZeroOneAndMany(

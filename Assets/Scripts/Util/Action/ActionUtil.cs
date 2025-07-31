@@ -142,7 +142,7 @@ public static class ActionUtil
     /// <param name="mainClause"></param>
     /// <param name="examinables"></param>
     /// <returns>List of items matching the words in mainClause</returns>
-    public static List<IExaminable> ProcessMainClauseFromEnd(List<string> mainClause, List<IExaminable> examinables)
+    public static List<IExaminable> ProcessMainClauseFromEnd(List<string> mainClause, IEnumerable<IExaminable> examinables)
     {
         /*
             I just need to walk myself through this logic.

@@ -11,9 +11,11 @@ public class EquipAction : IPlayerAction
 
     void IPlayerAction.Execute(ActionInput actionInput)
     {
-        //TODO: do i need all these toList() everywhere, use var or ienumerator
-        Player player = WorldState.GetInstance().player;
-        List<IExaminable> items = ActionUtil.ProcessMainClauseFromEnd(actionInput.mainClause, player.GetInventory().Cast<IExaminable>().ToList());
+        //do i need all these toList() everywhere? Yes because I use Count() and First() which are tuned for List
+        Player player = PlayerContext.Get;
+        var inventory = player.GetInventory().OfType<IExaminable>();
+
+        List<IExaminable> items = ActionUtil.ProcessMainClauseFromEnd(actionInput.mainClause, inventory);
         List<WearableBase> wearables = items.OfType<WearableBase>().ToList();
 
         ActionUtil.MatchZeroOneAndMany(

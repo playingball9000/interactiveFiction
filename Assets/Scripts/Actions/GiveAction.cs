@@ -13,9 +13,9 @@ public class GiveAction : IPlayerAction
     //TODO: Should probably handle "give man the bar" phrasing as well
     void IPlayerAction.Execute(ActionInput actionInput)
     {
-        Player player = WorldState.GetInstance().player;
-        List<IItem> roomItems = player.currentRoom.GetRoomItems();
+        Player player = PlayerContext.Get;
 
+        // You can give from any "storage" in the room, might want to change that...
         List<IStorage> storages = new List<IStorage>
         {
             player.currentRoom.roomItems,
