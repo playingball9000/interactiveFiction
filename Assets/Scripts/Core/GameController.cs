@@ -26,24 +26,25 @@ public class GameController : MonoBehaviour
 
     private void OnEnable()
     {
-        GameController.invokeShowDialogueCanvas += ShowDialogueCanvas;
-        GameController.invokeShowMainCanvas += ShowMainCanvas;
-        GameController.invokeShowExploreCanvas += ShowExploreCanvas;
+        invokeShowDialogueCanvas += ShowDialogueCanvas;
+        invokeShowMainCanvas += ShowMainCanvas;
+        invokeShowExploreCanvas += ShowExploreCanvas;
+
+        GameEvents.OnEnterArea += ShowExploreCanvas;
+        GameEvents.OnDieInArea += ResetPlayerOnDeath;
     }
 
     private void OnDisable()
     {
-        GameController.invokeShowDialogueCanvas -= ShowDialogueCanvas;
-        GameController.invokeShowMainCanvas -= ShowMainCanvas;
-        GameController.invokeShowExploreCanvas -= ShowExploreCanvas;
+        invokeShowDialogueCanvas -= ShowDialogueCanvas;
+        invokeShowMainCanvas -= ShowMainCanvas;
+        invokeShowExploreCanvas -= ShowExploreCanvas;
     }
 
     void Start()
     {
-        // LoggingUtil.Log("GameController Start");
-        // using the delegate here to do other stuff attached to delegate
-        invokeShowMainCanvas();
-        // invokeShowExploreCanvas();
+        // invokeShowMainCanvas();
+        invokeShowExploreCanvas();
     }
 
 
@@ -66,10 +67,20 @@ public class GameController : MonoBehaviour
 
     public void ShowExploreCanvas()
     {
-        WorldState.GetInstance().FLAG_dialogWindowActive = true;
+        WorldState.GetInstance().FLAG_dialogWindowActive = false;
         dialogueCanvas.gameObject.SetActive(false);
         mainDisplayCanvas.gameObject.SetActive(false);
         exploreCanvas.gameObject.SetActive(true);
+    }
+
+    public void ResetPlayerOnDeath()
+    {
+        PlayerContext.Get.currentLocation = RoomRegistry.GetRoom(RoomConstants.STARTING_CAMP);
+        // Always call the delegate to do all the related stuff
+        invokeShowMainCanvas();
+        CoroutineRunner.Instance.RunCoroutine(CommonCoroutines.Wait(0.5f));
+        StoryTextHandler.invokeUpdateStoryDisplay("\nYou died... but it is not the end.\n", UiConstants.EFFECT_TYPEWRITER);
+
     }
 
 }

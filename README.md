@@ -84,6 +84,22 @@
 3. Criteria - A test for a Fact. ex. exists("in_inventory", "book") or equals("concept", "onMove")
 4. Rule - A list of criteria. When a query satisfies the rule, a corresponding action will be done.
 
+Make use of the DSL for more concise and clearly written rules.
+
+## Areas and Cards
+
+Areas have cards.
+Cards have certain times to complete.
+There is a queue that running cards go in.
+
+Cards are tied to rules (for unlocking) and actions (to do when cards complete) by their respective registries. Rules are defined and run the same way as the above rule engines.
+
+Bars are tick based, but can be modified.
+
+## Events
+
+Events are used mostly to chnage canvases.
+
 ## Other
 
 1. Certain classes have an internalCode field. This is for use for referencing it in the code, for example in the rule engine as opposed what is displayed on the UI.

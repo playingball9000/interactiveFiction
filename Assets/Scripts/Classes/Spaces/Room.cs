@@ -76,9 +76,10 @@ public class Room : ILocation
     public List<Fact> GetRoomFacts()
     {
         List<Fact> roomFacts = new();
-        npcs.ForEach(npc => roomFacts.Add(new Fact { key = RuleConstants.KEY_IN_ROOM_NPC, value = npc.internalCode }));
-        roomItems.contents.ForEach(item => roomFacts.Add(new Fact { key = RuleConstants.KEY_IN_ROOM_ITEM, value = item.internalCode }));
-
+        roomFacts.AddRange(npcs
+            .Select(npc => new Fact { key = RuleConstants.KEY_IN_ROOM_NPC, value = npc.internalCode }));
+        roomFacts.AddRange(roomItems.contents
+            .Select(item => new Fact { key = RuleConstants.KEY_IN_ROOM_ITEM, value = item.internalCode }));
         return roomFacts;
     }
 

@@ -2,12 +2,11 @@ using UnityEngine;
 
 public class FoodBar : TickBarBase
 {
-    [SerializeField] private int tickInterval = 5;
-    [SerializeField] private float fillAmount = 0.1f;
-    protected float totalValue = 10f;
+    private int tickInterval = 5;
+    private float drainAmount = 40f;
+    protected float totalValue = 100f;
 
     private int tickCounter = 0;
-
 
     protected override void HandleTick()
     {
@@ -23,11 +22,10 @@ public class FoodBar : TickBarBase
 
             if (progressImage.fillAmount <= .001)
             {
-                // TODO: Really I should send out some sort of event here
-                GameController.invokeShowMainCanvas();
+                GameEvents.RaiseDieInArea();
 
                 // Disabling so update() isn't called all the time
-                //TODO: I should really have a manager class that enables/ disables all the bars
+                //TODO: I should really have a manager class that enables/ disables all the bars, and maybe checks levels
                 this.enabled = false;
             }
         }
@@ -35,7 +33,7 @@ public class FoodBar : TickBarBase
 
     private void Drain()
     {
-        currentValue = Mathf.Min(totalValue, currentValue - fillAmount);
+        currentValue = Mathf.Min(totalValue, currentValue - drainAmount);
         targetFill = Mathf.Clamp01(currentValue / totalValue);
     }
 

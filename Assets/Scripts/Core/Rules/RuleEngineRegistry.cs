@@ -44,11 +44,10 @@ public static class RuleEngineRegistry
             )
             .Do(() =>
             {
-                //TODO: Probably should be an event that does stuff
-                GameController.invokeShowExploreCanvas();
+                GameEvents.RaiseEnterArea();
             }));
 
-        engine.AddRule(Rule.Create("Player moves from Room to ROom")
+        engine.AddRule(Rule.Create("Player moves from Room to Room")
             .WhenAll(
                 FactExists(KEY_CONCEPT, CONCEPT_ON_MOVE),
                 FactIsTrue(KEY_ACTION_PLAYER_MOVED_TO_ROOM)

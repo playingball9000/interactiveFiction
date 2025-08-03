@@ -38,12 +38,13 @@ public class StoryTextHandler : MonoBehaviour
 
     void OnEnable()
     {
-        StoryTextHandler.invokeUpdateStoryDisplay += UpdateStoryDisplay;
+        invokeUpdateStoryDisplay += UpdateStoryDisplay;
+
     }
 
     void OnDisable()
     {
-        StoryTextHandler.invokeUpdateStoryDisplay -= UpdateStoryDisplay;
+        invokeUpdateStoryDisplay -= UpdateStoryDisplay;
     }
 
     public void UpdateStoryDisplay(string text, string effect)
