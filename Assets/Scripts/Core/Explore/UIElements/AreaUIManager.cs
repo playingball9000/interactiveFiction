@@ -12,7 +12,7 @@ public class AreaUIManager : MonoBehaviour
 
     private void OnEnable()
     {
-        GameController.invokeShowExploreCanvas += ShowCurrentArea;
+        GameEvents.OnEnterArea += ShowCurrentArea;
     }
 
 
@@ -20,7 +20,20 @@ public class AreaUIManager : MonoBehaviour
     {
         ExploreControl.IsTimeRunning = false;
         // Assuming the player is in an area
-        InitializeArea(PlayerContext.Get.currentArea);
+        Area currentArea = PlayerContext.Get.currentArea;
+
+        // Clear previous cards
+        foreach (Transform child in cardContainer)
+        {
+            Destroy(child.gameObject);
+        }
+
+        List<Card> showableCards = currentArea.cards.Where(card => !card.isLocked && !card.isComplete).ToList();
+        // Create ui prefabs for each showable card
+        foreach (Card card in showableCards)
+        {
+            CreateCardUI(card);
+        }
     }
 
     public void OnCardComplete(CardUI completedCard)
@@ -40,24 +53,6 @@ public class AreaUIManager : MonoBehaviour
 
         // Only create new cards for unlocked cards in the area
         foreach (var card in unlockedCards.Intersect(cardsInArea, new CardCodeComparer()))
-        {
-            CreateCardUI(card);
-        }
-    }
-
-
-
-    public void InitializeArea(Area currentArea)
-    {
-        // Clear previous cards
-        foreach (Transform child in cardContainer)
-        {
-            Destroy(child.gameObject);
-        }
-
-        List<Card> showableCards = currentArea.cards.Where(card => !card.isLocked && !card.isComplete).ToList();
-        // Create ui prefabs for each showable card
-        foreach (Card card in showableCards)
         {
             CreateCardUI(card);
         }

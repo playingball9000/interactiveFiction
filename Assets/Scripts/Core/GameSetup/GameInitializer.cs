@@ -43,7 +43,7 @@ public class GameInitializer : MonoBehaviour
             playerName = "Player",
             description = "description",
             // currentLocation = startArea
-            currentLocation = abyssEntrance
+            currentLocation = startArea
         };
 
 

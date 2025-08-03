@@ -12,10 +12,15 @@ public class QueueManager : MonoBehaviour
 
     private Queue<CardQueueUIEntry> cardQueue = new Queue<CardQueueUIEntry>();
     private bool isWorking = false;
-
     private Coroutine runningTaskCoroutine = null;
 
     public TaskMessageUI taskMessageUI;
+
+    private void OnEnable()
+    {
+        GameEvents.OnEnterArea += ClearQueue;
+        GameEvents.OnDieInArea += ClearQueue;
+    }
 
     public void EnqueueCard(CardUI cardUI)
     {
@@ -107,6 +112,17 @@ public class QueueManager : MonoBehaviour
         else if (cardQueue.Count == 0)
         {
             ExploreControl.IsTimeRunning = false;
+        }
+    }
+
+    void ClearQueue()
+    {
+        isWorking = false;
+        cardQueue.Clear();
+        runningTaskCoroutine = null;
+        foreach (Transform child in queueContainer)
+        {
+            Destroy(child.gameObject);
         }
     }
 

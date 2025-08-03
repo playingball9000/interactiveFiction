@@ -5,9 +5,8 @@ public static class CardUtil
 {
     public static void InitialUnlockCards()
     {
-        List<Card> allCards = CardRegistry.GetAllCards();
         // Since no facts, just unlocks cards with no rule
-        allCards.ForEach(c => c.isLocked = !CardUtil.IsCardUnlocked(c, new List<Fact>()));
+        CardRegistry.GetAllCards().ForEach(c => c.isLocked = !CardUtil.IsCardUnlocked(c, new List<Fact>()));
     }
 
     public static List<Card> UnlockCardsPostComplete()
@@ -38,5 +37,4 @@ public static class CardUtil
         Rule rule = CardRulesRegistry.GetRule(card.internalCode);
         return rule == null || rule.Evaluate(facts);
     }
-
 }

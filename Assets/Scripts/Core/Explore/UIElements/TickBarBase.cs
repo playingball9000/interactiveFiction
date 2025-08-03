@@ -6,11 +6,12 @@ public abstract class TickBarBase : MonoBehaviour
     [SerializeField] protected Image progressImage;
     protected float currentValue;
     protected float targetFill;
-    protected float fillSpeed = 2f;
+    protected float fillSpeed = .5f;
 
     protected virtual void OnEnable()
     {
         TickSystem.OnTick += HandleTick;
+        GameEvents.OnEnterArea += ResetProgress;
         ResetProgress();
     }
 
@@ -21,8 +22,7 @@ public abstract class TickBarBase : MonoBehaviour
 
     protected virtual void Update()
     {
-        // This makes the bar progress smooth rather than jerky. It does screw up the progress so it never quite gets full or empty.
-        progressImage.fillAmount = Mathf.Lerp(progressImage.fillAmount, targetFill, fillSpeed * Time.deltaTime);
+        progressImage.fillAmount = Mathf.MoveTowards(progressImage.fillAmount, targetFill, fillSpeed * Time.deltaTime);
     }
 
     protected abstract void HandleTick();
