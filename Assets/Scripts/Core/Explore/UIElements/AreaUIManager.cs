@@ -13,6 +13,8 @@ public class AreaUIManager : MonoBehaviour
     private void OnEnable()
     {
         GameEvents.OnEnterArea += ShowCurrentArea;
+        GameEvents.OnDieInArea += ResetCards;
+
     }
 
 
@@ -22,11 +24,7 @@ public class AreaUIManager : MonoBehaviour
         // Assuming the player is in an area
         Area currentArea = PlayerContext.Get.currentArea;
 
-        // Clear previous cards
-        foreach (Transform child in cardContainer)
-        {
-            Destroy(child.gameObject);
-        }
+        UiUtilMb.Instance.DestroyChildrenInContainer(cardContainer);
 
         List<Card> showableCards = currentArea.cards.Where(card => !card.isLocked && !card.isComplete).ToList();
         // Create ui prefabs for each showable card
@@ -39,12 +37,10 @@ public class AreaUIManager : MonoBehaviour
     public void OnCardComplete(CardUI completedCard)
     {
         // remove the Card object from card container
-        if (completedCard.gameObject != null)
-        {
-            Destroy(completedCard.gameObject);
-        }
+        Destroy(completedCard.gameObject);
 
-        completedCard.cardReference.isComplete = true;
+        completedCard.cardReference.MarkCompleted();
+        // Debug.Log(completedCard.cardReference);
         // Run associated code if it exists
         CardRunRegistry.Get(completedCard.cardReference.internalCode)?.Invoke();
 
@@ -65,5 +61,12 @@ public class AreaUIManager : MonoBehaviour
         cardUI.Init(card, queueManager.EnqueueCard);
 
         return cardUI;
+    }
+
+    public void ResetCards()
+    {
+        UiUtilMb.Instance.DestroyChildrenInContainer(cardContainer);
+
+        CardRegistry.GetAllCards().ForEach(c => c.ResetCard());
     }
 }
