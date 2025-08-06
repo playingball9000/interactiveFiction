@@ -5,7 +5,6 @@ using TMPro;
 public class CardUI : MonoBehaviour
 {
     public TMP_Text titleText;
-    public TMP_Text progressText;
     public Button startButton;
     public Slider progressBar;
     public Card cardReference;
@@ -14,7 +13,6 @@ public class CardUI : MonoBehaviour
     {
         cardReference = card;
         titleText.text = card.title;
-        progressText.text = $"Ready";
         startButton.onClick.AddListener(() => callback?.Invoke(this));
     }
 }

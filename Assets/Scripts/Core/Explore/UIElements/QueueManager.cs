@@ -39,31 +39,25 @@ public class QueueManager : MonoBehaviour
             runningTaskCoroutine = StartCoroutine(ProcessQueue());
     }
 
-    void OnQueueItemCanceled(CardQueueUIEntry entry)
+    void OnQueueItemCanceled(CardQueueUIEntry queueItem)
     {
         CardQueueUIEntry currentRunningEntry = cardQueue.Peek();
-        if (entry == currentRunningEntry)
+        if (queueItem == currentRunningEntry)
         {
-            Debug.Log("Canceled current running task.");
-
+            // Debug.Log("Canceled current running task.");
             StopCoroutine(runningTaskCoroutine);
-            Destroy(currentRunningEntry.gameObject);
-
             cardQueue.Dequeue();
             runningTaskCoroutine = StartCoroutine(ProcessQueue());
-
-            OnQueueStateChanged();
-            entry.originalCardUI.startButton.interactable = true;
-            return;
         }
-        // Remove it from the queue
-        List<CardQueueUIEntry> temp = new List<CardQueueUIEntry>(cardQueue);
-        temp.Remove(entry);
-
-        cardQueue = new Queue<CardQueueUIEntry>(temp);
-
-        entry.originalCardUI.startButton.interactable = true;
-        Destroy(entry.gameObject);
+        else
+        {
+            // Queue does not have a remove function so putting in list
+            List<CardQueueUIEntry> temp = new List<CardQueueUIEntry>(cardQueue);
+            temp.Remove(queueItem);
+            cardQueue = new Queue<CardQueueUIEntry>(temp);
+        }
+        queueItem.originalCardUI.startButton.interactable = true;
+        Destroy(queueItem.gameObject);
         OnQueueStateChanged();
     }
 
@@ -76,7 +70,7 @@ public class QueueManager : MonoBehaviour
             CardQueueUIEntry currentQueueUIEntry = cardQueue.Peek();
             // Log.Debug("PEEK" + currentQueueUIEntry);
 
-            float duration = currentQueueUIEntry.cardData.timeToComplete;
+            float duration = currentQueueUIEntry.cardData.GetCurrentTimeToComplete();
             float timeLeft = duration;
 
             while (timeLeft > 0)
@@ -91,7 +85,6 @@ public class QueueManager : MonoBehaviour
 
             currentQueueUIEntry.MarkComplete();
             cardQueue.Dequeue();
-            // Removes entry from queue container
             Destroy(currentQueueUIEntry.gameObject);
             taskMessageUI.ShowMessage($" Task '{currentQueueUIEntry.cardData.title}' completed!");
 
@@ -120,10 +113,8 @@ public class QueueManager : MonoBehaviour
         isWorking = false;
         cardQueue.Clear();
         runningTaskCoroutine = null;
-        foreach (Transform child in queueContainer)
-        {
-            Destroy(child.gameObject);
-        }
+        UiUtilMb.Instance.DestroyChildrenInContainer(queueContainer);
+
     }
 
 }
