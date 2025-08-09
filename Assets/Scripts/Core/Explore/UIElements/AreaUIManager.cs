@@ -12,11 +12,15 @@ public class AreaUIManager : MonoBehaviour
 
     private void OnEnable()
     {
-        GameEvents.OnEnterArea += ShowCurrentArea;
-        GameEvents.OnDieInArea += ResetCards;
-
+        EventManager.Subscribe(GameEvent.OnEnterArea, ShowCurrentArea);
+        EventManager.Subscribe(GameEvent.OnDieInArea, ResetCards);
     }
 
+    private void OnDisable()
+    {
+        EventManager.Unsubscribe(GameEvent.OnEnterArea, ShowCurrentArea);
+        EventManager.Unsubscribe(GameEvent.OnDieInArea, ResetCards);
+    }
 
     public void ShowCurrentArea()
     {

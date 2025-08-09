@@ -30,8 +30,8 @@ public class GameController : MonoBehaviour
         invokeShowMainCanvas += ShowMainCanvas;
         invokeShowExploreCanvas += ShowExploreCanvas;
 
-        GameEvents.OnEnterArea += ShowExploreCanvas;
-        GameEvents.OnDieInArea += ResetPlayerOnDeath;
+        EventManager.Subscribe(GameEvent.OnEnterArea, ShowExploreCanvas);
+        EventManager.Subscribe(GameEvent.OnDieInArea, ResetPlayerOnDeath);
     }
 
     private void OnDisable()
@@ -39,13 +39,16 @@ public class GameController : MonoBehaviour
         invokeShowDialogueCanvas -= ShowDialogueCanvas;
         invokeShowMainCanvas -= ShowMainCanvas;
         invokeShowExploreCanvas -= ShowExploreCanvas;
+
+        EventManager.Unsubscribe(GameEvent.OnEnterArea, ShowExploreCanvas);
+        EventManager.Unsubscribe(GameEvent.OnDieInArea, ResetPlayerOnDeath);
     }
 
     void Start()
     {
         // invokeShowMainCanvas();
         // invokeShowExploreCanvas();
-        GameEvents.RaiseEnterArea();
+        EventManager.Raise(GameEvent.OnEnterArea);
     }
 
 

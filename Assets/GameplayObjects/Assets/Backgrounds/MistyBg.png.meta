@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 33534b20026503144b72b950a80a1a7b
+guid: 4691e66d42caa744b937dd9880d8254d
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -2910503153310505838
-    second: card_shadow_0
+      213: -8500003308003574816
+    second: MistyBg_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -113,13 +113,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: card_shadow_0
+      name: MistyBg_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 520
-        height: 520
+        width: 1024
+        height: 1536
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -128,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 294e5457dc0db97d0800000000000000
-      internalID: -2910503153310505838
+      spriteID: 0eb3dccb60ce90a80800000000000000
+      internalID: -8500003308003574816
       vertices: []
       indices: 
       edges: []

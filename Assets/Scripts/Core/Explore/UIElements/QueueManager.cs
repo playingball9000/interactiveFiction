@@ -18,8 +18,12 @@ public class QueueManager : MonoBehaviour
 
     private void OnEnable()
     {
-        GameEvents.OnEnterArea += ClearQueue;
-        GameEvents.OnDieInArea += ClearQueue;
+        EventManager.Subscribe(GameEvent.OnDieInArea, ClearQueue);
+    }
+
+    private void OnDisable()
+    {
+        EventManager.Unsubscribe(GameEvent.OnDieInArea, ClearQueue);
     }
 
     public void EnqueueCard(CardUI cardUI)
@@ -102,7 +106,7 @@ public class QueueManager : MonoBehaviour
         {
             ExploreControl.IsTimeRunning = true;
         }
-        else if (cardQueue.Count == 0)
+        else
         {
             ExploreControl.IsTimeRunning = false;
         }
@@ -112,9 +116,11 @@ public class QueueManager : MonoBehaviour
     {
         isWorking = false;
         cardQueue.Clear();
-        runningTaskCoroutine = null;
+        if (runningTaskCoroutine != null)
+        {
+            StopCoroutine(runningTaskCoroutine);
+            runningTaskCoroutine = null;
+        }
         UiUtilMb.Instance.DestroyChildrenInContainer(queueContainer);
-
     }
-
 }
