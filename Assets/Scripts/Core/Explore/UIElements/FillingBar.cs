@@ -3,12 +3,6 @@ using UnityEngine.UI;
 
 public class FillingBar : MonoBehaviour
 {
-    // [SerializeField] private int tickInterval = 5;
-    // [SerializeField] private float fillAmount = 0.1f;
-    // protected float totalValue = .5f;
-
-    // private int tickCounter = 0;
-
     [SerializeField] private Image progressImage;
 
     private float runTime;

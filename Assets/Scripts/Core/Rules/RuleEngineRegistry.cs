@@ -44,7 +44,7 @@ public static class RuleEngineRegistry
             )
             .Do(() =>
             {
-                GameEvents.RaiseEnterArea();
+                EventManager.Raise(GameEvent.OnEnterArea);
             }));
 
         engine.AddRule(Rule.Create("Player moves from Room to Room")
