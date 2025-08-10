@@ -2,20 +2,22 @@ using UnityEngine;
 
 public class StatBarManager : MonoBehaviour
 {
-    [SerializeField] private GameObject healthbar;
+    [SerializeField] private FoodBar foodBar;
     [SerializeField] private Transform barContainer;
 
     private void OnEnable()
     {
-        EventManager.Subscribe(GameEvent.OnEnterArea, ReloadBars);
+        EventManager.Subscribe(GameEvent.EnterArea, ReloadBars);
     }
     private void OnDisable()
     {
-        EventManager.Unsubscribe(GameEvent.OnEnterArea, ReloadBars);
+        EventManager.Unsubscribe(GameEvent.EnterArea, ReloadBars);
     }
 
     public void ReloadBars()
     {
+        Debug.Log("stat bar manager - relaodbars");
+
     }
 
 }

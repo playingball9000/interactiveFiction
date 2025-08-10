@@ -2225,50 +2225,6 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 5567896496213507258, guid: c6d9c8a1016058d4a9c327a2aea949b1, type: 3}
   m_PrefabInstance: {fileID: 181408795}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &990426787
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 990426789}
-  - component: {fileID: 990426788}
-  m_Layer: 0
-  m_Name: EventBus
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &990426788
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 990426787}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f832e200acc93ce42b6418f2d176c5b6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!4 &990426789
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 990426787}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 658.8018, y: 696.00165, z: -2.2429137}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1145639450
 GameObject:
   m_ObjectHideFlags: 0
@@ -2605,11 +2561,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1256067135}
   m_CullTransparentMesh: 1
---- !u!1 &1271365895 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6320684930915901055, guid: 9de059a37feb48548981f6c51395bdea, type: 3}
-  m_PrefabInstance: {fileID: 1946261371}
-  m_PrefabAsset: {fileID: 0}
 --- !u!224 &1271365896 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 8849455409394090299, guid: 9de059a37feb48548981f6c51395bdea, type: 3}
@@ -3456,7 +3407,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2dd82c9c1ae26014cb785791996f1dee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  healthbar: {fileID: 1271365895}
+  foodBar: {fileID: 0}
   barContainer: {fileID: 1176125400}
 --- !u!1 &1902638266
 GameObject:
@@ -4352,4 +4303,3 @@ SceneRoots:
   - {fileID: 1581102471}
   - {fileID: 2031626266}
   - {fileID: 1186198839}
-  - {fileID: 990426789}

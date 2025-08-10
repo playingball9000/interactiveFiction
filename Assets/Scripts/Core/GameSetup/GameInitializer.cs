@@ -46,6 +46,18 @@ public class GameInitializer : MonoBehaviour
             currentLocation = startArea
         };
 
+        var startingStats = new Dictionary<Stat, float>()
+        {
+            { Stat.Health, 72 },
+            { Stat.Food, 21 },
+            { Stat.Water, 10 },
+            { Stat.Strength, 12 },
+            { Stat.Agility, 8 },
+            { Stat.Intelligence, 6 }
+        };
+
+        player.stats.InitializeBaseStats(startingStats);
+
 
         // TODO:This is silly, i set npc.currentLocation but also room.addNpc also sets it... should be able to do it once...
         NPC npcGrace = new Grace

@@ -18,12 +18,12 @@ public class QueueManager : MonoBehaviour
 
     private void OnEnable()
     {
-        EventManager.Subscribe(GameEvent.OnDieInArea, ClearQueue);
+        EventManager.Subscribe(GameEvent.DieInArea, ClearQueue);
     }
 
     private void OnDisable()
     {
-        EventManager.Unsubscribe(GameEvent.OnDieInArea, ClearQueue);
+        EventManager.Unsubscribe(GameEvent.DieInArea, ClearQueue);
     }
 
     public void EnqueueCard(CardUI cardUI)

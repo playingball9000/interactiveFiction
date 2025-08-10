@@ -21,11 +21,7 @@ public class FoodBar : TickBarBase
 
             if (currentValue <= 0)
             {
-                EventManager.Raise(GameEvent.OnDieInArea);
-
-                // Disabling so update() isn't called all the time
-                //TODO: I should really have a manager class that enables/ disables all the bars, and maybe checks levels
-                this.enabled = false;
+                EventManager.Raise(GameEvent.DieInArea);
             }
         }
     }
@@ -39,21 +35,19 @@ public class FoodBar : TickBarBase
 
     public override void ResetProgress()
     {
-        totalValue = 10f;
+        totalValue = PlayerContext.Get.stats.GetFinalStat(Stat.Food);
         currentValue = totalValue;
         // Both need to be 1f for draining bar
-        targetFill = 1f;
-        progressImage.fillAmount = 1f;
-
-
+        UpdateFillAmount();
         tickCounter = 0;
-        //TODO: I should really have a manager class that enables/ disables all the bars
-        this.enabled = true;
     }
 
-    public override void AddValue(float value)
+
+    public void UpdateBar()
     {
-        currentValue = Mathf.Min(totalValue, currentValue + value);
-        targetFill = Mathf.Clamp01(currentValue / totalValue);
+        float difference = PlayerContext.Get.stats.GetFinalStat(Stat.Food) - totalValue;
+        totalValue = totalValue + difference;
+        currentValue = Mathf.Min(1f, currentValue + difference); // In case it's negative and goes down
+        UpdateFillAmount();
     }
 }

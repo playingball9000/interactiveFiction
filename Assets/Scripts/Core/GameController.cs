@@ -1,10 +1,7 @@
 using UnityEngine;
 
 /*
-Overall list of stuff I'm thinking about
-
-- Should I have a IHideable for stuff i don't want to immediately show
-- how to implement skill checks
+Make more stuff enums
 
 */
 
@@ -14,7 +11,13 @@ public class GameController : MonoBehaviour
     public Canvas mainDisplayCanvas;
     public Canvas exploreCanvas;
 
+    /*
+    Canvases are controlled by delegates and not events due to the nature of Unity lifecycle.
+        InvokeCanvas -> enables canvas -> calls OnEnable for all sub elements
 
+    OnEnable is where the event subscription happens, therefore, if events are used, it actually
+    raises the events before the UI objects are subscribed (they are unsubscribed during OnDisable)
+    */
     public delegate void ShowDialogueCanvasDelegate();
     public static ShowDialogueCanvasDelegate invokeShowDialogueCanvas;
 
@@ -30,8 +33,7 @@ public class GameController : MonoBehaviour
         invokeShowMainCanvas += ShowMainCanvas;
         invokeShowExploreCanvas += ShowExploreCanvas;
 
-        EventManager.Subscribe(GameEvent.OnEnterArea, ShowExploreCanvas);
-        EventManager.Subscribe(GameEvent.OnDieInArea, ResetPlayerOnDeath);
+        EventManager.Subscribe(GameEvent.DieInArea, ResetPlayerOnDeath);
     }
 
     private void OnDisable()
@@ -40,15 +42,13 @@ public class GameController : MonoBehaviour
         invokeShowMainCanvas -= ShowMainCanvas;
         invokeShowExploreCanvas -= ShowExploreCanvas;
 
-        EventManager.Unsubscribe(GameEvent.OnEnterArea, ShowExploreCanvas);
-        EventManager.Unsubscribe(GameEvent.OnDieInArea, ResetPlayerOnDeath);
+        EventManager.Unsubscribe(GameEvent.DieInArea, ResetPlayerOnDeath);
     }
 
     void Start()
     {
         // invokeShowMainCanvas();
-        // invokeShowExploreCanvas();
-        EventManager.Raise(GameEvent.OnEnterArea);
+        invokeShowExploreCanvas();
     }
 
 
@@ -72,9 +72,13 @@ public class GameController : MonoBehaviour
     public void ShowExploreCanvas()
     {
         WorldState.GetInstance().FLAG_dialogWindowActive = false;
+
         dialogueCanvas.gameObject.SetActive(false);
         mainDisplayCanvas.gameObject.SetActive(false);
         exploreCanvas.gameObject.SetActive(true);
+
+        // Need to raise event after canvas has been activated to make sure all UI elements have subscribed
+        EventManager.Raise(GameEvent.EnterArea);
     }
 
     public void ResetPlayerOnDeath()
