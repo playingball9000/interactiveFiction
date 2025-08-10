@@ -10,8 +10,8 @@ public static class QueryRunner
     {
         List<Fact> facts = new()
         {
-            new Fact { key = RuleConstants.KEY_CONCEPT, value = RuleConstants.CONCEPT_ON_MOVE },
-            new Fact { key = RuleConstants.KEY_ACTION_MOVED_FROM_LOCATION, value = movedFrom.internalCode }
+            new Fact { key = RuleKey.Concept, value = RuleConstants.CONCEPT_ON_MOVE },
+            new Fact { key = RuleKey.ActionMovedFromLocation, value = movedFrom.internalCode }
         };
         if (movedFrom is Room)
         {
@@ -29,19 +29,19 @@ public static class QueryRunner
     {
         List<Fact> facts = new()
         {
-            new Fact { key = RuleConstants.KEY_CONCEPT, value = RuleConstants.CONCEPT_ON_MOVE },
-            new Fact { key = RuleConstants.KEY_ACTION_MOVED_TO_LOCATION, value = movedTo.internalCode }
+            new Fact { key = RuleKey.Concept, value = RuleConstants.CONCEPT_ON_MOVE },
+            new Fact { key = RuleKey.ActionMovedToLocation, value = movedTo.internalCode }
         };
 
         if (movedTo is Room)
         {
             Room r = (Room)movedTo;
             facts.AddRange(r.GetRoomFacts());
-            facts.Add(new Fact { key = RuleConstants.KEY_ACTION_PLAYER_MOVED_TO_ROOM, value = true });
+            facts.Add(new Fact { key = RuleKey.ActionPlayerMovedToRoom, value = true });
         }
         else
         {
-            facts.Add(new Fact { key = RuleConstants.KEY_ACTION_PLAYER_MOVED_TO_AREA, value = true });
+            facts.Add(new Fact { key = RuleKey.ActionPlayerMovedToArea, value = true });
         }
         facts.AddRange(PlayerContext.Get.GetPlayerFacts());
 
@@ -65,10 +65,10 @@ public static class QueryRunner
     {
         List<Fact> facts = new()
         {
-            Fact.Create(RuleConstants.KEY_CONCEPT, RuleConstants.CONCEPT_ON_CARD_COMPLETE)
+            Fact.Create(RuleKey.Concept, RuleConstants.CONCEPT_ON_CARD_COMPLETE)
         };
 
-        facts.AddRange(completedCards.Select(c => Fact.Create(RuleConstants.KEY_CARD_COMPLETED, c.internalCode)).ToList());
+        facts.AddRange(completedCards.Select(c => Fact.Create(RuleKey.CardCompleted, c.internalCode)).ToList());
         facts.AddRange(PlayerContext.Get.GetPlayerFacts());
 
         // Set isLocked to NOT isUnlocked basically

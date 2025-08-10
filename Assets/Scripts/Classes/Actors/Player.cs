@@ -25,15 +25,15 @@ public class Player : IActor
     public List<Fact> GetPlayerFacts()
     {
         List<Fact> playerFacts = new() {
-            new Fact { key = RuleConstants.KEY_CURRENT_ROOM, value = currentRoom?.internalCode ?? "None"},
-            new Fact { key = RuleConstants.KEY_CURRENT_AREA, value = currentArea?.internalCode ?? "None"}
+            new Fact { key = RuleKey.CurrentRoom, value = currentRoom?.internalCode ?? "None"},
+            new Fact { key = RuleKey.CurrentArea, value = currentArea?.internalCode ?? "None"}
             };
 
-        playerFacts.AddRange(inventory.contents.Select(item => new Fact { key = RuleConstants.KEY_IN_INVENTORY, value = item.internalCode }).ToList());
+        playerFacts.AddRange(inventory.contents.Select(item => new Fact { key = RuleKey.InInventory, value = item.internalCode }).ToList());
         playerFacts.AddRange(playerMemory.GetMemoryFacts());
-        playerFacts.AddRange(relationships.Select(kvp => new Fact { key = "relationship_" + kvp.Key, value = kvp.Value.points }).ToList());
-        playerFacts.AddRange(equipment.Select(e => new Fact { key = RuleConstants.KEY_PLAYER_EQUIPMENT, value = e.internalCode }).ToList());
-        playerFacts.AddRange(GetActiveAbilities().Select(a => new Fact { key = RuleConstants.KEY_PLAYER_ABILITIES, value = a.internalCode }).ToList());
+        // playerFacts.AddRange(relationships.Select(kvp => new Fact { key = "relationship_" + kvp.Key, value = kvp.Value.points }).ToList());
+        playerFacts.AddRange(equipment.Select(e => new Fact { key = RuleKey.PlayerEquipment, value = e.internalCode }).ToList());
+        playerFacts.AddRange(GetActiveAbilities().Select(a => new Fact { key = RuleKey.PlayerAbilities, value = a.internalCode }).ToList());
         return playerFacts;
     }
 

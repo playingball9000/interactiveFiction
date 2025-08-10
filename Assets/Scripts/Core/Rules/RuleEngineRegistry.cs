@@ -27,9 +27,9 @@ public static class RuleEngineRegistry
         RuleEngineBase engine = new();
 
         engine.AddRule(Rule.Create("Leave with book")
-            .AddCriteria(Criterion.Create("", facts => Criterion.FactExists(facts, RuleConstants.KEY_CONCEPT, RuleConstants.CONCEPT_ON_MOVE)))
-            .AddCriteria(Criterion.Create("", facts => Criterion.FactExists(facts, RuleConstants.KEY_IN_INVENTORY, "item_old_book")))
-            .AddCriteria(Criterion.Create("", facts => Criterion.FactExists(facts, RuleConstants.KEY_IN_ROOM_NPC, "npc_kate")))
+            .AddCriteria(Criterion.Create("", facts => Criterion.FactExists(facts, RuleKey.Concept, RuleConstants.CONCEPT_ON_MOVE)))
+            .AddCriteria(Criterion.Create("", facts => Criterion.FactExists(facts, RuleKey.InInventory, "item_old_book")))
+            .AddCriteria(Criterion.Create("", facts => Criterion.FactExists(facts, RuleKey.InRoomNpc, "npc_kate")))
             .SetAction(() =>
             {
                 StoryTextHandler.invokeUpdateStoryDisplay(
@@ -39,8 +39,8 @@ public static class RuleEngineRegistry
 
         engine.AddRule(Rule.Create("Player moves from Room to Area")
             .WhenAll(
-                FactExists(KEY_CONCEPT, CONCEPT_ON_MOVE),
-                FactIsTrue(KEY_ACTION_PLAYER_MOVED_TO_AREA)
+                FactExists(RuleKey.Concept, CONCEPT_ON_MOVE),
+                FactIsTrue(RuleKey.ActionPlayerMovedToArea)
             )
             .Do(() =>
             {
@@ -51,8 +51,8 @@ public static class RuleEngineRegistry
 
         engine.AddRule(Rule.Create("Player moves from Room to Room")
             .WhenAll(
-                FactExists(KEY_CONCEPT, CONCEPT_ON_MOVE),
-                FactIsTrue(KEY_ACTION_PLAYER_MOVED_TO_ROOM)
+                FactExists(RuleKey.Concept, CONCEPT_ON_MOVE),
+                FactIsTrue(RuleKey.ActionPlayerMovedToRoom)
             )
             .Do(() =>
             {
