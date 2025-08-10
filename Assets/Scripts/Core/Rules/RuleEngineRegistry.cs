@@ -2,6 +2,8 @@ using System.Collections.Generic;
 
 using static FactExtensions;
 using static RuleConstants;
+using static RuleKey;
+using static RuleConcepts;
 
 public static class RuleEngineRegistry
 {
@@ -27,32 +29,30 @@ public static class RuleEngineRegistry
         RuleEngineBase engine = new();
 
         engine.AddRule(Rule.Create("Leave with book")
-            .AddCriteria(Criterion.Create("", facts => Criterion.FactExists(facts, RuleKey.Concept, RuleConstants.CONCEPT_ON_MOVE)))
-            .AddCriteria(Criterion.Create("", facts => Criterion.FactExists(facts, RuleKey.InInventory, "item_old_book")))
-            .AddCriteria(Criterion.Create("", facts => Criterion.FactExists(facts, RuleKey.InRoomNpc, "npc_kate")))
+            .AddCriteria(Criterion.Create("", facts => Criterion.FactExists(facts, Concept, OnMove)))
+            .AddCriteria(Criterion.Create("", facts => Criterion.FactExists(facts, InInventory, "item_old_book")))
+            .AddCriteria(Criterion.Create("", facts => Criterion.FactExists(facts, InRoomNpc, "npc_kate")))
             .SetAction(() =>
             {
                 StoryTextHandler.invokeUpdateStoryDisplay(
                     TmpTextTagger.Color(@"As you leave, the woman calls after you, ""Hey! That's my book!""", UiConstants.TEXT_COLOR_NPC_TEXT),
-                    UiConstants.EFFECT_TYPEWRITER);
+                    TextEffect.Typewriter);
             }));
 
         engine.AddRule(Rule.Create("Player moves from Room to Area")
             .WhenAll(
-                FactExists(RuleKey.Concept, CONCEPT_ON_MOVE),
-                FactIsTrue(RuleKey.ActionPlayerMovedToArea)
+                FactExists(Concept, OnMove),
+                FactIsTrue(ActionPlayerMovedToArea)
             )
             .Do(() =>
             {
-                // EventManager.Raise(GameEvent.EnterArea);
                 GameController.invokeShowExploreCanvas();
-
             }));
 
         engine.AddRule(Rule.Create("Player moves from Room to Room")
             .WhenAll(
-                FactExists(RuleKey.Concept, CONCEPT_ON_MOVE),
-                FactIsTrue(RuleKey.ActionPlayerMovedToRoom)
+                FactExists(Concept, OnMove),
+                FactIsTrue(ActionPlayerMovedToRoom)
             )
             .Do(() =>
             {

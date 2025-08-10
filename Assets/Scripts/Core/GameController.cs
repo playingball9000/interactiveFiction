@@ -87,7 +87,7 @@ public class GameController : MonoBehaviour
         // Always call the delegate to do all the related stuff
         invokeShowMainCanvas();
         CoroutineRunner.Instance.RunCoroutine(CommonCoroutines.Wait(0.5f));
-        StoryTextHandler.invokeUpdateStoryDisplay("\nYou died... but it is not the end.\n", UiConstants.EFFECT_TYPEWRITER);
+        StoryTextHandler.invokeUpdateStoryDisplay("\nYou died... but it is not the end.\n", TextEffect.Typewriter);
 
     }
 

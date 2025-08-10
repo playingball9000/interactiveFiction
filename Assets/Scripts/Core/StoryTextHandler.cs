@@ -17,12 +17,12 @@ public class StoryTextHandler : MonoBehaviour
     private Coroutine typingCoroutine;
     WaitForSeconds textQueueWait = new(0.7f);
     WaitForSeconds typeWritingWait = new(0.015f);
-    private Queue<(string text, string effect)> textQueue = new();
+    private Queue<(string text, TextEffect effect)> textQueue = new();
     private bool isTyping = false;
     private bool skipQueueWait = false;
 
     // Delegates for other functions to use to invoke this. Probably not the right way but oh well.
-    public delegate void UpdateStoryDisplayDelegate(string text, string effect = "");
+    public delegate void UpdateStoryDisplayDelegate(string text, TextEffect effect = TextEffect.None);
     public static UpdateStoryDisplayDelegate invokeUpdateStoryDisplay;
 
     void Awake()
@@ -47,7 +47,7 @@ public class StoryTextHandler : MonoBehaviour
         invokeUpdateStoryDisplay -= UpdateStoryDisplay;
     }
 
-    public void UpdateStoryDisplay(string text, string effect)
+    public void UpdateStoryDisplay(string text, TextEffect effect)
     {
         text = TmpTextTagger.Color(text, UiConstants.TEXT_COLOR_STORY_TEXT);
         storyLog.Add(text + "\n");
@@ -70,11 +70,11 @@ public class StoryTextHandler : MonoBehaviour
             skipQueueWait = false;
             var (nextText, effect) = textQueue.Dequeue();
 
-            if (string.IsNullOrEmpty(effect))
+            if (TextEffect.None == effect)
             {
                 UI_storyBox.text = storyLog.GetLogsString();
             }
-            else if (effect == UiConstants.EFFECT_TYPEWRITER)
+            else if (TextEffect.Typewriter == effect)
             {
                 yield return StartCoroutine(TypewriterAppend(nextText));
                 if (!skipQueueWait)

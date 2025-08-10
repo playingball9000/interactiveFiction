@@ -2,7 +2,8 @@ using System;
 using System.Linq;
 
 using static FactExtensions;
-using static RuleConstants;
+using static RuleConcepts;
+using static RuleKey;
 
 public static class RuleExtensions
 {
@@ -38,8 +39,8 @@ public static class RuleExtensions
     public static Rule CardIsComplete(this Rule rule, string cardCode)
     {
         return rule.WhenAll(
-            FactExists(RuleKey.Concept, CONCEPT_ON_CARD_COMPLETE),
-            FactExists(RuleKey.CardCompleted, cardCode)
+            FactExists(Concept, OnCardComplete),
+            FactExists(CardCompleted, cardCode)
         );
     }
 }
