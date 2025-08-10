@@ -10,9 +10,9 @@ public class UiUtilMb : MonoBehaviour
         {
             if (_instance == null)
             {
-                GameObject runner = new GameObject("UiUtilMb");
-                _instance = runner.AddComponent<UiUtilMb>();
-                DontDestroyOnLoad(runner);
+                GameObject util = new GameObject("UiUtilMb");
+                _instance = util.AddComponent<UiUtilMb>();
+                DontDestroyOnLoad(util);
             }
             return _instance;
         }

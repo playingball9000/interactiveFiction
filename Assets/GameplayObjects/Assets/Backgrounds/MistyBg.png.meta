@@ -147,7 +147,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      MistyBg_0: -8500003308003574816
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

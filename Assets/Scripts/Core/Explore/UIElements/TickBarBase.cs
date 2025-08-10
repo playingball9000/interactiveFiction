@@ -12,15 +12,13 @@ public abstract class TickBarBase : MonoBehaviour
     protected virtual void OnEnable()
     {
         TickSystem.OnTick += HandleTick;
-        EventManager.Subscribe(GameEvent.OnEnterArea, ResetProgress);
-
-        ResetProgress();
+        EventManager.Subscribe(GameEvent.EnterArea, ResetProgress);
     }
 
     protected virtual void OnDisable()
     {
         TickSystem.OnTick -= HandleTick;
-        EventManager.Unsubscribe(GameEvent.OnEnterArea, ResetProgress);
+        EventManager.Unsubscribe(GameEvent.EnterArea, ResetProgress);
 
     }
 
@@ -29,7 +27,12 @@ public abstract class TickBarBase : MonoBehaviour
         progressImage.fillAmount = Mathf.MoveTowards(progressImage.fillAmount, targetFill, fillSpeed * Time.deltaTime);
     }
 
+    protected virtual void UpdateFillAmount()
+    {
+        progressImage.fillAmount = Mathf.Clamp01(currentValue / totalValue);
+        targetFill = progressImage.fillAmount;
+    }
+
     protected abstract void HandleTick();
     public abstract void ResetProgress();
-    public abstract void AddValue(float value);
 }

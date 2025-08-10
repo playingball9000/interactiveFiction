@@ -8,6 +8,8 @@ public class Player : IActor
     public string playerName { get; set; }
     public string description { get; set; }
 
+    public PlayerStats stats { get; } = new PlayerStats();
+
     public ILocation currentLocation;
 
     public Room currentRoom => currentLocation as Room;
@@ -96,7 +98,8 @@ public class Player : IActor
         string toString =
             $"<b><color=#8B4513>[Player]</color></b>\n" +
             $"  • Location: {currentLocation.displayName}\n" +
-            $"  • Inventory: {GetInventoryString()}\n";
+            $"  • Inventory: {GetInventoryString()}\n" +
+            $"  • Stats: {stats}\n";
 
         return toString;
     }
