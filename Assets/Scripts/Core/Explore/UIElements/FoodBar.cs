@@ -43,11 +43,18 @@ public class FoodBar : TickBarBase
     }
 
 
-    public void UpdateBar()
+    public void UpdateTotal()
     {
         float difference = PlayerContext.Get.stats.GetFinalStat(Stat.Food) - totalValue;
         totalValue = totalValue + difference;
+        // Do I always want current to change?
         currentValue = Mathf.Min(1f, currentValue + difference); // In case it's negative and goes down
+        UpdateFillAmount();
+    }
+
+    public void Add(float amount)
+    {
+        currentValue = Mathf.Max(totalValue, currentValue + amount);
         UpdateFillAmount();
     }
 }

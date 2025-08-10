@@ -1,89 +1,89 @@
 using System.Collections.Generic;
 public class ActionWordSynonyms
 {
-    public static readonly Dictionary<string, string> SynonymsDict = new()
+    public static readonly Dictionary<string, PlayerAction> SynonymsDict = new()
     {
-        { "n", ExitDirection.North.ToString() },
-        { "north", ExitDirection.North.ToString() },
-        { "nw", ExitDirection.Northwest.ToString() },
-        { "northwest", ExitDirection.Northwest.ToString() },
-        { "ne", ExitDirection.Northeast.ToString() },
-        { "northeast", ExitDirection.Northeast.ToString() },
-        { "south", ExitDirection.South.ToString() },
-        { "sw", ExitDirection.Southwest.ToString() },
-        { "southwest", ExitDirection.Southwest.ToString() },
-        { "se", ExitDirection.Southeast.ToString() },
-        { "southeast", ExitDirection.Southeast.ToString() },
-        { "s", ExitDirection.South.ToString() },
-        { "east", ExitDirection.East.ToString() },
-        { "e", ExitDirection.East.ToString() },
-        { "west", ExitDirection.West.ToString() },
-        { "w", ExitDirection.West.ToString() },
-        { "enter", ExitDirection.Enter.ToString() },
-        { "exit", ExitDirection.Enter.ToString() },
-        { "leave", ExitDirection.Enter.ToString() },
+        { "n", PlayerAction.North },
+        { "north", PlayerAction.North },
+        { "nw", PlayerAction.NorthWest },
+        { "northwest", PlayerAction.NorthWest },
+        { "ne", PlayerAction.NorthEast },
+        { "northeast", PlayerAction.NorthEast },
+        { "south", PlayerAction.South },
+        { "sw", PlayerAction.SouthWest },
+        { "southwest", PlayerAction.SouthWest },
+        { "se", PlayerAction.SouthEast },
+        { "southeast", PlayerAction.SouthEast },
+        { "s", PlayerAction.South },
+        { "east", PlayerAction.East },
+        { "e", PlayerAction.East },
+        { "west", PlayerAction.West },
+        { "w", PlayerAction.West },
+        { "enter", PlayerAction.Enter },
+        { "exit", PlayerAction.Enter },
+        { "leave", PlayerAction.Enter },
 
-        { "unlock", ActionConstants.ACTION_UNLOCK },
+        { "unlock", PlayerAction.Unlock },
 
-        { "tickle", ActionConstants.ACTION_TICKLE },
+        { "tickle", PlayerAction.Tickle },
 
-        { "talk", ActionConstants.ACTION_TALK },
+        { "talk", PlayerAction.Talk },
 
-        { "take", ActionConstants.ACTION_GET },
-        { "grab", ActionConstants.ACTION_GET },
-        { "get", ActionConstants.ACTION_GET },
-        { "collect", ActionConstants.ACTION_GET },
-        { "acquire", ActionConstants.ACTION_GET },
-        { "pick", ActionConstants.ACTION_GET },
-        { "sieze", ActionConstants.ACTION_GET },
-        { "stash", ActionConstants.ACTION_GET },
+        { "take", PlayerAction.Get },
+        { "grab", PlayerAction.Get },
+        { "get", PlayerAction.Get },
+        { "collect", PlayerAction.Get },
+        { "acquire", PlayerAction.Get },
+        { "pick", PlayerAction.Get },
+        { "sieze", PlayerAction.Get },
+        { "stash", PlayerAction.Get },
 
-        { "i", ActionConstants.ACTION_INVENTORY },
-        { "inventory", ActionConstants.ACTION_INVENTORY },
+        { "i", PlayerAction.Inventory },
+        { "inventory", PlayerAction.Inventory },
 
-        { "drop", ActionConstants.ACTION_DROP },
-        { "discard", ActionConstants.ACTION_DROP },
-        { "unload", ActionConstants.ACTION_DROP },
-        { "unpack", ActionConstants.ACTION_DROP },
+        { "drop", PlayerAction.Drop },
+        { "discard", PlayerAction.Drop },
+        { "unload", PlayerAction.Drop },
+        { "unpack", PlayerAction.Drop },
 
-        { "give", ActionConstants.ACTION_GIVE },
-        { "offer", ActionConstants.ACTION_GIVE },
-        { "present", ActionConstants.ACTION_GIVE },
-        { "grant", ActionConstants.ACTION_GIVE },
-        { "deliver", ActionConstants.ACTION_GIVE },
+        { "give", PlayerAction.Give },
+        { "offer", PlayerAction.Give },
+        { "present", PlayerAction.Give },
+        { "grant", PlayerAction.Give },
+        { "deliver", PlayerAction.Give },
 
-        { "equip", ActionConstants.ACTION_EQUIP },
-        { "wear", ActionConstants.ACTION_EQUIP },
-        { "don", ActionConstants.ACTION_EQUIP },
+        { "equip", PlayerAction.Equip },
+        { "wear", PlayerAction.Equip },
+        { "don", PlayerAction.Equip },
 
-        { "unequip", ActionConstants.ACTION_UNEQUIP },
-        { "remove", ActionConstants.ACTION_UNEQUIP },
+        { "unequip", PlayerAction.Unequip },
+        { "remove", PlayerAction.Unequip },
 
-        { "open", ActionConstants.ACTION_OPEN },
+        { "open", PlayerAction.Open },
 
-        { "close", ActionConstants.ACTION_CLOSE },
-        { "shut", ActionConstants.ACTION_CLOSE },
+        { "close", PlayerAction.Close },
+        { "shut", PlayerAction.Close },
 
-        { "put", ActionConstants.ACTION_PUT },
-        { "insert",  ActionConstants.ACTION_PUT },
-        { "place",  ActionConstants.ACTION_PUT },
+        { "put", PlayerAction.Put },
+        { "insert",  PlayerAction.Put },
+        { "place",  PlayerAction.Put },
 
-        { "look", ActionConstants.ACTION_LOOK },
-        { "l", ActionConstants.ACTION_LOOK },
+        { "look", PlayerAction.Look },
+        { "l", PlayerAction.Look },
 
-        { "examine", ActionConstants.ACTION_EXAMINE },
-        { "x", ActionConstants.ACTION_EXAMINE },
-        { "inspect", ActionConstants.ACTION_EXAMINE },
+        { "examine", PlayerAction.Examine },
+        { "x", PlayerAction.Examine },
+        { "inspect", PlayerAction.Examine },
 
-        { "savegame", ActionConstants.ACTION_SAVEGAME },
-        { "save", ActionConstants.ACTION_SAVEGAME },
+        { "savegame", PlayerAction.SaveGame },
+        { "save", PlayerAction.SaveGame },
 
-        { "loadgame", ActionConstants.ACTION_LOADGAME },
-        { "load", ActionConstants.ACTION_LOADGAME },
+        { "loadgame", PlayerAction.LoadGame },
+        { "load", PlayerAction.LoadGame },
     };
 
-    public static string Get(string name)
+    public static PlayerAction Get(string name)
     {
-        return SynonymsDict.TryGetValue(name, out var action) ? action : null;
+        return SynonymsDict.TryGetValue(name, out var action) ? action : PlayerAction.Unknown;
     }
 }

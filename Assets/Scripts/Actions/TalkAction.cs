@@ -7,7 +7,8 @@ public class TalkAction : IPlayerAction
     public string tooManyMessage { get; private set; } = "Try the following: talk [target]";
     public int minInputCount { get; private set; } = 2;
     public int maxInputCount { get; private set; } = 3;
-    string IPlayerAction.playerActionCode { get; } = ActionConstants.ACTION_TALK;
+    PlayerAction IPlayerAction.playerActionCode { get; } = PlayerAction.Talk;
+
 
     void IPlayerAction.Execute(ActionInput actionInput)
     {

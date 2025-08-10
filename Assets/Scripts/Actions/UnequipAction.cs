@@ -7,7 +7,8 @@ public class UnequipAction : IPlayerAction
     public string tooManyMessage { get; private set; } = "Try the following: unequip [target]";
     public int minInputCount { get; private set; } = 2;
     public int maxInputCount { get; private set; } = 4;
-    string IPlayerAction.playerActionCode { get; } = ActionConstants.ACTION_UNEQUIP;
+    PlayerAction IPlayerAction.playerActionCode { get; } = PlayerAction.Unequip;
+
 
     void IPlayerAction.Execute(ActionInput actionInput)
     {

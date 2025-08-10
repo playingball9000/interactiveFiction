@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine.Animations;
 
 public class CloseAction : IPlayerAction
 {
@@ -7,7 +8,7 @@ public class CloseAction : IPlayerAction
     public string tooManyMessage { get; private set; } = "Try the following: close [target]";
     public int minInputCount { get; private set; } = 2;
     public int maxInputCount { get; private set; } = 3;
-    string IPlayerAction.playerActionCode { get; } = ActionConstants.ACTION_CLOSE;
+    PlayerAction IPlayerAction.playerActionCode { get; } = PlayerAction.Close;
 
     void IPlayerAction.Execute(ActionInput actionInput)
     {

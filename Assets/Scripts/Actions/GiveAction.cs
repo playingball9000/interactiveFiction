@@ -7,7 +7,7 @@ public class GiveAction : IPlayerAction
     public string tooManyMessage { get; private set; } = "Try the following: give [item] [target]";
     public int minInputCount { get; private set; } = 3;
     public int maxInputCount { get; private set; } = 5;
-    string IPlayerAction.playerActionCode { get; } = ActionConstants.ACTION_GIVE;
+    PlayerAction IPlayerAction.playerActionCode { get; } = PlayerAction.Give;
 
 
     //TODO: Should probably handle "give man the bar" phrasing as well

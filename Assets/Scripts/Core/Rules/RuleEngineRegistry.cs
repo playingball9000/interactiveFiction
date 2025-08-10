@@ -26,7 +26,7 @@ public static class RuleEngineRegistry
     {
         RuleEngineBase engine = new();
 
-        engine.AddRule(new Rule()
+        engine.AddRule(Rule.Create("Leave with book")
             .AddCriteria(Criterion.Create("", facts => Criterion.FactExists(facts, RuleConstants.KEY_CONCEPT, RuleConstants.CONCEPT_ON_MOVE)))
             .AddCriteria(Criterion.Create("", facts => Criterion.FactExists(facts, RuleConstants.KEY_IN_INVENTORY, "item_old_book")))
             .AddCriteria(Criterion.Create("", facts => Criterion.FactExists(facts, RuleConstants.KEY_IN_ROOM_NPC, "npc_kate")))

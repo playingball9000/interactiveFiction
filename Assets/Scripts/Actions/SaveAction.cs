@@ -4,7 +4,8 @@ public class SaveAction : IPlayerAction
     public string tooManyMessage { get; private set; }
     public int minInputCount { get; private set; } = 1;
     public int maxInputCount { get; private set; } = 1;
-    string IPlayerAction.playerActionCode { get; } = ActionConstants.ACTION_SAVEGAME;
+    PlayerAction IPlayerAction.playerActionCode { get; } = PlayerAction.SaveGame;
+
 
     void IPlayerAction.Execute(ActionInput actionInput)
     {

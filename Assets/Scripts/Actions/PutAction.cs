@@ -7,7 +7,8 @@ public class PutAction : IPlayerAction
     public string tooManyMessage { get; private set; } = "Try the following: put [target] [destination]";
     public int minInputCount { get; private set; } = 3;
     public int maxInputCount { get; private set; } = 4;
-    string IPlayerAction.playerActionCode { get; } = ActionConstants.ACTION_PUT;
+    PlayerAction IPlayerAction.playerActionCode { get; } = PlayerAction.Put;
+
 
     void IPlayerAction.Execute(ActionInput actionInput)
     {

@@ -7,7 +7,8 @@ public class UnlockAction : IPlayerAction
     public string tooManyMessage { get; private set; } = "Try the following: unlock [target]";
     public int minInputCount { get; private set; } = 2;
     public int maxInputCount { get; private set; } = 4;
-    string IPlayerAction.playerActionCode { get; } = ActionConstants.ACTION_UNLOCK;
+    PlayerAction IPlayerAction.playerActionCode { get; } = PlayerAction.Unlock;
+
 
     void IPlayerAction.Execute(ActionInput actionInput)
     {

@@ -7,7 +7,7 @@ public class ExamineAction : IPlayerAction
     public string tooManyMessage { get; private set; } = "Try the following: examine [target] OR examine [target] [object]";
     public int minInputCount { get; private set; } = 2;
     public int maxInputCount { get; private set; } = 5;
-    string IPlayerAction.playerActionCode { get; } = ActionConstants.ACTION_EXAMINE;
+    PlayerAction IPlayerAction.playerActionCode { get; } = PlayerAction.Examine;
 
     private string CANT_ACTION_MESSAGE = "You can't examine that";
 

@@ -4,7 +4,7 @@ public class LoadAction : IPlayerAction
     public string tooManyMessage { get; private set; }
     public int minInputCount { get; private set; } = 1;
     public int maxInputCount { get; private set; } = 1;
-    string IPlayerAction.playerActionCode { get; } = ActionConstants.ACTION_LOADGAME;
+    PlayerAction IPlayerAction.playerActionCode { get; } = PlayerAction.LoadGame;
 
     void IPlayerAction.Execute(ActionInput actionInput)
     {

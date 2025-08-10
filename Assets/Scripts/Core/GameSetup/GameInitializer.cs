@@ -119,6 +119,7 @@ public class GameInitializer : MonoBehaviour
         ContainerBase bag = new()
         {
             contents = new List<IItem>() { itemBottle, itemBar },
+            internalCode = "bag",
             description = "Your trusty bag, never leave home without it.",
             adjective = "duffel",
             isGettable = true,
