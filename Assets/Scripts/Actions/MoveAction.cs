@@ -9,12 +9,12 @@ public class MoveAction : IPlayerAction
     public int minInputCount { get; private set; } = 0;
     public int maxInputCount { get; private set; } = 4;
     // Move is just the direction you are moving in, No ref action name.
-    string IPlayerAction.playerActionCode { get; }
+    PlayerAction IPlayerAction.playerActionCode { get; }
 
     void IPlayerAction.Execute(ActionInput actionInput)
     {
         Player player = PlayerContext.Get;
-        string movement = actionInput.actionTaken;
+        string movement = actionInput.actionTaken.ToString();
         List<Exit> roomExits = player.currentRoom.exits
             .Where(e => StringUtil.EqualsIgnoreCase(e.exitDirection.ToString(), movement))
             .ToList();

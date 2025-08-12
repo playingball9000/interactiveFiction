@@ -39,7 +39,7 @@ public class StatModifier
 [Serializable]
 public class PlayerStats
 {
-    private Dictionary<Stat, float> baseStats = new Dictionary<Stat, float>();
+    private Dictionary<Stat, float> baseStats = new();
 
     private List<StatModifier> modifiers = new List<StatModifier>();
 

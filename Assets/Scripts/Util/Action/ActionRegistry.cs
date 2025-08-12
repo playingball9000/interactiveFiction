@@ -3,7 +3,7 @@ using System.Linq;
 
 public class ActionRegistry
 {
-    public static readonly Dictionary<string, IPlayerAction> ActionsDict = new[]
+    public static readonly Dictionary<PlayerAction, IPlayerAction> ActionsDict = new[]
     {
         CreateAction<LookAction>(),
         CreateAction<TalkAction>(),
@@ -25,31 +25,31 @@ public class ActionRegistry
     .Concat(CreateMoveActions<MoveAction>())
     .ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
 
-    public static IPlayerAction Get(string name)
+    public static IPlayerAction Get(PlayerAction name)
     {
         return ActionsDict.TryGetValue(name, out var action) ? action : null;
     }
 
-    private static KeyValuePair<string, IPlayerAction> CreateAction<T>() where T : IPlayerAction, new()
+    private static KeyValuePair<PlayerAction, IPlayerAction> CreateAction<T>() where T : IPlayerAction, new()
     {
         IPlayerAction action = new T();
-        return new KeyValuePair<string, IPlayerAction>(action.playerActionCode, action);
+        return new KeyValuePair<PlayerAction, IPlayerAction>(action.playerActionCode, action);
     }
 
-    private static KeyValuePair<string, IPlayerAction>[] CreateMoveActions<T>() where T : IPlayerAction, new()
+    private static KeyValuePair<PlayerAction, IPlayerAction>[] CreateMoveActions<T>() where T : IPlayerAction, new()
     {
         IPlayerAction moveAction = new T();
-        KeyValuePair<string, IPlayerAction>[] keyValuePairs = new KeyValuePair<string, IPlayerAction>[]
+        KeyValuePair<PlayerAction, IPlayerAction>[] keyValuePairs = new KeyValuePair<PlayerAction, IPlayerAction>[]
         {
-            new(ExitDirection.North.ToString(), moveAction),
-            new(ExitDirection.Northeast.ToString(), moveAction),
-            new(ExitDirection.Northwest.ToString(), moveAction),
-            new(ExitDirection.South.ToString(), moveAction),
-            new(ExitDirection.Southeast.ToString(), moveAction),
-            new(ExitDirection.Southwest.ToString(), moveAction),
-            new(ExitDirection.East.ToString(), moveAction),
-            new(ExitDirection.West.ToString(), moveAction),
-            new(ExitDirection.Enter.ToString(), moveAction),
+            new(PlayerAction.North, moveAction),
+            new(PlayerAction.NorthEast, moveAction),
+            new(PlayerAction.NorthWest, moveAction),
+            new(PlayerAction.South, moveAction),
+            new(PlayerAction.SouthEast, moveAction),
+            new(PlayerAction.SouthWest, moveAction),
+            new(PlayerAction.East, moveAction),
+            new(PlayerAction.West, moveAction),
+            new(PlayerAction.Enter, moveAction),
         };
         return keyValuePairs;
     }

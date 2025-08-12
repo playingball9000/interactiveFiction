@@ -10,6 +10,10 @@ public class UiConstants
     public const string TEXT_COLOR_STORY_NPC = "#4CAF50";
     public const string TEXT_COLOR_STORY_ITEM = "#FFC107";
     public const string TEXT_COLOR_DEATH_TEXT = "#FF4444";
+}
 
-    public const string EFFECT_TYPEWRITER = "typewriter";
+public enum TextEffect
+{
+    None,
+    Typewriter
 }

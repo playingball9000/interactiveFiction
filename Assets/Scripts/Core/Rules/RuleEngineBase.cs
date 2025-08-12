@@ -14,6 +14,7 @@ public class RuleEngineBase
         List<string> executedRules = new();
         foreach (Rule rule in rules)
         {
+            // Log.Debug("*** Running: " + rule.ruleName);
             if (rule.Evaluate(facts))
             {
                 executedRules.Add(rule.ruleName);

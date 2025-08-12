@@ -77,9 +77,9 @@ public class Room : ILocation
     {
         List<Fact> roomFacts = new();
         roomFacts.AddRange(npcs
-            .Select(npc => new Fact { key = RuleConstants.KEY_IN_ROOM_NPC, value = npc.internalCode }));
+            .Select(npc => new Fact { key = RuleKey.InRoomNpc, value = npc.internalCode }));
         roomFacts.AddRange(roomItems.contents
-            .Select(item => new Fact { key = RuleConstants.KEY_IN_ROOM_ITEM, value = item.internalCode }));
+            .Select(item => new Fact { key = RuleKey.InRoomItem, value = item.internalCode }));
         return roomFacts;
     }
 

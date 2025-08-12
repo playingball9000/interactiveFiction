@@ -12,7 +12,7 @@ public class Card
     public bool isComplete = false;
     public int completionCount = 0;
 
-    public float minimumTime = 1f;
+    public float minimumTime = .02f;
 
     List<ThresholdStage> scalingStages = new List<ThresholdStage>
     {

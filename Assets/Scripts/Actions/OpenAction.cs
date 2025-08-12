@@ -7,7 +7,7 @@ public class OpenAction : IPlayerAction
     public string tooManyMessage { get; private set; } = "Try the following: open [target]";
     public int minInputCount { get; private set; } = 2;
     public int maxInputCount { get; private set; } = 3;
-    string IPlayerAction.playerActionCode { get; } = ActionConstants.ACTION_OPEN;
+    PlayerAction IPlayerAction.playerActionCode { get; } = PlayerAction.Open;
 
     void IPlayerAction.Execute(ActionInput actionInput)
     {

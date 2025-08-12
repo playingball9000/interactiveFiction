@@ -2,10 +2,10 @@
 [System.Serializable]
 public class Fact
 {
-    public string key { get; set; }
+    public RuleKey key { get; set; }
     public object value { get; set; }
 
-    public static Fact Create(string key, object value)
+    public static Fact Create(RuleKey key, object value)
     {
         return new Fact { key = key, value = value };
     }

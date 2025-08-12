@@ -7,7 +7,8 @@ public class TickleAction : IPlayerAction
     public string tooManyMessage { get; private set; } = "Try the following: tickle [target] [body part]";
     public int minInputCount { get; private set; } = 2;
     public int maxInputCount { get; private set; } = 4;
-    string IPlayerAction.playerActionCode { get; } = ActionConstants.ACTION_TICKLE;
+    PlayerAction IPlayerAction.playerActionCode { get; } = PlayerAction.Tickle;
+
 
     void IPlayerAction.Execute(ActionInput actionInput)
     {

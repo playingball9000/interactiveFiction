@@ -4,9 +4,9 @@ using System.Linq;
 [System.Serializable]
 public class Memory
 {
-    private Dictionary<string, object> memory = new();
+    private Dictionary<RuleKey, object> memory = new();
 
-    public void Update(string key, object value)
+    public void Update(RuleKey key, object value)
     {
         if (memory.TryGetValue(key, out var existingValue) && existingValue is int existingIntValue && value is int intValue)
         {
@@ -23,7 +23,7 @@ public class Memory
         return memory.Select(kvp => new Fact { key = kvp.Key, value = kvp.Value }).ToList();
     }
 
-    public void Delete(string key)
+    public void Delete(RuleKey key)
     {
         memory.Remove(key);
     }

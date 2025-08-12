@@ -7,7 +7,7 @@ public class DropAction : IPlayerAction
     public string tooManyMessage { get; private set; } = "Try the following: drop [target]";
     public int minInputCount { get; private set; } = 2;
     public int maxInputCount { get; private set; } = 3;
-    string IPlayerAction.playerActionCode { get; } = ActionConstants.ACTION_DROP;
+    PlayerAction IPlayerAction.playerActionCode { get; } = PlayerAction.Drop;
 
     void IPlayerAction.Execute(ActionInput actionInput)
     {

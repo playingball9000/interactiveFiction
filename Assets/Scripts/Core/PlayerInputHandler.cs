@@ -80,9 +80,9 @@ public class PlayerInputHandler : MonoBehaviour
 
         inputTextArray = inputTextArray.Where(word => !prepositions.Contains(word)).ToArray();
 
-        string action = ActionWordSynonyms.Get(inputTextArray[0]);
+        PlayerAction action = ActionWordSynonyms.Get(inputTextArray[0]);
 
-        if (action != null)
+        if (action != PlayerAction.Unknown)
         {
             // LoggingUtil.Log("Player Action was : " + action + " | inputTextArray: " + actionInput.mainClause.Count);
             // LoggingUtil.LogList(inputTextArray.ToList());

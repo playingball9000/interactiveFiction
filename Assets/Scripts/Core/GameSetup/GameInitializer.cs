@@ -9,8 +9,12 @@ public class GameInitializer : MonoBehaviour
     {
         CardRegistry.Initialize();
         AreaRegistry.Initialize(); // Run after CardRegistry
-
         CardUtil.InitialUnlockCards();
+
+        TimerManager.Instance.CreateTimer(TimerCode.Test, 1f, () =>
+        {
+            Debug.Log("💥 Boom!");
+        });
 
         //TODO: probably a good idea to make a hashmap of all the rooms for easy lookup
         Room startingCamp = new()
@@ -119,6 +123,7 @@ public class GameInitializer : MonoBehaviour
         ContainerBase bag = new()
         {
             contents = new List<IItem>() { itemBottle, itemBar },
+            internalCode = "bag",
             description = "Your trusty bag, never leave home without it.",
             adjective = "duffel",
             isGettable = true,

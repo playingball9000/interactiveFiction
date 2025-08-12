@@ -7,17 +7,23 @@ public class StatBarManager : MonoBehaviour
 
     private void OnEnable()
     {
-        EventManager.Subscribe(GameEvent.EnterArea, ReloadBars);
+        EventManager.Subscribe(GameEvent.EnterArea, ResetBars);
+        EventManager.Subscribe(GameEvent.StatsChanged, ReloadBars);
     }
     private void OnDisable()
     {
-        EventManager.Unsubscribe(GameEvent.EnterArea, ReloadBars);
+        EventManager.Unsubscribe(GameEvent.EnterArea, ResetBars);
+        EventManager.Unsubscribe(GameEvent.StatsChanged, ReloadBars);
+    }
+
+    public void ResetBars()
+    {
+        foodBar.ResetProgress();
     }
 
     public void ReloadBars()
     {
-        Debug.Log("stat bar manager - relaodbars");
-
+        foodBar.UpdateTotal();
     }
 
 }
