@@ -69,6 +69,7 @@ public class AreaUIManager : MonoBehaviour
 
     public void ResetCards()
     {
+        ExploreControl.IsTimeRunning = false;
         UiUtilMb.Instance.DestroyChildrenInContainer(cardContainer);
 
         CardRegistry.GetAllCards().ForEach(c => c.ResetCard());

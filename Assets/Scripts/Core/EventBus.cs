@@ -14,8 +14,8 @@ public enum GameEvent
 public class EventManager : MonoBehaviour
 {
 
-    private Dictionary<GameEvent, Action> eventTable = new Dictionary<GameEvent, Action>();
-    private Dictionary<GameEvent, int> lastFiredFrame = new Dictionary<GameEvent, int>();
+    private Dictionary<GameEvent, Action> eventTable = new();
+    private Dictionary<GameEvent, int> lastFiredFrame = new();
 
     private static EventManager _instance; // private backing field
 

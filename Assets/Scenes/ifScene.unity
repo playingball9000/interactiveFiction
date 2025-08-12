@@ -781,7 +781,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5567896496213507258, guid: c6d9c8a1016058d4a9c327a2aea949b1, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 20.0001
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 5567896496213507258, guid: c6d9c8a1016058d4a9c327a2aea949b1, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1641,6 +1641,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1176125400}
     m_Modifications:
+    - target: {fileID: 3747917558628109072, guid: b77f506ec4fabd04fac5b3e17acd4c6c, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5204435100991043248, guid: b77f506ec4fabd04fac5b3e17acd4c6c, type: 3}
       propertyPath: m_Name
       value: WaterBar
@@ -2225,6 +2229,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 5567896496213507258, guid: c6d9c8a1016058d4a9c327a2aea949b1, type: 3}
   m_PrefabInstance: {fileID: 181408795}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &973068735 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6883623045348440064, guid: c6d9c8a1016058d4a9c327a2aea949b1, type: 3}
+  m_PrefabInstance: {fileID: 181408795}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 51aac2593efb95343a443c3110e1d19a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1145639450
 GameObject:
   m_ObjectHideFlags: 0
@@ -2376,7 +2391,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_VertexColorAlwaysGammaSpace: 0
-  m_AdditionalShaderChannelsFlag: 0
+  m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
   m_SortingOrder: 0
@@ -2752,7 +2767,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_VertexColorAlwaysGammaSpace: 0
-  m_AdditionalShaderChannelsFlag: 0
+  m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
   m_SortingOrder: 0
@@ -3407,7 +3422,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2dd82c9c1ae26014cb785791996f1dee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  foodBar: {fileID: 0}
+  foodBar: {fileID: 973068735}
   barContainer: {fileID: 1176125400}
 --- !u!1 &1902638266
 GameObject:
