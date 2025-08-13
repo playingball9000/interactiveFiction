@@ -9,6 +9,6 @@ public class CardCodeComparer : IEqualityComparer<Card>
 
     public int GetHashCode(Card obj)
     {
-        return obj.internalCode?.GetHashCode() ?? 0;
+        return obj.internalCode.GetHashCode();
     }
 }

@@ -3,7 +3,7 @@ using System.Linq;
 
 public static class AreaRegistry
 {
-    public static Dictionary<string, Area> Areas = new();
+    public static Dictionary<LocationCode, Area> areas = new();
     private static bool initialized = false;
 
     public static void Initialize()
@@ -11,17 +11,28 @@ public static class AreaRegistry
         if (initialized) return;
         initialized = true;
 
-        var abyss = new Area("Abyss", "abyss_area");
-        abyss.AddCard(CardRegistry.GetCard("card1"));
-        abyss.AddCard(CardRegistry.GetCard("card2"));
-        abyss.AddCard(CardRegistry.GetCard("card3"));
-        abyss.AddCard(CardRegistry.GetCard("card4"));
+        var abyss = new Area("Abyss", LocationCode.Abyss_a);
+        abyss.AddCard(CardRegistry.GetCard(CardCode.card1));
+        abyss.AddCard(CardRegistry.GetCard(CardCode.card2));
+        abyss.AddCard(CardRegistry.GetCard(CardCode.card3));
+        abyss.AddCard(CardRegistry.GetCard(CardCode.card4));
 
-        Areas[abyss.internalCode] = abyss;
+        areas[abyss.internalCode] = abyss;
     }
 
-    public static Area GetArea(string internalCode) => Areas[internalCode];
-    public static List<Area> GetAllAreas() => Areas.Values.ToList();
+    public static Area GetArea(LocationCode internalCode) => areas[internalCode];
+    public static List<Area> GetAllAreas() => areas.Values.ToList();
+
+
+    public static Dictionary<LocationCode, Area> GetDict()
+    {
+        return areas;
+    }
+
+    public static void Load(Dictionary<LocationCode, Area> a)
+    {
+        areas = a;
+    }
 
     public static new string ToString()
     {

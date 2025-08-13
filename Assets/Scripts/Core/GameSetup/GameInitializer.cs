@@ -16,18 +16,17 @@ public class GameInitializer : MonoBehaviour
             Debug.Log("💥 Boom!");
         });
 
-        //TODO: probably a good idea to make a hashmap of all the rooms for easy lookup
         Room startingCamp = new()
         {
             displayName = "Starting Camp",
-            internalCode = RoomConstants.STARTING_CAMP,
+            internalCode = LocationCode.StartingCamp_r,
             description = @"A few weather-beaten tents cluster together on a narrow plateau overlooking the chasm. Crates of supplies litter the ground. The air is thick with the scent of damp earth, and greenery. Nearby, a small bonfire crackles weakly, fighting back the creeping cold."
         };
 
         Room abyssEntrance = new()
         {
             displayName = "Abyss Entrance",
-            internalCode = RoomConstants.ABYSS_ENTRANCE,
+            internalCode = LocationCode.AbyssEntrance_r,
             description = @"Here, the ground falls away into a vast, gaping darkness. Jagged rock walls curve inward, forming what looks like an enormous throat. Peering down, you catch glimpses of the first layer: lush, tangled vegetation clings to sheer walls."
         };
 
@@ -37,7 +36,7 @@ public class GameInitializer : MonoBehaviour
         RoomFactory.LinkRoomsTwoWay(abyssEntrance, startingCamp, ExitDirection.North);
 
 
-        Area startArea = AreaRegistry.GetArea("abyss_area");
+        Area startArea = AreaRegistry.GetArea(LocationCode.Abyss_a);
 
         abyssEntrance.exits.Add(new Exit { exitDirection = ExitDirection.Enter, targetDestination = startArea });
 
@@ -47,7 +46,7 @@ public class GameInitializer : MonoBehaviour
             playerName = "Player",
             description = "description",
             // currentLocation = startArea
-            currentLocation = startArea
+            currentLocation = abyssEntrance
         };
 
         var startingStats = new Dictionary<Stat, float>()
@@ -166,7 +165,9 @@ public class GameInitializer : MonoBehaviour
         // player.AddToInventory(masterKey);
 
         WorldState.GetInstance().player = player;
-        WorldState.GetInstance().roomsData.AddRange(RoomRegistry.GetAllRooms());
+        WorldState.GetInstance().roomData = RoomRegistry.GetDict();
+        WorldState.GetInstance().areaData = AreaRegistry.GetDict();
+        WorldState.GetInstance().cardData = CardRegistry.GetDict();
     }
 
     // Put stuff that happens at the start of the game here

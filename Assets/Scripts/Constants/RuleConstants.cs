@@ -5,7 +5,7 @@ public static class RuleConstants
 
 }
 
-public enum RuleConcepts
+public enum RuleConcept
 {
     OnGive,
     OnMove,

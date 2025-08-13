@@ -3,10 +3,10 @@ using System.Linq;
 
 public static class CardRulesRegistry
 {
-    public static Dictionary<string, Rule> cardRulesDict = new()
+    public static Dictionary<CardCode, Rule> cardRulesDict = new()
     {
-        { "card4", Rule.Create().CardIsComplete("card3")}
+        { CardCode.card4, Rule.Create().CardIsComplete(CardCode.card3)}
     };
 
-    public static Rule GetRule(string cardInternalCode) => cardRulesDict.TryGetValue(cardInternalCode, out var rule) ? rule : null;
+    public static Rule GetRule(CardCode cardInternalCode) => cardRulesDict.TryGetValue(cardInternalCode, out var rule) ? rule : null;
 }

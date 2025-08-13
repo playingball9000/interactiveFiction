@@ -2,7 +2,7 @@ using System;
 using System.Linq;
 
 using static FactExtensions;
-using static RuleConcepts;
+using static RuleConcept;
 using static RuleKey;
 
 public static class RuleExtensions
@@ -36,7 +36,7 @@ public static class RuleExtensions
         return rule;
     }
 
-    public static Rule CardIsComplete(this Rule rule, string cardCode)
+    public static Rule CardIsComplete(this Rule rule, CardCode cardCode)
     {
         return rule.WhenAll(
             FactExists(Concept, OnCardComplete),

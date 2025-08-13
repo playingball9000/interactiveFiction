@@ -47,8 +47,8 @@ public class GameController : MonoBehaviour
 
     void Start()
     {
-        // invokeShowMainCanvas();
-        invokeShowExploreCanvas();
+        invokeShowMainCanvas();
+        // invokeShowExploreCanvas();
     }
 
 
@@ -83,7 +83,7 @@ public class GameController : MonoBehaviour
 
     public void ResetPlayerOnDeath()
     {
-        PlayerContext.Get.currentLocation = RoomRegistry.GetRoom(RoomConstants.STARTING_CAMP);
+        PlayerContext.Get.currentLocation = RoomRegistry.GetRoom(LocationCode.StartingCamp_r);
         // Always call the delegate to do all the related stuff
         invokeShowMainCanvas();
         CoroutineRunner.Instance.RunCoroutine(CommonCoroutines.Wait(0.5f));

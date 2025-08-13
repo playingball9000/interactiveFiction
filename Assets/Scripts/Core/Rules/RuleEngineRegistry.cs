@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using static FactExtensions;
 using static RuleConstants;
 using static RuleKey;
-using static RuleConcepts;
+using static RuleConcept;
 
 public static class RuleEngineRegistry
 {

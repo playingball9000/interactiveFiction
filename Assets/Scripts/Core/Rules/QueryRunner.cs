@@ -10,7 +10,7 @@ public static class QueryRunner
     {
         List<Fact> facts = new()
         {
-            new Fact { key = RuleKey.Concept, value = RuleConcepts.OnMove },
+            new Fact { key = RuleKey.Concept, value = RuleConcept.OnMove },
             new Fact { key = RuleKey.ActionMovedFromLocation, value = movedFrom.internalCode }
         };
         if (movedFrom is Room)
@@ -29,7 +29,7 @@ public static class QueryRunner
     {
         List<Fact> facts = new()
         {
-            new Fact { key = RuleKey.Concept, value = RuleConcepts.OnMove },
+            new Fact { key = RuleKey.Concept, value = RuleConcept.OnMove },
             new Fact { key = RuleKey.ActionMovedToLocation, value = movedTo.internalCode }
         };
 
@@ -65,7 +65,7 @@ public static class QueryRunner
     {
         List<Fact> facts = new()
         {
-            Fact.Create(RuleKey.Concept, RuleConcepts.OnCardComplete)
+            Fact.Create(RuleKey.Concept, RuleConcept.OnCardComplete)
         };
 
         facts.AddRange(completedCards.Select(c => Fact.Create(RuleKey.CardCompleted, c.internalCode)).ToList());

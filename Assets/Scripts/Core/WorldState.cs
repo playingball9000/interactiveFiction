@@ -4,8 +4,10 @@ using System.Collections.Generic;
 public class WorldState
 {
     public Player player;
-    public List<Room> roomsData = new();
-    public List<Area> areasData = new();
+    public Dictionary<LocationCode, Room> roomData = new();
+    public Dictionary<LocationCode, Area> areaData = new();
+    public Dictionary<CardCode, Card> cardData = new();
+
     public List<NPC> npcs = new();
 
     public bool FLAG_dialogWindowActive = false;
