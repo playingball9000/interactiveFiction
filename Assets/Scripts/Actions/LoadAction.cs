@@ -18,6 +18,10 @@ public class LoadAction : IPlayerAction
         {
             StoryTextHandler.invokeUpdateStoryDisplay("Game has been loaded");
             WorldState.SetInstance(worldState);
+
+            RoomRegistry.Load(WorldState.GetInstance().roomData);
+            AreaRegistry.Load(WorldState.GetInstance().areaData);
+            CardRegistry.Load(WorldState.GetInstance().cardData);
         }
     }
 }

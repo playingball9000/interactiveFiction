@@ -6,7 +6,7 @@ public static class RoomFactory
     public static Room CreateRoom(
        string displayName,
        string description,
-       string internalCode,
+       LocationCode internalCode,
        List<Exit> exits = null,
        List<NPC> npcs = null,
        RoomItems roomItems = null,

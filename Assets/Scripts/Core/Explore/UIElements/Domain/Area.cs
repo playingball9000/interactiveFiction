@@ -5,9 +5,9 @@ public class Area : ILocation
 {
     public string displayName { get; set; }
     public List<Card> cards = new List<Card>();
-    public string internalCode { get; set; }
+    public LocationCode internalCode { get; set; }
 
-    public Area(string displayName, string internalCode)
+    public Area(string displayName, LocationCode internalCode)
     {
         this.displayName = displayName;
         this.internalCode = internalCode;

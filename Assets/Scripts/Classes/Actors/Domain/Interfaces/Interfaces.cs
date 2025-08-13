@@ -59,5 +59,5 @@ public interface IOpenable
 public interface ILocation
 {
     string displayName { get; }
-    string internalCode { get; }
+    public LocationCode internalCode { get; set; }
 }

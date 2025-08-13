@@ -5,7 +5,7 @@ using UnityEngine;
 public class Card
 {
     public string title;
-    public string internalCode;
+    public CardCode internalCode;
     public float baseTimeToComplete;
 
     public bool isLocked = true;
@@ -24,7 +24,7 @@ public class Card
         new ThresholdStage(20, 0.99f), // Minimal gain, near mastery
     };
 
-    public Card(string title, float baseTimeToComplete, string internalCode)
+    public Card(string title, float baseTimeToComplete, CardCode internalCode)
     {
         this.title = title;
         this.baseTimeToComplete = baseTimeToComplete;

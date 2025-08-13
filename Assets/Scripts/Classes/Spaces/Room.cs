@@ -6,7 +6,7 @@ public class Room : ILocation
 {
     public string displayName { get; set; }
     public string description;
-    public string internalCode { get; set; }
+    public LocationCode internalCode { get; set; }
 
     public List<Exit> exits = new();
     public List<NPC> npcs = new();
