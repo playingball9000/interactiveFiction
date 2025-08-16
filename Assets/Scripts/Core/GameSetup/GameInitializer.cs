@@ -45,8 +45,8 @@ public class GameInitializer : MonoBehaviour
         {
             playerName = "Player",
             description = "description",
-            // currentLocation = startArea
-            currentLocation = abyssEntrance
+            currentLocation = startArea
+            // currentLocation = abyssEntrance
         };
 
         var startingStats = new Dictionary<Stat, float>()
