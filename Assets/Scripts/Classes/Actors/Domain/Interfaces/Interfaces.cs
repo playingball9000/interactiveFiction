@@ -61,3 +61,8 @@ public interface ILocation
     string displayName { get; }
     public LocationCode internalCode { get; set; }
 }
+
+public interface IToolTip
+{
+    string GetToolTipText();
+}

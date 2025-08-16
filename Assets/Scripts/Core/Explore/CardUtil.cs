@@ -6,7 +6,7 @@ public static class CardUtil
     public static void InitialUnlockCards()
     {
         // Since no facts, just unlocks cards with no rule
-        CardRegistry.GetAllCards().ForEach(c => c.isLocked = !CardUtil.IsCardUnlocked(c, new List<Fact>()));
+        CardRegistry.GetAllCards().ForEach(c => c.isLocked = !IsCardUnlocked(c, new List<Fact>()));
     }
 
     public static List<Card> UnlockCardsPostComplete()

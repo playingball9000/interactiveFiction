@@ -14,6 +14,8 @@ public class Card
 
     public float minimumTime = .02f;
 
+    public string toolTipDesc { get; set; }
+
     List<ThresholdStage> scalingStages = new List<ThresholdStage>
     {
         new ThresholdStage(0, 0.85f),  // First completions = rapid improvement (15% faster per)
@@ -24,13 +26,14 @@ public class Card
         new ThresholdStage(20, 0.99f), // Minimal gain, near mastery
     };
 
-    public Card(string title, float baseTimeToComplete, CardCode internalCode)
+    public Card(string title, float baseTimeToComplete, CardCode internalCode, string toolTipText = "")
     {
         this.title = title;
         this.baseTimeToComplete = baseTimeToComplete;
         this.internalCode = internalCode;
-
+        this.toolTipDesc = toolTipText;
     }
+
 
     public float GetCurrentTimeToComplete()
     {
