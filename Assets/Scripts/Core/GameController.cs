@@ -47,8 +47,8 @@ public class GameController : MonoBehaviour
 
     void Start()
     {
-        // invokeShowMainCanvas();
-        invokeShowExploreCanvas();
+        invokeShowMainCanvas();
+        // invokeShowExploreCanvas();
     }
 
 

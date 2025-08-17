@@ -16,97 +16,36 @@ public class GameInitializer : MonoBehaviour
             Debug.Log("💥 Boom!");
         });
 
-        Room startingCamp = new()
-        {
-            displayName = "Starting Camp",
-            internalCode = LocationCode.StartingCamp_r,
-            description = @"A few weather-beaten tents cluster together on a narrow plateau overlooking the chasm. Crates of supplies litter the ground. The air is thick with the scent of damp earth, and greenery. Nearby, a small bonfire crackles weakly, fighting back the creeping cold."
-        };
-
-        Room abyssEntrance = new()
-        {
-            displayName = "Abyss Entrance",
-            internalCode = LocationCode.AbyssEntrance_r,
-            description = @"Here, the ground falls away into a vast, gaping darkness. Jagged rock walls curve inward, forming what looks like an enormous throat. Peering down, you catch glimpses of the first layer: lush, tangled vegetation clings to sheer walls."
-        };
-
-        RoomRegistry.Register(startingCamp);
-        RoomRegistry.Register(abyssEntrance);
-
-        RoomFactory.LinkRoomsTwoWay(abyssEntrance, startingCamp, ExitDirection.North);
+        Room startingCamp = new RoomBuilder("Starting Camp", LocationCode.StartingCamp_r)
+            .WithDescription(@"A few weather-beaten tents cluster together on a narrow plateau overlooking the chasm. Crates of supplies litter the ground. The air is thick with the scent of damp earth, and greenery. Nearby, a small bonfire crackles weakly, fighting back the creeping cold.")
+            .WithExit(ExitDirection.South, LocationCode.AbyssEntrance_r)
+            .Build();
 
 
-        Area startArea = AreaRegistry.GetArea(LocationCode.Abyss_a);
+        Room abyssEntrance = new RoomBuilder("Abyss Entrance", LocationCode.AbyssEntrance_r)
+            .WithDescription(@"Here, the ground falls away into a vast, gaping darkness. Jagged rock walls curve inward, forming what looks like an enormous throat. Peering down, you catch glimpses of the first layer: lush, tangled vegetation clings to sheer walls.")
+            .WithExit(ExitDirection.North, LocationCode.StartingCamp_r)
+            .WithExit(ExitDirection.Enter, LocationCode.Abyss_a)
+            .Build()
+            .AddScenery("darkness", "A thick haze blocks your view beyond a few hundred meters.")
+            .AddScenery("walls", "rock", "Dangerous looking.")
+            .AddScenery("layer", "first", "The very start of every adventure.")
+            .AddScenery("vegetation", "Lush and green");
 
-        abyssEntrance.exits.Add(new Exit { exitDirection = ExitDirection.Enter, targetDestination = startArea });
 
-
-        Player player = new()
-        {
-            playerName = "Player",
-            description = "description",
-            currentLocation = startArea
-            // currentLocation = abyssEntrance
-        };
-
-        var startingStats = new Dictionary<Stat, float>()
-        {
-            { Stat.Health, 72 },
-            { Stat.Food, 21 },
-            { Stat.Water, 10 },
-            { Stat.Strength, 12 },
-            { Stat.Agility, 8 },
-            { Stat.Intelligence, 6 }
-        };
-
-        player.stats.InitializeBaseStats(startingStats);
-
+        Player player = PlayerFactory.CreateNew("", LocationCode.StartingCamp_r);
 
         // TODO:This is silly, i set npc.currentLocation but also room.addNpc also sets it... should be able to do it once...
         NPC npcGrace = new Grace
         {
-            referenceName = "Grace",
+            displayName = "Grace",
             internalCode = "npc_grace",
             description = @"A petite girl. Her bright, emerald-green eyes sparkle with excitement and mischief, scanning every crevice and glimmer as though each one hides a secret treasure. Her hair, a wild tangle of chestnut curls, is tied back in a messy ponytail with a faded red ribbon that flutters behind her like a tiny flag.",
             currentLocation = startingCamp,
             dialogueFile = "womanDialogue"
         };
 
-        startingCamp.AddNpc(npcGrace);
-
-        startingCamp.roomScenery.AddRange(new List<Scenery>() {
-            new Scenery {
-                referenceName = "campfire",
-                description = "A sad looking fire."
-            },
-            new Scenery {
-                referenceName = "tents",
-                description = "Morose looking tents."
-            }
-            });
-
-
-        abyssEntrance.roomScenery.AddRange(new List<Scenery>() {
-            new Scenery {
-                referenceName = "darkness",
-                description = "A thick haze blocks your view beyond a few hundred meters."
-            },
-            new Scenery {
-                referenceName = "walls",
-                adjective = "rock",
-                description = "Dangerous looking."
-            },
-            new Scenery {
-                referenceName = "layer",
-                adjective = "first",
-                description = "The very start of every adventure."
-            },
-            new Scenery {
-                referenceName = "vegetation",
-                description = "Lush and green"
-            }
-            });
-
+        startingCamp.AddNPC(npcGrace);
 
         IItem itemBottle = ItemFactory.CreateItem(
             "bottle",
@@ -128,7 +67,7 @@ public class GameInitializer : MonoBehaviour
             isGettable = true,
             isOpen = false,
             pickUpNarration = "You hoist your trusty bag.",
-            referenceName = "bag"
+            displayName = "bag"
         };
 
         startingCamp.AddItem(bag);
@@ -155,7 +94,7 @@ public class GameInitializer : MonoBehaviour
         // player.AddToInventory(gasMask);
         IItem masterKey = new KeyBase
         {
-            referenceName = "key",
+            displayName = "key",
             adjective = "master",
             unlocks = "door_room_102",
             internalCode = "item_master_key",
@@ -163,6 +102,8 @@ public class GameInitializer : MonoBehaviour
         };
 
         // player.AddToInventory(masterKey);
+
+        RoomBuilder.FinalizeRooms();
 
         WorldState.GetInstance().player = player;
         WorldState.GetInstance().roomData = RoomRegistry.GetDict();

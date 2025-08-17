@@ -1,7 +1,7 @@
 [System.Serializable]
 public class ItemBase : IItem
 {
-    public string referenceName { get; set; }
+    public string displayName { get; set; }
     public string internalCode { get; set; }
     public string description { get; set; }
     public string adjective { get; set; } = "";
@@ -15,15 +15,9 @@ public class ItemBase : IItem
     {
         return pickUpNarrationBackingField ?? $"you pick up the {GetDisplayName()}";
     }
-
-    public string GetDescription()
-    {
-        return description;
-    }
-
     public string GetDisplayName()
     {
-        return string.IsNullOrEmpty(adjective) ? referenceName : adjective + " " + referenceName;
+        return ((IExaminable)this).GetDisplayName();
     }
 
     public override string ToString()

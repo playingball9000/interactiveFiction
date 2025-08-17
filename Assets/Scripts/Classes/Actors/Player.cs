@@ -25,8 +25,7 @@ public class Player : IActor
     public List<Fact> GetPlayerFacts()
     {
         List<Fact> playerFacts = new() {
-            new Fact { key = RuleKey.CurrentRoom, value = currentRoom?.internalCode ?? LocationCode.None},
-            new Fact { key = RuleKey.CurrentArea, value = currentArea?.internalCode ?? LocationCode.None}
+            new Fact { key = RuleKey.CurrentLocation, value = currentLocation.internalCode},
             };
 
         playerFacts.AddRange(inventory.contents.Select(item => new Fact { key = RuleKey.InInventory, value = item.internalCode }).ToList());

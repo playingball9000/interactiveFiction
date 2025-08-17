@@ -37,7 +37,7 @@ public static class ActionUtil
     /// Searches a list of objects for a field value that matches the searchString
     /// </summary>
     /// <param name="source">list to search ex. player.currentRoom.npcs </param>
-    /// <param name="propertySelector">field name on object to check ex. npc => npc.referenceName</param>
+    /// <param name="propertySelector">field name on object to check ex. npc => npc.displayName</param>
     /// <param name="searchString">word you are looking for ex. man</param>
     /// <typeparam name="T"></typeparam>
     /// <returns></returns>
@@ -84,13 +84,13 @@ public static class ActionUtil
                     pm = FindItemsFieldContainsString(container.contents, item => item.adjective, word);
                     if (!pm.Any())
                     {
-                        pm = FindItemsFieldContainsString(container.contents, item => item.referenceName, word);
+                        pm = FindItemsFieldContainsString(container.contents, item => item.displayName, word);
                     }
                 }
                 else if (processingCount == 2)
                 {
                     // Second time through, I want to disambiguate by adjectives
-                    pm = FindItemsFieldContainsString(pm, item => item.referenceName, word);
+                    pm = FindItemsFieldContainsString(pm, item => item.displayName, word);
                 }
 
                 if (pm.Count == 1)
@@ -162,7 +162,7 @@ public static class ActionUtil
 
             if (processingCount == 1)
             {
-                pm = FindItemsFieldContainsString(examinables, item => item.referenceName, word);
+                pm = FindItemsFieldContainsString(examinables, item => item.displayName, word);
                 if (!pm.Any())
                 {
                     pm = FindItemsFieldContainsString(examinables, item => item.adjective, word);
@@ -203,13 +203,13 @@ public static class ActionUtil
                 pm = FindItemsFieldContainsString(examinables, item => item.adjective, word);
                 if (!pm.Any())
                 {
-                    pm = FindItemsFieldContainsString(examinables, item => item.referenceName, word);
+                    pm = FindItemsFieldContainsString(examinables, item => item.displayName, word);
                 }
             }
             else if (processingCount == 2)
             {
-                // Second time through, I want to disambiguate by referenceName
-                pm = FindItemsFieldContainsString(pm, item => item.referenceName, word);
+                // Second time through, I want to disambiguate by displayName
+                pm = FindItemsFieldContainsString(pm, item => item.displayName, word);
             }
             if (!pm.Any() || pm.Count == 1)
             {
@@ -247,7 +247,7 @@ public static class ActionUtil
         List<NPC> possibleMatches = FindItemsFieldContainsString(npcs, item => item.adjective, firstWord);
         if (!possibleMatches.Any())
         {
-            possibleMatches = FindItemsFieldContainsString(npcs, item => item.referenceName, firstWord);
+            possibleMatches = FindItemsFieldContainsString(npcs, item => item.displayName, firstWord);
         }
         if (possibleMatches.Count <= 1)
         {
@@ -255,7 +255,7 @@ public static class ActionUtil
         }
 
         // if hasn't returned here, then possible matches are many so disambiguate
-        return FindItemsFieldContainsString(possibleMatches, item => item.referenceName, secondWord);
+        return FindItemsFieldContainsString(possibleMatches, item => item.displayName, secondWord);
 
     }
 

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using Unity.VisualScripting;
 
 public static class RoomRegistry
@@ -15,9 +16,9 @@ public static class RoomRegistry
         return rooms.TryGetValue(internalCode, out var room) ? room : null;
     }
 
-    public static IEnumerable<Room> GetAllRooms()
+    public static List<Room> GetAllRooms()
     {
-        return rooms.Values;
+        return rooms.Values.ToList();
     }
 
     public static Dictionary<LocationCode, Room> GetDict()

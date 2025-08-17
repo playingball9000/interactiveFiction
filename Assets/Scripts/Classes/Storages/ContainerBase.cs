@@ -4,7 +4,7 @@ using System.Linq;
 [System.Serializable]
 public class ContainerBase : IStorage, IItem, IOpenable, IExaminable
 {
-    public string referenceName { get; set; }
+    public string displayName { get; set; }
     public string description { get; set; }
     public string adjective { get; set; } = "";
     public string internalCode { get; set; }
@@ -65,7 +65,7 @@ public class ContainerBase : IStorage, IItem, IOpenable, IExaminable
 
     public string GetDisplayName()
     {
-        return string.IsNullOrEmpty(adjective) ? referenceName : adjective + " " + referenceName;
+        return string.IsNullOrEmpty(adjective) ? displayName : adjective + " " + displayName;
     }
 
     public bool isAccessible()

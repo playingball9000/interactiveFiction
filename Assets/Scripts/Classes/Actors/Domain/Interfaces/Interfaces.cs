@@ -10,11 +10,17 @@ public interface IWearable : IExaminable, IItem
 
 public interface IExaminable
 {
-    string referenceName { get; set; }
+    string displayName { get; set; }
     string adjective { get; set; }
     string description { get; set; }
-    string GetDisplayName();
-    string GetDescription();
+    public string GetDisplayName()
+    {
+        return string.IsNullOrEmpty(adjective) ? displayName : adjective + " " + displayName;
+    }
+    public string GetDescription()
+    {
+        return description;
+    }
 }
 
 public interface IItem : IExaminable

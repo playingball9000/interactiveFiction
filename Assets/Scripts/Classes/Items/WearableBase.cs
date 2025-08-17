@@ -3,7 +3,7 @@ using System.Collections.Generic;
 //TODO: Should this also extend ItemBase?
 public class WearableBase : IWearable
 {
-    public string referenceName { get; set; }
+    public string displayName { get; set; }
     public string internalCode { get; set; }
     public string description { get; set; }
     public string adjective { get; set; } = "";
@@ -34,7 +34,7 @@ public class WearableBase : IWearable
 
     public string GetDisplayName()
     {
-        return string.IsNullOrEmpty(adjective) ? referenceName : adjective + " " + referenceName;
+        return ((IExaminable)this).GetDisplayName();
     }
 
     public override string ToString()

@@ -16,6 +16,7 @@ public enum RuleConcept
 public enum RuleKey
 {
     Concept,
+    CurrentLocation,
     CurrentRoom,
     CurrentArea,
     PlayerEquipment,

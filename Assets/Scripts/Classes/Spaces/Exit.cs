@@ -2,6 +2,7 @@
 [System.Serializable]
 public class Exit : Portal
 {
+    public LocationCode locationCode { get; set; }
     public ILocation targetDestination { get; set; }
 
     public Room DestinationRoom => targetDestination as Room;

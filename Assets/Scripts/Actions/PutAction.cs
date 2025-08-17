@@ -19,7 +19,7 @@ public class PutAction : IPlayerAction
             player.currentRoom.roomItems,
             player.inventory
         };
-        storages.AddRange(player.currentRoom.GetRoomContainers());
+        storages.AddRange(player.currentRoom.GetContainersInRoom());
 
         var (containerHoldingItem, items) = ActionUtil.FindItemsInAccessibleStorages(storages, actionInput.mainClause);
 

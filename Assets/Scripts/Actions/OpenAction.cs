@@ -28,7 +28,7 @@ public class OpenAction : IPlayerAction
                 // }
                 else
                 {
-                    StoryTextHandler.invokeUpdateStoryDisplay("You open " + container.referenceName + "\nContents: " + container.ContentsToString());
+                    StoryTextHandler.invokeUpdateStoryDisplay("You open " + container.displayName + "\nContents: " + container.ContentsToString());
                     container.isOpen = true;
                 }
             },
