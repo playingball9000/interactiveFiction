@@ -84,16 +84,10 @@ public class PlayerInputHandler : MonoBehaviour
 
         if (action != PlayerAction.Unknown)
         {
-            // LoggingUtil.Log("Player Action was : " + action + " | inputTextArray: " + actionInput.mainClause.Count);
-            // LoggingUtil.LogList(inputTextArray.ToList());
-
             IPlayerAction playerAction = ActionRegistry.Get(action);
-
-            if (inputTextArray.Length < playerAction.minInputCount)
-            {
-                StoryTextHandler.invokeUpdateStoryDisplay(playerAction.tooFewMessage);
-            }
-            else if (inputTextArray.Length > playerAction.maxInputCount)
+            // Log.Debug(playerAction);
+            // Log.Debug(inputTextArray);
+            if (inputTextArray.Length > playerAction.maxInputCount || inputTextArray.Length < playerAction.minInputCount)
             {
                 StoryTextHandler.invokeUpdateStoryDisplay(playerAction.tooManyMessage);
             }

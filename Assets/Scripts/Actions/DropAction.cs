@@ -3,7 +3,7 @@ using System.Linq;
 
 public class DropAction : IPlayerAction
 {
-    public string tooFewMessage { get; private set; } = "What are you trying to drop?";
+    private static string actionVerb = "drop";
     public string tooManyMessage { get; private set; } = "Try the following: drop [target]";
     public int minInputCount { get; private set; } = 2;
     public int maxInputCount { get; private set; } = 3;
@@ -17,15 +17,15 @@ public class DropAction : IPlayerAction
 
         ActionUtil.MatchZeroOneAndMany(
             items.OfType<IItem>().ToList(),
-            () => StoryTextHandler.invokeUpdateStoryDisplay("You can't drop that"),
+            () => StoryTextHandler.invokeUpdateStoryDisplay($"You can't {actionVerb} that"),
             item =>
             {
-                StoryTextHandler.invokeUpdateStoryDisplay("You drop " + item.GetDisplayName());
+                StoryTextHandler.invokeUpdateStoryDisplay($"You {actionVerb} " + item.GetDisplayName());
                 player.RemoveFromInventory(item);
                 player.currentRoom.AddItem(item);
             },
             items => StoryTextHandler.invokeUpdateStoryDisplay(
-                "Are you trying to drop " + StringUtil.CreateOrSeparatedString(items.Select(item => item.GetDisplayName())))
+                $"Are you trying to {actionVerb} " + StringUtil.CreateOrSeparatedString(items.Select(item => item.GetDisplayName())))
         );
     }
 }

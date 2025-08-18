@@ -3,7 +3,6 @@ using System.Linq;
 
 public class GetAction : IPlayerAction
 {
-    public string tooFewMessage { get; private set; } = "What are you trying to get?";
     public string tooManyMessage { get; private set; } = "Try the following: get [target]";
     public int minInputCount { get; private set; } = 2;
     public int maxInputCount { get; private set; } = 3;
@@ -19,7 +18,7 @@ public class GetAction : IPlayerAction
             player.currentRoom.roomItems
         };
         // GetRoomContainers gets the containers in the room like bags
-        storages.AddRange(player.currentRoom.GetRoomContainers());
+        storages.AddRange(player.currentRoom.GetContainersInRoom());
 
         // We want to search all items in the room and accessible containers
         var (containerHoldingItem, items) = ActionUtil.FindItemsInAccessibleStorages(storages, actionInput.mainClause);

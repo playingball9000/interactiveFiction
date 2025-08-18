@@ -83,36 +83,21 @@ public class Room : ILocation
         return roomFacts;
     }
 
-    public void RemoveItem(IItem item)
-    {
-        roomItems.contents.Remove(item);
-    }
-
-    public void AddItem(IItem item)
-    {
-        roomItems.contents.Add(item);
-    }
 
     public List<IItem> GetRoomItems()
     {
         return roomItems.contents;
     }
 
-    public List<ContainerBase> GetRoomContainers()
+    public List<ContainerBase> GetContainersInRoom()
     {
         return roomItems.contents.OfType<ContainerBase>().ToList();
     }
 
-    public void AddNpc(NPC npc)
-    {
-        npc.currentLocation = this;
-        this.npcs.Add(npc);
-    }
-
     public override string ToString()
     {
-        string npcNames = StringUtil.CreateCommaSeparatedString(npcs.Select(npc => npc.referenceName).ToList());
-        string itemNames = StringUtil.CreateCommaSeparatedString(roomItems.contents.Select(item => item.referenceName).ToList());
+        string npcNames = StringUtil.CreateCommaSeparatedString(npcs.Select(npc => npc.displayName).ToList());
+        string itemNames = StringUtil.CreateCommaSeparatedString(roomItems.contents.Select(item => item.displayName).ToList());
         string exitsPaths = StringUtil.CreateCommaSeparatedString(exits.Select(ex => ex.ToString()).ToList());
 
         string toString =

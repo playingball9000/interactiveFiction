@@ -1,13 +1,13 @@
 using System.Collections.Generic;
 using System.Linq;
 
-public class TalkAction : IPlayerAction
+public class BattleAction : IPlayerAction
 {
-    public string tooManyMessage { get; private set; } = "Try the following: talk [target]";
+    private static string actionVerb = "battle";
+    public string tooManyMessage { get; private set; } = $"Try the following: {actionVerb} [target]";
     public int minInputCount { get; private set; } = 2;
     public int maxInputCount { get; private set; } = 3;
-    PlayerAction IPlayerAction.playerActionCode { get; } = PlayerAction.Talk;
-
+    PlayerAction IPlayerAction.playerActionCode { get; } = PlayerAction.Battle;
 
     void IPlayerAction.Execute(ActionInput actionInput)
     {
@@ -16,14 +16,14 @@ public class TalkAction : IPlayerAction
 
         ActionUtil.MatchZeroOneAndMany(
             npcMatch.Cast<NPC>().ToList(),
-            () => StoryTextHandler.invokeUpdateStoryDisplay("You can't talk to that"),
+            () => StoryTextHandler.invokeUpdateStoryDisplay($"You can't {actionVerb} that"),
             npc =>
             {
-                StoryTextHandler.invokeUpdateStoryDisplay("You strike up a conversation...");
-                DialogueParser.invokeStartDialogue(npc);
+                //TODO: fill this in
+                StoryTextHandler.invokeUpdateStoryDisplay("They don't want to battle");
             },
             npcs => StoryTextHandler.invokeUpdateStoryDisplay(
-                "Are you trying to talk to " + StringUtil.CreateOrSeparatedString(npcs.Select(npc => npc.GetDisplayName())))
+                $"Are you trying to {actionVerb} " + StringUtil.CreateOrSeparatedString(npcs.Select(npc => npc.GetDisplayName())))
         );
     }
 }

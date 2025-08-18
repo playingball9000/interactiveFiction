@@ -3,7 +3,6 @@ using System.Linq;
 
 public class OpenAction : IPlayerAction
 {
-    public string tooFewMessage { get; private set; } = "What are you trying to open?";
     public string tooManyMessage { get; private set; } = "Try the following: open [target]";
     public int minInputCount { get; private set; } = 2;
     public int maxInputCount { get; private set; } = 3;
@@ -28,7 +27,7 @@ public class OpenAction : IPlayerAction
                 // }
                 else
                 {
-                    StoryTextHandler.invokeUpdateStoryDisplay("You open " + container.referenceName + "\nContents: " + container.ContentsToString());
+                    StoryTextHandler.invokeUpdateStoryDisplay("You open " + container.displayName + "\nContents: " + container.ContentsToString());
                     container.isOpen = true;
                 }
             },

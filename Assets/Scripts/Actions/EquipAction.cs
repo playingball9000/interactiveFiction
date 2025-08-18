@@ -3,8 +3,9 @@ using System.Linq;
 
 public class EquipAction : IPlayerAction
 {
-    public string tooFewMessage { get; private set; } = "What are you trying to equip?";
-    public string tooManyMessage { get; private set; } = "Try the following: equip [target]";
+    private static string actionVerb = "equip";
+
+    public string tooManyMessage { get; private set; } = $"Try the following: {actionVerb} [target]";
     public int minInputCount { get; private set; } = 2;
     public int maxInputCount { get; private set; } = 4;
     PlayerAction IPlayerAction.playerActionCode { get; } = PlayerAction.Equip;
@@ -20,10 +21,10 @@ public class EquipAction : IPlayerAction
 
         ActionUtil.MatchZeroOneAndMany(
             wearables,
-            () => StoryTextHandler.invokeUpdateStoryDisplay("You can't equip that"),
+            () => StoryTextHandler.invokeUpdateStoryDisplay($"You can't {actionVerb} that"),
             item =>
             {
-                StoryTextHandler.invokeUpdateStoryDisplay("You equip " + item.GetDisplayName());
+                StoryTextHandler.invokeUpdateStoryDisplay($"You {actionVerb} " + item.GetDisplayName());
 
                 var conflictingPieces = player.equipment.FindAll(e => e.layer == item.layer && e.slotsTaken.Intersect(item.slotsTaken).Any());
                 if (conflictingPieces.Any())
@@ -38,7 +39,7 @@ public class EquipAction : IPlayerAction
 
             },
             items => StoryTextHandler.invokeUpdateStoryDisplay(
-                "Are you trying to equip " + StringUtil.CreateOrSeparatedString(items.Select(item => item.GetDisplayName())))
+                $"Are you trying to {actionVerb} " + StringUtil.CreateOrSeparatedString(items.Select(item => item.GetDisplayName())))
         );
     }
 }

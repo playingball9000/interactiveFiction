@@ -6,9 +6,9 @@ public class Grace : NPC
 {
     public string dialogueFile { get; set; }
     public string internalCode { get; set; }
-    public Room currentLocation { get; set; }
+    public ILocation currentLocation { get; set; }
     public List<IWearable> clothes { get; set; } = new List<IWearable>();
-    public string referenceName { get; set; }
+    public string displayName { get; set; }
     public string description { get; set; }
     public string adjective { get; set; } = "";
 
@@ -20,25 +20,10 @@ public class Grace : NPC
 
         if (clothes.Any())
         {
-            string clothingListString = string.Join(", ", clothes.Select(clothingItem => $"{clothingItem.referenceName}"));
-            fullDescription = fullDescription + $"{referenceName} is wearing {clothingListString}";
+            string clothingListString = string.Join(", ", clothes.Select(clothingItem => $"{clothingItem.displayName}"));
+            fullDescription = fullDescription + $"{displayName} is wearing {clothingListString}";
         }
 
         return fullDescription;
-    }
-
-    public bool GetGiveReaction(IItem giftedItem)
-    {
-        return false;
-    }
-
-    public string GetDisplayName()
-    {
-        return string.IsNullOrEmpty(adjective) ? referenceName : adjective + " " + referenceName;
-    }
-
-    public bool GetTickleReaction(string part)
-    {
-        return false;
     }
 }

@@ -3,7 +3,6 @@ using System.Linq;
 
 public class GiveAction : IPlayerAction
 {
-    public string tooFewMessage { get; private set; } = "Who do you want to give to?";
     public string tooManyMessage { get; private set; } = "Try the following: give [item] [target]";
     public int minInputCount { get; private set; } = 3;
     public int maxInputCount { get; private set; } = 5;
@@ -22,7 +21,7 @@ public class GiveAction : IPlayerAction
             player.inventory
         };
 
-        storages.AddRange(player.currentRoom.GetRoomContainers());
+        storages.AddRange(player.currentRoom.GetContainersInRoom());
 
         var (containerHoldingItem, items) = ActionUtil.FindItemsInAccessibleStorages(storages, actionInput.mainClause);
 

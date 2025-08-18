@@ -3,7 +3,6 @@ using System.Linq;
 
 public class UnlockAction : IPlayerAction
 {
-    public string tooFewMessage { get; private set; } = "What are you trying to unlock?";
     public string tooManyMessage { get; private set; } = "Try the following: unlock [target]";
     public int minInputCount { get; private set; } = 2;
     public int maxInputCount { get; private set; } = 4;
