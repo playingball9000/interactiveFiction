@@ -34,7 +34,6 @@ public interface IItem : IExaminable
 public interface IPlayerAction
 {
     public PlayerAction playerActionCode { get; }
-    public string tooFewMessage { get; }
     public string tooManyMessage { get; }
     public int minInputCount { get; }
     public int maxInputCount { get; }

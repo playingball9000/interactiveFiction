@@ -9,6 +9,8 @@ public enum PlayerAction
     Give,
     Open,
     Close,
+    Battle,
+    Insult,
     Put,
     Equip,
     Unequip,

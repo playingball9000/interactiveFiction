@@ -15,9 +15,11 @@ public interface NPC : IExaminable, IActor
 
     bool GetGiveReaction(IItem giftedItem)
     {
-        // default implementation
-        return false; // default: no reaction
+        return false;
     }
-    bool GetTickleReaction(string part);
+    bool GetTickleReaction(string part)
+    {
+        return false;
+    }
 
 }

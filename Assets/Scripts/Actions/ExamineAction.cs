@@ -3,7 +3,6 @@ using System.Linq;
 
 public class ExamineAction : IPlayerAction
 {
-    public string tooFewMessage { get; private set; } = "What do you want to examine?";
     public string tooManyMessage { get; private set; } = "Try the following: examine [target] OR examine [target] [object]";
     public int minInputCount { get; private set; } = 2;
     public int maxInputCount { get; private set; } = 5;

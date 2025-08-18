@@ -21,6 +21,8 @@ public class ActionRegistry
         CreateAction<UnequipAction>(),
         CreateAction<UnlockAction>(),
         CreateAction<TickleAction>(),
+        CreateAction<InsultAction>(),
+        CreateAction<BattleAction>(),
     }
     .Concat(CreateMoveActions<MoveAction>())
     .ToDictionary(kvp => kvp.Key, kvp => kvp.Value);

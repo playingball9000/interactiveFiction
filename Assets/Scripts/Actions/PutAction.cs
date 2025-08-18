@@ -3,7 +3,6 @@ using System.Linq;
 
 public class PutAction : IPlayerAction
 {
-    public string tooFewMessage { get; private set; } = "Try the following: put [target] [destination]";
     public string tooManyMessage { get; private set; } = "Try the following: put [target] [destination]";
     public int minInputCount { get; private set; } = 3;
     public int maxInputCount { get; private set; } = 4;

@@ -27,6 +27,13 @@ public class ActionWordSynonyms
 
         { "tickle", PlayerAction.Tickle },
 
+        { "insult", PlayerAction.Insult },
+
+        { "battle", PlayerAction.Battle },
+        { "fight", PlayerAction.Battle },
+        { "challenge", PlayerAction.Battle },
+        { "aggress", PlayerAction.Battle },
+
         { "talk", PlayerAction.Talk },
 
         { "take", PlayerAction.Get },

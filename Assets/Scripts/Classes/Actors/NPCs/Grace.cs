@@ -26,14 +26,4 @@ public class Grace : NPC
 
         return fullDescription;
     }
-
-    public bool GetGiveReaction(IItem giftedItem)
-    {
-        return false;
-    }
-
-    public bool GetTickleReaction(string part)
-    {
-        return false;
-    }
 }

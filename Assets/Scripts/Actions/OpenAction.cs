@@ -3,7 +3,6 @@ using System.Linq;
 
 public class OpenAction : IPlayerAction
 {
-    public string tooFewMessage { get; private set; } = "What are you trying to open?";
     public string tooManyMessage { get; private set; } = "Try the following: open [target]";
     public int minInputCount { get; private set; } = 2;
     public int maxInputCount { get; private set; } = 3;

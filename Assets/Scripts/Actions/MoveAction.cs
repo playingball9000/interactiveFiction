@@ -4,7 +4,6 @@ using System.Linq;
 
 public class MoveAction : IPlayerAction
 {
-    public string tooFewMessage { get; private set; }
     public string tooManyMessage { get; private set; } = "If you're trying to move, try: n,s,e,w,enter";
     public int minInputCount { get; private set; } = 0;
     public int maxInputCount { get; private set; } = 4;
