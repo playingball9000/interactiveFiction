@@ -8,13 +8,16 @@ public class Card
     public CardCode internalCode;
     public float baseTimeToComplete;
 
+    public ICardLifecycle lifecycle;
+
     public bool isLocked = true;
     public bool isComplete = false;
     public int completionCount = 0;
 
     public float minimumTime = .02f;
 
-    public string toolTipDesc { get; set; }
+    public string tooltipDesc { get; set; }
+    public string completionLog { get; set; }
 
     List<ThresholdStage> scalingStages = new List<ThresholdStage>
     {
@@ -26,14 +29,12 @@ public class Card
         new ThresholdStage(20, 0.99f), // Minimal gain, near mastery
     };
 
-    public Card(string title, float baseTimeToComplete, CardCode internalCode, string toolTipText = "")
+    public Card(string title, CardCode internalCode, float baseTimeToComplete)
     {
         this.title = title;
         this.baseTimeToComplete = baseTimeToComplete;
         this.internalCode = internalCode;
-        this.toolTipDesc = toolTipText;
     }
-
 
     public float GetCurrentTimeToComplete()
     {
@@ -60,13 +61,14 @@ public class Card
 
     public void MarkCompleted()
     {
-        completionCount++;
-        isComplete = true;
+        lifecycle.OnComplete(this);
     }
 
     public void ResetCard()
     {
-        isComplete = false;
+        // Log.Debug($"Reset Card: {this}");
+        lifecycle.OnReset(this);
+        isLocked = true;
     }
 
     public override string ToString()

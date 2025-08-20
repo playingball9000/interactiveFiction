@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class FoodBar : TickBarBase
 {
-    private float drainAmount = .1f;
+    private float drainAmount = 1f;
     public bool canDrain = false;
 
     protected override void HandleTick()

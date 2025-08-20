@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
+using TMPro;
 
 public class AreaUIManager : MonoBehaviour
 {
@@ -10,16 +11,21 @@ public class AreaUIManager : MonoBehaviour
     public Transform cardContainer; // Parent object to hold card buttons
     public GameObject cardButtonPrefab; // Prefab for each card button
 
+    public TaskMessageUI taskMessageUI;
+    public Transform areaLogContainer;
+    public GameObject logPrefab;
+
+
     private void OnEnable()
     {
         EventManager.Subscribe(GameEvent.EnterArea, ShowCurrentArea);
-        EventManager.Subscribe(GameEvent.DieInArea, ResetCards);
+        EventManager.Subscribe(GameEvent.DieInArea, ResetAreas);
     }
 
     private void OnDisable()
     {
         EventManager.Unsubscribe(GameEvent.EnterArea, ShowCurrentArea);
-        EventManager.Unsubscribe(GameEvent.DieInArea, ResetCards);
+        EventManager.Unsubscribe(GameEvent.DieInArea, ResetAreas);
     }
 
     public void ShowCurrentArea()
@@ -43,10 +49,16 @@ public class AreaUIManager : MonoBehaviour
         // remove the Card object from card container
         Destroy(completedCard.gameObject);
 
-        completedCard.cardReference.MarkCompleted();
+        completedCard.cardRef.MarkCompleted();
         // Debug.Log(completedCard.cardReference);
         // Run associated code if it exists
-        CardRunRegistry.Get(completedCard.cardReference.internalCode)?.Invoke();
+        CardRunRegistry.Get(completedCard.cardRef.internalCode)?.Invoke();
+
+        taskMessageUI.ShowMessage($" Task '{completedCard.cardRef.title}' completed!");
+
+        GameObject newTextObj = Instantiate(logPrefab, areaLogContainer);
+        TextMeshProUGUI tmp = newTextObj.GetComponent<TextMeshProUGUI>();
+        tmp.text = completedCard.cardRef.completionLog;
 
         List<Card> unlockedCards = CardUtil.UnlockCardsPostComplete();
         List<Card> cardsInArea = PlayerContext.Get.currentArea.cards;
@@ -67,10 +79,11 @@ public class AreaUIManager : MonoBehaviour
         return cardUI;
     }
 
-    public void ResetCards()
+    public void ResetAreas()
     {
         ExploreControl.IsTimeRunning = false;
         UiUtilMb.Instance.DestroyChildrenInContainer(cardContainer);
+        UiUtilMb.Instance.DestroyChildrenInContainer(areaLogContainer);
 
         CardRegistry.GetAllCards().ForEach(c => c.ResetCard());
     }

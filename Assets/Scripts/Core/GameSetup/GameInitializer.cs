@@ -7,9 +7,9 @@ public class GameInitializer : MonoBehaviour
     //Setup for the game here
     void Awake()
     {
-        CardRegistry.Initialize();
-        AreaRegistry.Initialize(); // Run after CardRegistry
+        SetupCards.initialize();
         CardUtil.InitialUnlockCards();
+        AreaRegistry.Initialize(); // Run after setup cards
 
         TimerManager.Instance.CreateTimer(TimerCode.Test, 1f, () =>
         {
@@ -33,7 +33,7 @@ public class GameInitializer : MonoBehaviour
             .AddScenery("vegetation", "Lush and green");
 
 
-        Player player = PlayerFactory.CreateNew("", LocationCode.StartingCamp_r);
+        Player player = PlayerFactory.CreateNew("", LocationCode.Abyss_a);
 
         // TODO:This is silly, i set npc.currentLocation but also room.addNpc also sets it... should be able to do it once...
         NPC npcGrace = new Grace

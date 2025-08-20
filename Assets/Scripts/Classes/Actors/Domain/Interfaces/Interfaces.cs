@@ -67,7 +67,7 @@ public interface ILocation
     public LocationCode internalCode { get; set; }
 }
 
-public interface IToolTip
+public interface ITooltip
 {
-    string GetToolTipText();
+    string GetTooltipText();
 }

@@ -3,11 +3,11 @@ using UnityEngine.EventSystems;
 
 public class TooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
-    public IToolTip toolTipInfo;
+    public ITooltip tooltipInfo;
 
     private void Awake()
     {
-        toolTipInfo = GetComponent<IToolTip>();
+        tooltipInfo = GetComponent<ITooltip>();
     }
 
     private void OnDisable()
@@ -22,7 +22,7 @@ public class TooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        TooltipManager.Instance.ShowTooltipByID(toolTipInfo.GetToolTipText());
+        TooltipManager.Instance.ShowTooltipByID(tooltipInfo.GetTooltipText());
     }
 
     public void OnPointerExit(PointerEventData eventData)

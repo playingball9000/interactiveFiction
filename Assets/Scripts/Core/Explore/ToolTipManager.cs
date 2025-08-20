@@ -6,9 +6,9 @@ public class TooltipManager : MonoBehaviour
 {
     public static TooltipManager Instance;
 
-    [SerializeField] private GameObject toolTipCanvas;
+    [SerializeField] private GameObject tooltipCanvas;
     [SerializeField] private TextMeshProUGUI tooltipText;
-    [SerializeField] private RectTransform toolTipBg;
+    [SerializeField] private RectTransform tooltipBg;
 
     // All tooltips stored here
     private Dictionary<string, string> tooltipData = new Dictionary<string, string>()
@@ -31,7 +31,7 @@ public class TooltipManager : MonoBehaviour
         var normalizedPosition = new Vector2(position.x / Screen.width, position.y / Screen.height);
         var pivot = CalculatePivot(normalizedPosition);
 
-        toolTipBg.pivot = pivot;
+        tooltipBg.pivot = pivot;
 
         Vector2 pos;
         RectTransformUtility.ScreenPointToLocalPointInRectangle(
@@ -40,7 +40,7 @@ public class TooltipManager : MonoBehaviour
             null,
             out pos
         );
-        toolTipBg.localPosition = pos + new Vector2(10f, -10f);
+        tooltipBg.localPosition = pos + new Vector2(10f, -10f);
     }
 
     private Vector2 CalculatePivot(Vector2 normalizedPosition)
@@ -72,13 +72,13 @@ public class TooltipManager : MonoBehaviour
     public void ShowTooltipByID(string id)
     {
         tooltipText.text = id;
-        toolTipCanvas.SetActive(true);
+        tooltipCanvas.SetActive(true);
     }
 
     public void HideTooltip()
     {
         // onDisable calls this so it causes errors when the game shuts down
-        if (!toolTipCanvas) return;
-        toolTipCanvas.SetActive(false);
+        if (!tooltipCanvas) return;
+        tooltipCanvas.SetActive(false);
     }
 }
