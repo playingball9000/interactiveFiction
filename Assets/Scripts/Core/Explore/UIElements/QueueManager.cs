@@ -1,5 +1,4 @@
 using UnityEngine;
-using System.Collections;
 using System.Collections.Generic;
 
 public class QueueManager : MonoBehaviour
@@ -71,7 +70,7 @@ public class QueueManager : MonoBehaviour
         isWorking = true;
         currentQueueUIEntry = cardQueue.Peek();
 
-        taskDuration = currentQueueUIEntry.cardUIRef.cardRef.GetCurrentTimeToComplete();
+        taskDuration = currentQueueUIEntry.cardUIRef.cardRef.currentTimeToComplete;
         taskTimeLeft = taskDuration - currentQueueUIEntry.cardUIRef.elapsedTime;
 
         currentQueueUIEntry.SetProgress(0f);

@@ -16,7 +16,7 @@ public class CardQueueUIEntry : MonoBehaviour
         cardUIRef = cardUI;
         titleText.text = cardUI.cardRef.title;
         onCancelClicked = cancelCallback;
-        progressBar.value = cardUI.elapsedTime / cardUI.cardRef.GetCurrentTimeToComplete();
+        progressBar.value = cardUI.elapsedTime / cardUI.cardRef.currentTimeToComplete;
 
         cancelButton.onClick.AddListener(() => onCancelClicked?.Invoke(this));
     }

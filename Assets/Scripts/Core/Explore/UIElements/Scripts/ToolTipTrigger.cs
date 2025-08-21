@@ -22,7 +22,7 @@ public class TooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        TooltipManager.Instance.ShowTooltipByID(tooltipInfo.GetTooltipText());
+        TooltipManager.Instance.ShowTooltipByID(tooltipInfo);
     }
 
     public void OnPointerExit(PointerEventData eventData)

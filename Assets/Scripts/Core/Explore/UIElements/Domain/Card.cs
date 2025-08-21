@@ -7,6 +7,7 @@ public class Card
     public string title;
     public CardCode internalCode;
     public float baseTimeToComplete;
+    public float currentTimeToComplete;
 
     public ICardLifecycle lifecycle;
 
@@ -19,6 +20,7 @@ public class Card
     public string tooltipDesc { get; set; }
     public string completionLog { get; set; }
 
+    //TODO: Need to fix this, it resets at each threshold
     List<ThresholdStage> scalingStages = new List<ThresholdStage>
     {
         new ThresholdStage(0, 0.85f),  // First completions = rapid improvement (15% faster per)
@@ -33,13 +35,12 @@ public class Card
     {
         this.title = title;
         this.baseTimeToComplete = baseTimeToComplete;
+        currentTimeToComplete = baseTimeToComplete;
         this.internalCode = internalCode;
     }
 
-    public float GetCurrentTimeToComplete()
+    public void RecalculateCurrentTimeToComplete()
     {
-        float time = baseTimeToComplete;
-
         ThresholdStage activeStage = scalingStages[0];
 
         foreach (var stage in scalingStages)
@@ -54,9 +55,8 @@ public class Card
             }
         }
 
-        int scaledCompletions = completionCount - activeStage.minCompletionCount;
-        float scaledTime = time * Mathf.Pow(activeStage.scalingFactor, scaledCompletions);
-        return Mathf.Max(minimumTime, scaledTime);
+        // int scaledCompletions = completionCount - activeStage.minCompletionCount;
+        currentTimeToComplete = currentTimeToComplete * activeStage.scalingFactor;
     }
 
     public void MarkCompleted()
@@ -68,7 +68,6 @@ public class Card
     {
         // Log.Debug($"Reset Card: {this}");
         lifecycle.OnReset(this);
-        isLocked = true;
     }
 
     public override string ToString()
@@ -77,7 +76,7 @@ public class Card
                $"  • Title: <b>{title}</b>\n" +
                $"  • Code: {internalCode}\n" +
                $"  • Base Time: {baseTimeToComplete:F1}s\n" +
-               $"  • Current Time: {GetCurrentTimeToComplete():F1}s\n" +
+               $"  • Current Time: {currentTimeToComplete:F1}s\n" +
                $"  • Completions: {completionCount}\n" +
                $"  • Locked: {(isLocked ? "<color=red>Yes</color>" : "<color=green>No</color>")}\n" +
                $"  • Complete: {(isComplete ? "<color=green>Yes</color>" : "<color=grey>No</color>")}\n";

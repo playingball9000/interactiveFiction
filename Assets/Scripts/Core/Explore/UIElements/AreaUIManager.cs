@@ -46,10 +46,19 @@ public class AreaUIManager : MonoBehaviour
 
     public void OnCardComplete(CardUI completedCard)
     {
-        // remove the Card object from card container
-        Destroy(completedCard.gameObject);
-
         completedCard.cardRef.MarkCompleted();
+        completedCard.cardRef.RecalculateCurrentTimeToComplete();
+
+        if (completedCard.cardRef.isComplete)
+        {
+            // remove the Card object from card container only if it is complete. ie. repeatable cards are not marked complete
+            Destroy(completedCard.gameObject);
+        }
+        else
+        {
+            completedCard.startButton.interactable = true;
+        }
+
         // Debug.Log(completedCard.cardReference);
         // Run associated code if it exists
         CardRunRegistry.Get(completedCard.cardRef.internalCode)?.Invoke();

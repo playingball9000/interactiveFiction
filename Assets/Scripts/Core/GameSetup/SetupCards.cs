@@ -2,14 +2,16 @@ public static class SetupCards
 {
     public static void initialize()
     {
-        new CardBuilder("Find the key", CardCode.card1, 1f)
+        new CardBuilder("Find the key", CardCode.card1, .1f)
             .WithTooltip("")
             .WithCompletionLog("Yay found key")
+            .AsLimitedRepeats(3)
             .Build();
 
-        new CardBuilder("Unlock Door", CardCode.card2, 2f)
+        new CardBuilder("Unlock Door", CardCode.card2, .2f)
             .WithTooltip("")
             .WithCompletionLog("door unlock")
+            .AsRepeatable()
             .Build();
 
 

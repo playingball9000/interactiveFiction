@@ -1,6 +1,7 @@
 
 public interface ICardLifecycle
 {
+    string GetTooltip();
     void OnComplete(Card card);
     void OnReset(Card card);
 }
@@ -8,6 +9,11 @@ public interface ICardLifecycle
 [System.Serializable]
 public class OnceLifecycle : ICardLifecycle
 {
+    public string GetTooltip()
+    {
+        return "Progress persists";
+    }
+
     public void OnComplete(Card card)
     {
         card.completionCount++;
@@ -20,12 +26,20 @@ public class OnceLifecycle : ICardLifecycle
 [System.Serializable]
 public class RepeatableLifecycle : ICardLifecycle
 {
+    public string GetTooltip()
+    {
+        return "Repeatable";
+    }
+
     public void OnComplete(Card card)
     {
         card.completionCount++;
     }
 
-    public void OnReset(Card card) { }
+    public void OnReset(Card card)
+    {
+        card.isLocked = CardRuleRegistry.Get(card.internalCode) != null;
+    }
 }
 
 [System.Serializable]
@@ -33,6 +47,11 @@ public class LimitedRepeatLifecycle : ICardLifecycle
 {
     public int maxRepeats;
     public int completeCountThisRun;
+
+    public string GetTooltip()
+    {
+        return $"Completed: {completeCountThisRun} / {maxRepeats}";
+    }
 
     public void OnComplete(Card card)
     {
@@ -48,12 +67,18 @@ public class LimitedRepeatLifecycle : ICardLifecycle
     {
         completeCountThisRun = 0;
         card.isComplete = false;
+        card.isLocked = CardRuleRegistry.Get(card.internalCode) != null;
     }
 }
 
 [System.Serializable]
 public class RegularLifecycle : ICardLifecycle
 {
+    public string GetTooltip()
+    {
+        return "";
+    }
+
     public void OnComplete(Card card)
     {
         card.completionCount++;
@@ -63,6 +88,7 @@ public class RegularLifecycle : ICardLifecycle
     public void OnReset(Card card)
     {
         card.isComplete = false;
+        card.isLocked = CardRuleRegistry.Get(card.internalCode) != null;
     }
 }
 

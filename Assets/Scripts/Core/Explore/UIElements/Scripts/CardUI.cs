@@ -24,9 +24,10 @@ public class CardUI : MonoBehaviour, ITooltip
 
         // Header
         sb.AppendLine($"<b>{cardRef.title}</b>");
+        sb.AppendLine($"{cardRef.lifecycle.GetTooltip()}");
         sb.AppendLine($"{cardRef.tooltipDesc}");
-        sb.AppendLine($"{cardRef.GetCurrentTimeToComplete():F2} / {cardRef.baseTimeToComplete:F2}");
-        sb.AppendLine($"Time Left: {cardRef.GetCurrentTimeToComplete() - elapsedTime:F2}");
+        sb.AppendLine($"{cardRef.currentTimeToComplete:F2} / {cardRef.baseTimeToComplete:F2}");
+        sb.AppendLine($"Time Left: {cardRef.currentTimeToComplete - elapsedTime:F2}");
 
         return sb.ToString();
     }
