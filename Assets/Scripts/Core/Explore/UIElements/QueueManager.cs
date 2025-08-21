@@ -1,7 +1,5 @@
 using UnityEngine;
-using System.Collections;
 using System.Collections.Generic;
-using System;
 
 public class QueueManager : MonoBehaviour
 {
@@ -12,18 +10,23 @@ public class QueueManager : MonoBehaviour
 
     private Queue<CardQueueUIEntry> cardQueue = new Queue<CardQueueUIEntry>();
     private bool isWorking = false;
-    private Coroutine runningTaskCoroutine = null;
 
-    public TaskMessageUI taskMessageUI;
+
+    private CardQueueUIEntry currentQueueUIEntry;
+    private float taskDuration;
+    private float taskTimeLeft;
+
 
     private void OnEnable()
     {
         EventManager.Subscribe(GameEvent.DieInArea, ClearQueue);
+        TickSystem.OnTick += OnTick;
     }
 
     private void OnDisable()
     {
         EventManager.Unsubscribe(GameEvent.DieInArea, ClearQueue);
+        TickSystem.OnTick -= OnTick;
     }
 
     public void EnqueueCard(CardUI cardUI)
@@ -32,72 +35,83 @@ public class QueueManager : MonoBehaviour
 
         GameObject entryObj = Instantiate(queueItemPrefab, queueContainer, false);
         CardQueueUIEntry cardQueueUIEntry = entryObj.GetComponent<CardQueueUIEntry>();
-
         cardQueueUIEntry.Init(cardUI, OnQueueItemCanceled);
 
-        // I do want to queue up the CardQueueUIEntry because it represents the actual thing in progress
         cardQueue.Enqueue(cardQueueUIEntry);
         OnQueueStateChanged();
 
         if (!isWorking)
-            runningTaskCoroutine = StartCoroutine(ProcessQueue());
+            StartNextTask();
+    }
+
+    private void OnTick()
+    {
+        if (!isWorking || currentQueueUIEntry == null)
+            return;
+
+        taskTimeLeft -= .02f; // decrease by tick length
+        float progress = 1f - (taskTimeLeft / taskDuration);
+        currentQueueUIEntry.SetProgress(progress);
+
+        if (taskTimeLeft <= 0f)
+        {
+            CompleteTask();
+        }
+    }
+
+    private void StartNextTask()
+    {
+        if (cardQueue.Count == 0)
+        {
+            isWorking = false;
+            return;
+        }
+
+        isWorking = true;
+        currentQueueUIEntry = cardQueue.Peek();
+
+        taskDuration = currentQueueUIEntry.cardUIRef.cardRef.currentTimeToComplete;
+        taskTimeLeft = taskDuration - currentQueueUIEntry.cardUIRef.elapsedTime;
+
+        currentQueueUIEntry.SetProgress(0f);
+    }
+
+    private void CompleteTask()
+    {
+        cardQueue.Dequeue();
+        Destroy(currentQueueUIEntry.gameObject);
+
+        areaUIManager.OnCardComplete(currentQueueUIEntry.cardUIRef);
+        OnQueueStateChanged();
+
+        currentQueueUIEntry = null;
+        StartNextTask();
     }
 
     void OnQueueItemCanceled(CardQueueUIEntry queueItem)
     {
-        CardQueueUIEntry currentRunningEntry = cardQueue.Peek();
-        if (queueItem == currentRunningEntry)
+        // Reset button + remove UI
+        queueItem.cardUIRef.startButton.interactable = true;
+        Destroy(queueItem.gameObject);
+
+        if (currentQueueUIEntry == queueItem)
         {
-            // Debug.Log("Canceled current running task.");
-            StopCoroutine(runningTaskCoroutine);
             cardQueue.Dequeue();
-            runningTaskCoroutine = StartCoroutine(ProcessQueue());
+            currentQueueUIEntry = null;
+            isWorking = false;
+            queueItem.cardUIRef.elapsedTime = taskDuration - taskTimeLeft;
+
+            StartNextTask();
         }
         else
         {
-            // Queue does not have a remove function so putting in list
+            // Cancel a queued (not yet running) task
             List<CardQueueUIEntry> temp = new List<CardQueueUIEntry>(cardQueue);
             temp.Remove(queueItem);
             cardQueue = new Queue<CardQueueUIEntry>(temp);
         }
-        queueItem.originalCardUI.startButton.interactable = true;
-        Destroy(queueItem.gameObject);
+
         OnQueueStateChanged();
-    }
-
-    private IEnumerator ProcessQueue()
-    {
-        isWorking = true;
-
-        while (cardQueue.Count > 0)
-        {
-            CardQueueUIEntry currentQueueUIEntry = cardQueue.Peek();
-            // Log.Debug("PEEK" + currentQueueUIEntry);
-
-            float duration = currentQueueUIEntry.cardData.GetCurrentTimeToComplete();
-            float timeLeft = duration;
-
-            while (timeLeft > 0)
-            {
-                float progress = 1f - (timeLeft / duration);
-                currentQueueUIEntry.SetProgress(progress);
-
-                timeLeft -= Time.deltaTime;
-                yield return null;
-            }
-            // Log.Debug("POST COMPLETE CARD" + currentQueueUIEntry.originalCardUI.cardReference);
-
-            currentQueueUIEntry.MarkComplete();
-            cardQueue.Dequeue();
-            Destroy(currentQueueUIEntry.gameObject);
-            taskMessageUI.ShowMessage($" Task '{currentQueueUIEntry.cardData.title}' completed!");
-
-            areaUIManager.OnCardComplete(currentQueueUIEntry.originalCardUI);
-
-            OnQueueStateChanged();
-        }
-
-        isWorking = false;
     }
 
     void OnQueueStateChanged()
@@ -115,12 +129,12 @@ public class QueueManager : MonoBehaviour
     void ClearQueue()
     {
         isWorking = false;
+        currentQueueUIEntry = null;
         cardQueue.Clear();
-        if (runningTaskCoroutine != null)
-        {
-            StopCoroutine(runningTaskCoroutine);
-            runningTaskCoroutine = null;
-        }
+
         UiUtilMb.Instance.DestroyChildrenInContainer(queueContainer);
+
+        OnQueueStateChanged();
     }
+
 }

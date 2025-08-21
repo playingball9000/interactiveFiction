@@ -7,6 +7,9 @@ public class Card
     public string title;
     public CardCode internalCode;
     public float baseTimeToComplete;
+    public float currentTimeToComplete;
+
+    public ICardLifecycle lifecycle;
 
     public bool isLocked = true;
     public bool isComplete = false;
@@ -14,8 +17,10 @@ public class Card
 
     public float minimumTime = .02f;
 
-    public string toolTipDesc { get; set; }
+    public string tooltipDesc { get; set; }
+    public string completionLog { get; set; }
 
+    //TODO: Need to fix this, it resets at each threshold
     List<ThresholdStage> scalingStages = new List<ThresholdStage>
     {
         new ThresholdStage(0, 0.85f),  // First completions = rapid improvement (15% faster per)
@@ -26,19 +31,16 @@ public class Card
         new ThresholdStage(20, 0.99f), // Minimal gain, near mastery
     };
 
-    public Card(string title, float baseTimeToComplete, CardCode internalCode, string toolTipText = "")
+    public Card(string title, CardCode internalCode, float baseTimeToComplete)
     {
         this.title = title;
         this.baseTimeToComplete = baseTimeToComplete;
+        currentTimeToComplete = baseTimeToComplete;
         this.internalCode = internalCode;
-        this.toolTipDesc = toolTipText;
     }
 
-
-    public float GetCurrentTimeToComplete()
+    public void RecalculateCurrentTimeToComplete()
     {
-        float time = baseTimeToComplete;
-
         ThresholdStage activeStage = scalingStages[0];
 
         foreach (var stage in scalingStages)
@@ -53,20 +55,19 @@ public class Card
             }
         }
 
-        int scaledCompletions = completionCount - activeStage.minCompletionCount;
-        float scaledTime = time * Mathf.Pow(activeStage.scalingFactor, scaledCompletions);
-        return Mathf.Max(minimumTime, scaledTime);
+        // int scaledCompletions = completionCount - activeStage.minCompletionCount;
+        currentTimeToComplete = currentTimeToComplete * activeStage.scalingFactor;
     }
 
     public void MarkCompleted()
     {
-        completionCount++;
-        isComplete = true;
+        lifecycle.OnComplete(this);
     }
 
     public void ResetCard()
     {
-        isComplete = false;
+        // Log.Debug($"Reset Card: {this}");
+        lifecycle.OnReset(this);
     }
 
     public override string ToString()
@@ -75,7 +76,7 @@ public class Card
                $"  • Title: <b>{title}</b>\n" +
                $"  • Code: {internalCode}\n" +
                $"  • Base Time: {baseTimeToComplete:F1}s\n" +
-               $"  • Current Time: {GetCurrentTimeToComplete():F1}s\n" +
+               $"  • Current Time: {currentTimeToComplete:F1}s\n" +
                $"  • Completions: {completionCount}\n" +
                $"  • Locked: {(isLocked ? "<color=red>Yes</color>" : "<color=green>No</color>")}\n" +
                $"  • Complete: {(isComplete ? "<color=green>Yes</color>" : "<color=grey>No</color>")}\n";

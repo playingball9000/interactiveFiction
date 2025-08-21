@@ -3,27 +3,31 @@ using UnityEngine.UI;
 using TMPro;
 using System.Text;
 
-public class CardUI : MonoBehaviour, IToolTip
+public class CardUI : MonoBehaviour, ITooltip
 {
     public TMP_Text titleText;
     public Button startButton;
-    public Card cardReference;
+    public Card cardRef;
+    public float elapsedTime;
 
     public void Init(Card card, System.Action<CardUI> callback)
     {
-        cardReference = card;
+        cardRef = card;
         titleText.text = card.title;
         startButton.onClick.AddListener(() => callback?.Invoke(this));
+        elapsedTime = 0f;
     }
 
-    public string GetToolTipText()
+    public string GetTooltipText()
     {
         StringBuilder sb = new StringBuilder();
 
         // Header
-        sb.AppendLine($"<b>{cardReference.title}</b>");
-        sb.AppendLine($"{cardReference.toolTipDesc}");
-        sb.AppendLine($"{cardReference.GetCurrentTimeToComplete():F2} / {cardReference.baseTimeToComplete:F2}");
+        sb.AppendLine($"<b>{cardRef.title}</b>");
+        sb.AppendLine($"{cardRef.lifecycle.GetTooltip()}");
+        sb.AppendLine($"{cardRef.tooltipDesc}");
+        sb.AppendLine($"{cardRef.currentTimeToComplete:F2} / {cardRef.baseTimeToComplete:F2}");
+        sb.AppendLine($"Time Left: {cardRef.currentTimeToComplete - elapsedTime:F2}");
 
         return sb.ToString();
     }

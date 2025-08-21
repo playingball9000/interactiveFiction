@@ -6,17 +6,11 @@ public class TooltipManager : MonoBehaviour
 {
     public static TooltipManager Instance;
 
-    [SerializeField] private GameObject toolTipCanvas;
+    [SerializeField] private GameObject tooltipCanvas;
     [SerializeField] private TextMeshProUGUI tooltipText;
-    [SerializeField] private RectTransform toolTipBg;
+    [SerializeField] private RectTransform tooltipBg;
 
-    // All tooltips stored here
-    private Dictionary<string, string> tooltipData = new Dictionary<string, string>()
-    {
-        { "playButton", "Start the game!" },
-        { "settingsButton", "Adjust your game settings." },
-        { "quitButton", "Exit the game." }
-    };
+    ITooltip currentProvider;
 
     private void Awake()
     {
@@ -25,22 +19,25 @@ public class TooltipManager : MonoBehaviour
     }
 
     private void Update()
-
     {
-        var position = Input.mousePosition;
-        var normalizedPosition = new Vector2(position.x / Screen.width, position.y / Screen.height);
-        var pivot = CalculatePivot(normalizedPosition);
+        if (tooltipCanvas.activeSelf && currentProvider != null)
+        {
+            tooltipText.text = currentProvider.GetTooltipText();
+            var position = Input.mousePosition;
+            var normalizedPosition = new Vector2(position.x / Screen.width, position.y / Screen.height);
+            var pivot = CalculatePivot(normalizedPosition);
 
-        toolTipBg.pivot = pivot;
+            tooltipBg.pivot = pivot;
 
-        Vector2 pos;
-        RectTransformUtility.ScreenPointToLocalPointInRectangle(
-            transform.parent as RectTransform,
-            Input.mousePosition,
-            null,
-            out pos
-        );
-        toolTipBg.localPosition = pos + new Vector2(10f, -10f);
+            Vector2 pos;
+            RectTransformUtility.ScreenPointToLocalPointInRectangle(
+                transform.parent as RectTransform,
+                Input.mousePosition,
+                null,
+                out pos
+            );
+            tooltipBg.localPosition = pos + new Vector2(10f, -10f);
+        }
     }
 
     private Vector2 CalculatePivot(Vector2 normalizedPosition)
@@ -69,16 +66,18 @@ public class TooltipManager : MonoBehaviour
         }
     }
 
-    public void ShowTooltipByID(string id)
+    public void ShowTooltipByID(ITooltip tip)
     {
-        tooltipText.text = id;
-        toolTipCanvas.SetActive(true);
+        currentProvider = tip;
+        tooltipText.text = tip.GetTooltipText();
+        tooltipCanvas.SetActive(true);
     }
 
     public void HideTooltip()
     {
         // onDisable calls this so it causes errors when the game shuts down
-        if (!toolTipCanvas) return;
-        toolTipCanvas.SetActive(false);
+        if (!tooltipCanvas) return;
+        currentProvider = null;
+        tooltipCanvas.SetActive(false);
     }
 }

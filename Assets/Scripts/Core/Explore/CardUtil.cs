@@ -34,7 +34,7 @@ public static class CardUtil
 
     public static bool IsCardUnlocked(Card card, List<Fact> facts)
     {
-        Rule rule = CardRulesRegistry.GetRule(card.internalCode);
+        Rule rule = CardRuleRegistry.Get(card.internalCode);
         return rule == null || rule.Evaluate(facts);
     }
 }
