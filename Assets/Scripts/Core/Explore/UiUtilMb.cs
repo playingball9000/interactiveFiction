@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UiUtilMb : MonoBehaviour
 {
@@ -24,5 +25,11 @@ public class UiUtilMb : MonoBehaviour
         {
             Destroy(child.gameObject);
         }
+    }
+
+    public void ScrollToBottom(ScrollRect scrollRect)
+    {
+        Canvas.ForceUpdateCanvases();
+        scrollRect.verticalNormalizedPosition = 0f;
     }
 }

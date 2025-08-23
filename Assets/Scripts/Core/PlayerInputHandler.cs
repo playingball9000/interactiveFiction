@@ -110,6 +110,7 @@ public class PlayerInputHandler : MonoBehaviour
 
     public void ActivateAndClearField()
     {
+        UI_playerInputBox.Select();
         UI_playerInputBox.ActivateInputField();
         UI_playerInputBox.text = "";
     }

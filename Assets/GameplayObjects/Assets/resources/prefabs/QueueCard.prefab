@@ -12,7 +12,8 @@ GameObject:
   - component: {fileID: 8782154581949211461}
   - component: {fileID: 3298368713655844378}
   - component: {fileID: 6126837857046942232}
-  - component: {fileID: 4395216495686705799}
+  - component: {fileID: 560357684226861251}
+  - component: {fileID: 3791795351841910423}
   m_Layer: 5
   m_Name: QueueCard
   m_TagString: Untagged
@@ -95,16 +96,8 @@ MonoBehaviour:
   titleText: {fileID: 2628977652123075399}
   progressBar: {fileID: 4183914418895840472}
   cancelButton: {fileID: 4352432513753411391}
-  originalCardUI: {fileID: 0}
-  cardData:
-    title: 
-    internalCode: 0
-    baseTimeToComplete: 0
-    isLocked: 0
-    isComplete: 0
-    completionCount: 0
-    minimumTime: 0
---- !u!114 &4395216495686705799
+  cardUIRef: {fileID: 0}
+--- !u!114 &560357684226861251
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -113,12 +106,27 @@ MonoBehaviour:
   m_GameObject: {fileID: 119781412673780517}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cfabb0440166ab443bba8876756fdfa9, type: 3}
+  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
-  m_EffectDistance: {x: 2, y: -1}
+  m_EffectColor: {r: 0.3679245, g: 0.24894312, b: 0.098923095, a: 0.5}
+  m_EffectDistance: {x: 1, y: 1}
   m_UseGraphicAlpha: 1
+--- !u!114 &3791795351841910423
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 119781412673780517}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0.8018868, g: 0.5825849, b: 0.3215112, a: 0.5}
+  m_EffectDistance: {x: -1, y: -1}
+  m_UseGraphicAlpha: 0
 --- !u!1 &1164641752965078863
 GameObject:
   m_ObjectHideFlags: 0
@@ -168,6 +176,7 @@ GameObject:
   - component: {fileID: 2537673102847327541}
   - component: {fileID: 4352432513753411391}
   - component: {fileID: 4440234805524543590}
+  - component: {fileID: 9111681077016782879}
   m_Layer: 5
   m_Name: Button
   m_TagString: Untagged
@@ -291,6 +300,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
   m_EffectDistance: {x: 1, y: -1}
+  m_UseGraphicAlpha: 1
+--- !u!114 &9111681077016782879
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2839197226677327978}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cfabb0440166ab443bba8876756fdfa9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 1, g: 1, b: 1, a: 0.5}
+  m_EffectDistance: {x: -1, y: 1}
   m_UseGraphicAlpha: 1
 --- !u!1 &3959187576361568716
 GameObject:

@@ -59,7 +59,7 @@ public class StoryTextHandler : MonoBehaviour
             typingCoroutine = StartCoroutine(ProcessTextQueue());
         }
 
-        ScrollToBottom();
+        UiUtilMb.Instance.ScrollToBottom(storyScrollRect);
     }
 
     private IEnumerator ProcessTextQueue()
@@ -114,11 +114,5 @@ public class StoryTextHandler : MonoBehaviour
             charIndex++;
             yield return typeWritingWait;
         }
-    }
-
-    private void ScrollToBottom()
-    {
-        Canvas.ForceUpdateCanvases();
-        storyScrollRect.verticalNormalizedPosition = 0f;
     }
 }

@@ -9,6 +9,7 @@ public interface ICardLifecycle
 [System.Serializable]
 public class OnceLifecycle : ICardLifecycle
 {
+
     public string GetTooltip()
     {
         return "Progress persists";
