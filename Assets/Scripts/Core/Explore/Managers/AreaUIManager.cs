@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class AreaUIManager : MonoBehaviour
 {
 
+    //TODO: probably should repalce with events
     public QueueManager queueManager; // Injected from Unity UI
 
     public Transform cardContainer; // Parent object to hold card buttons
@@ -48,17 +49,12 @@ public class AreaUIManager : MonoBehaviour
 
     public void OnCardComplete(CardUI completedCard)
     {
-        completedCard.cardRef.MarkCompleted();
-        completedCard.cardRef.RecalculateCurrentTimeToComplete();
+        completedCard.cardRef.OnComplete();
 
         if (completedCard.cardRef.isComplete)
         {
             // remove the Card object from card container only if it is complete. ie. repeatable cards are not marked complete
             Destroy(completedCard.gameObject);
-        }
-        else
-        {
-            completedCard.startButton.interactable = true;
         }
 
         // Debug.Log(completedCard.cardReference);

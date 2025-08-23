@@ -1,8 +1,10 @@
 using UnityEngine;
 
 /*
-Make more stuff enums
-
+explrot canvas -> panel
+tooltip look better
+explore log look better
+explore dialgoue box
 */
 
 public class GameController : MonoBehaviour
@@ -47,8 +49,9 @@ public class GameController : MonoBehaviour
 
     void Start()
     {
-        invokeShowMainCanvas();
-        // invokeShowExploreCanvas();
+        // invokeShowMainCanvas();
+        PlayerContext.Get.currentLocation = AreaRegistry.GetArea(LocationCode.Abyss_a);
+        invokeShowExploreCanvas();
     }
 
 

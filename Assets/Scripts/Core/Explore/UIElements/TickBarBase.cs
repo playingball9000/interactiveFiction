@@ -7,7 +7,7 @@ public abstract class TickBarBase : TickBase
     [SerializeField] protected Image progressImage;
     [SerializeField] public TextMeshProUGUI numbers;
 
-    protected virtual void UpdateBarAndNumber()
+    protected virtual void UpdateUIBarAndNumber()
     {
         progressImage.fillAmount = Mathf.Clamp01(currentValue / totalValue);
         numbers.text = $"{Mathf.Round(currentValue)} / {totalValue}";

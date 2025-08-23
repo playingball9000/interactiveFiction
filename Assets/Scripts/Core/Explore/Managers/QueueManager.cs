@@ -32,6 +32,7 @@ public class QueueManager : MonoBehaviour
 
     public void EnqueueCard(CardUI cardUI)
     {
+        //TODO: This should really be managed int eh CardUI class
         if (cardUI.cardRef.lifecycle is RegularLifecycle
             || cardUI.cardRef.lifecycle is OnceLifecycle)
         {
@@ -41,6 +42,7 @@ public class QueueManager : MonoBehaviour
         GameObject entryObj = Instantiate(queueItemPrefab, queueContainer, false);
         CardQueueUIEntry cardQueueUIEntry = entryObj.GetComponent<CardQueueUIEntry>();
         cardQueueUIEntry.Init(cardUI, OnQueueItemCanceled, entryObj);
+        //QUESTION: If i queue up a bunch of stuff, will the time to complete get updated as it finishes each task?
 
         cardQueue.Enqueue(cardQueueUIEntry);
         OnQueueStateChanged();
@@ -113,8 +115,6 @@ public class QueueManager : MonoBehaviour
 
     void OnQueueItemCanceled(CardQueueUIEntry queueItem)
     {
-        //TODO: What happens if i remove a repetable task? for progress
-
         // Reset button + remove UI
         queueItem.cardUIRef.startButton.interactable = true;
         Destroy(queueItem.gameObject);

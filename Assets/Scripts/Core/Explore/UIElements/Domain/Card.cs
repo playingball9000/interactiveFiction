@@ -39,7 +39,7 @@ public class Card
         this.internalCode = internalCode;
     }
 
-    public void RecalculateCurrentTimeToComplete()
+    private void RecalculateCurrentTimeToComplete()
     {
         ThresholdStage activeStage = scalingStages[0];
 
@@ -55,13 +55,13 @@ public class Card
             }
         }
 
-        // int scaledCompletions = completionCount - activeStage.minCompletionCount;
         currentTimeToComplete = currentTimeToComplete * activeStage.scalingFactor;
     }
 
-    public void MarkCompleted()
+    public void OnComplete()
     {
         lifecycle.OnComplete(this);
+        RecalculateCurrentTimeToComplete();
     }
 
     public void ResetCard()

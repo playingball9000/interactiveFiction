@@ -2,12 +2,12 @@ using UnityEngine;
 
 public class FoodBar : TickBarBase
 {
-    private float drainAmount = .5f;
-    public bool canDrain = false;
+    private float changeAmount = -.5f;
+    public bool isChanging = false;
 
     protected override void HandleTick()
     {
-        if (!ExploreControl.IsTimeRunning || !canDrain)
+        if (!ExploreControl.IsTimeRunning || !isChanging)
             return;
 
         tickCounter++;
@@ -15,7 +15,7 @@ public class FoodBar : TickBarBase
         if (tickCounter >= tickInterval)
         {
             tickCounter = 0;
-            Drain();
+            Change();
 
             if (currentValue <= 0)
             {
@@ -24,10 +24,10 @@ public class FoodBar : TickBarBase
         }
     }
 
-    private void Drain()
+    private void Change()
     {
-        currentValue = Mathf.Min(totalValue, currentValue - drainAmount);
-        UpdateBarAndNumber();
+        currentValue = Mathf.Min(totalValue, currentValue + changeAmount);
+        UpdateUIBarAndNumber();
         // Debug.Log("currentValue=" + currentValue);
     }
 
@@ -36,8 +36,8 @@ public class FoodBar : TickBarBase
         // Directly tied to player stats so any changes reflect immediately
         totalValue = PlayerContext.Get.stats.GetFinalStat(Stat.Food);
         currentValue = totalValue;
-        canDrain = true;
-        UpdateBarAndNumber();
+        isChanging = true;
+        UpdateUIBarAndNumber();
         tickCounter = 0;
         tickInterval = 5;
     }
@@ -49,12 +49,12 @@ public class FoodBar : TickBarBase
         totalValue = totalValue + difference;
         // Do I always want current to change?
         currentValue = Mathf.Min(1f, currentValue + difference); // In case it's negative and goes down
-        UpdateBarAndNumber();
+        UpdateUIBarAndNumber();
     }
 
     public void Add(float amount)
     {
         currentValue = Mathf.Max(totalValue, currentValue + amount);
-        UpdateBarAndNumber();
+        UpdateUIBarAndNumber();
     }
 }
