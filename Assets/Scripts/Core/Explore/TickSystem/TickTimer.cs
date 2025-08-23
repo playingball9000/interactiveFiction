@@ -17,7 +17,6 @@ public class TickTimer : TickBase
         onComplete = callback;
         timerCanRun = true;
         tickCounter = 0;
-        tickInterval = 5;
 
         if (timerNumbers != null)
         {

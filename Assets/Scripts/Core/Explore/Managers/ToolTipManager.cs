@@ -1,6 +1,5 @@
 using UnityEngine;
 using TMPro;
-using System.Collections.Generic;
 
 public class TooltipManager : MonoBehaviour
 {
@@ -30,10 +29,16 @@ public class TooltipManager : MonoBehaviour
             tooltipBg.pivot = pivot;
 
             Vector2 pos;
+            // RectTransformUtility.ScreenPointToLocalPointInRectangle(
+            //     transform.parent as RectTransform,
+            //     Input.mousePosition,
+            //     null,
+            //     out pos
+            // );
             RectTransformUtility.ScreenPointToLocalPointInRectangle(
                 transform.parent as RectTransform,
                 Input.mousePosition,
-                null,
+                tooltipCanvas.GetComponent<Canvas>().worldCamera,
                 out pos
             );
             tooltipBg.localPosition = pos + new Vector2(10f, -10f);

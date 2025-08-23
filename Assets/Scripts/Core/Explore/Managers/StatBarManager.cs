@@ -2,8 +2,10 @@ using UnityEngine;
 
 public class StatBarManager : MonoBehaviour
 {
-    [SerializeField] private FoodBar foodBar;
-    [SerializeField] private Transform barContainer;
+    [SerializeField] private StatBar healthBar;
+    [SerializeField] private StatBar foodBar;
+    [SerializeField] private StatBar waterBar;
+    [SerializeField] private Transform statsContainer;
 
     private void OnEnable()
     {
@@ -18,12 +20,16 @@ public class StatBarManager : MonoBehaviour
 
     public void ResetBars()
     {
+        healthBar.ResetProgress();
         foodBar.ResetProgress();
+        waterBar.ResetProgress();
     }
 
     public void ReloadBars()
     {
-        foodBar.UpdateTotal();
+        healthBar.UpdateTotalFromStats();
+        foodBar.UpdateTotalFromStats();
+        waterBar.UpdateTotalFromStats();
     }
 
 }
