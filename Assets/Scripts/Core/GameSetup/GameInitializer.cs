@@ -33,7 +33,7 @@ public class GameInitializer : MonoBehaviour
             .AddScenery("vegetation", "Lush and green");
 
 
-        Player player = PlayerFactory.CreateNew("", LocationCode.Abyss_a);
+        Player player = PlayerFactory.CreateNew("", LocationCode.StartingCamp_r);
 
         // TODO:This is silly, i set npc.currentLocation but also room.addNpc also sets it... should be able to do it once...
         NPC npcGrace = new Grace

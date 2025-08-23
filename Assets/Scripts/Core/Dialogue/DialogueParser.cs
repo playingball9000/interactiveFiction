@@ -8,8 +8,10 @@ public class DialogueParser : MonoBehaviour
 {
     [HideInInspector]
     public TextMeshProUGUI UI_dialogueBox;
-    [HideInInspector]
-    public TextMeshProUGUI UI_dialogueChoicesBox;
+
+    public Transform choicesPanel;
+    public GameObject choicePrefab;
+
     [HideInInspector]
     public GameObject UI_storyScrollView;
     private ScrollRect dialogueScrollRect;
@@ -33,8 +35,8 @@ public class DialogueParser : MonoBehaviour
         GameObject dialogueTextObject = GameObject.Find("DialogueTextBox");
         UI_dialogueBox = dialogueTextObject.GetComponent<TextMeshProUGUI>();
 
-        GameObject choicesTextObject = GameObject.Find("ChoicesTextBox");
-        UI_dialogueChoicesBox = choicesTextObject.GetComponent<TextMeshProUGUI>();
+        choicesPanel = GameObject.Find("ChoicesPanel").transform;
+        choicePrefab = (GameObject)Resources.Load("prefabs/dialogue/DialogueChoice", typeof(GameObject));
 
         UI_storyScrollView = GameObject.Find("DialogueScrollView");
         dialogueScrollRect = UI_storyScrollView.GetComponent<ScrollRect>();
@@ -42,12 +44,14 @@ public class DialogueParser : MonoBehaviour
 
     void OnEnable()
     {
-        DialogueParser.invokeStartDialogue += StartDialogue;
+        invokeStartDialogue += StartDialogue;
+        DialogueChoiceUI.OnChoiceClicked += HandleChoiceClicked;
     }
 
     void OnDisable()
     {
-        DialogueParser.invokeStartDialogue -= StartDialogue;
+        invokeStartDialogue -= StartDialogue;
+        DialogueChoiceUI.OnChoiceClicked -= HandleChoiceClicked;
     }
 
     void Update()
@@ -65,12 +69,18 @@ public class DialogueParser : MonoBehaviour
         }
     }
 
+    public void HandleChoiceClicked(int choiceNumber)
+    {
+        // Choice numbers start at 1
+        DialogueChoice choice = currentChoices[choiceNumber - 1];
+        OnChoiceSelected(choice);
+    }
+
     public void StartDialogue(NPC npc)
     {
         dialogueLog.Clear();
         currentChoices.Clear();
         dialogueFacts.Clear();
-        UI_dialogueChoicesBox.text = "";
         GameController.invokeShowDialogueCanvas();
 
         //TODO: Finish gathering facts here, npc, location, world, context, etc
@@ -90,17 +100,24 @@ public class DialogueParser : MonoBehaviour
         dialogueLog.Add(fullText + "\n");
         UI_dialogueBox.text = dialogueLog.GetLogsString();
         ScrollToBottom();
+        DisplayPlayerChoices(currentNode);
+    }
 
-
+    private void DisplayPlayerChoices(DialogueNode currentNode)
+    {
+        // Display Player choices
         int choiceCounter = 1;
         for (int i = 0; i < currentNode.choices.Count; i++)
         {
             // If no rule or if rule passes, add choice
             if (currentNode.choices[i].showRule == null || currentNode.choices[i].showRule.Evaluate(dialogueFacts))
             {
+                GameObject newChoice = Instantiate(choicePrefab, choicesPanel);
+                DialogueChoiceUI choiceUI = newChoice.GetComponent<DialogueChoiceUI>();
+                choiceUI.Init(choiceCounter, currentNode.choices[i].text);
+
                 // Not all choices satisfy rules so need to keep track of choices that passed
                 currentChoices.Add(currentNode.choices[i]);
-                UI_dialogueChoicesBox.text += $"{choiceCounter}. {currentNode.choices[i].text}\n";
                 choiceCounter++;
             }
         }
@@ -109,7 +126,7 @@ public class DialogueParser : MonoBehaviour
     public void OnChoiceSelected(DialogueChoice choice)
     {
         currentChoices.Clear();
-        UI_dialogueChoicesBox.text = "";
+        UiUtilMb.Instance.DestroyChildrenInContainer(choicesPanel);
 
         if (choice.nextNode == null)
         {

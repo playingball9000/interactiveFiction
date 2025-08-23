@@ -8,11 +8,14 @@ public class CardQueueUIEntry : MonoBehaviour
     public Slider progressBar;
     public Button cancelButton;
 
+    private GameObject uiObj;
+
     [HideInInspector] public CardUI cardUIRef;
     [HideInInspector] public System.Action<CardQueueUIEntry> onCancelClicked;
 
-    public void Init(CardUI cardUI, System.Action<CardQueueUIEntry> cancelCallback)
+    public void Init(CardUI cardUI, System.Action<CardQueueUIEntry> cancelCallback, GameObject gameObject)
     {
+        uiObj = gameObject;
         cardUIRef = cardUI;
         titleText.text = cardUI.cardRef.title;
         onCancelClicked = cancelCallback;
@@ -24,6 +27,11 @@ public class CardQueueUIEntry : MonoBehaviour
     public void SetProgress(float t)
     {
         progressBar.value = Mathf.Clamp01(t);
+    }
+
+    public void DestroySelf()
+    {
+        Destroy(uiObj);
     }
 
     public override string ToString()
