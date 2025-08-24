@@ -63,11 +63,6 @@ public class ContainerBase : IStorage, IItem, IOpenable, IExaminable
         contents.Remove(item);
     }
 
-    public string GetDisplayName()
-    {
-        return string.IsNullOrEmpty(adjective) ? displayName : adjective + " " + displayName;
-    }
-
     public bool isAccessible()
     {
         return isOpen;
@@ -77,7 +72,7 @@ public class ContainerBase : IStorage, IItem, IOpenable, IExaminable
     {
         string toString =
             $"<b><color=#8B4513>[Container]</color></b>\n" +
-            $"  • Name: <b>{GetDisplayName()}</b>\n" +
+            $"  • Name: <b>{this.GetDisplayName()}</b>\n" +
             $"  • Accessible: {isAccessible()}\n" +
             $"  • Contents: {ContentsToString()}\n";
         return toString;

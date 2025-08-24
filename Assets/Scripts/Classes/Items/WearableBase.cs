@@ -20,25 +20,21 @@ public class WearableBase : IWearable
 
     public string GetPickUpNarration()
     {
-        return pickUpNarrationBackingField ?? $"you pick up the {GetDisplayName()}";
+
+        return pickUpNarrationBackingField ?? $"you pick up the {this.GetDisplayName()}";
     }
 
     public string GetDescription()
     {
-        string title = $"{GetDisplayName()}\n[Slot: {StringUtil.CreateCommaSeparatedString(slotsTaken)} | Layer: {layer}]";
+        string title = $"{this.GetDisplayName()}\n[Slot: {StringUtil.CreateCommaSeparatedString(slotsTaken)} | Layer: {layer}]";
         string attributesText = attributes.Count > 0 ? "Attributes:\n" : "";
         attributesText += StringUtil.CreateCommaSeparatedString(attributes);
         string descriptionText = $"{description}";
         return $"{title}\n\n{attributesText}\n\n{descriptionText}";
     }
 
-    public string GetDisplayName()
-    {
-        return ((IExaminable)this).GetDisplayName();
-    }
-
     public override string ToString()
     {
-        return GetDisplayName();
+        return this.GetDisplayName();
     }
 }

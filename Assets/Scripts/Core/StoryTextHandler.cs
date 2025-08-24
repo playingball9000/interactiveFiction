@@ -14,12 +14,8 @@ public class StoryTextHandler : MonoBehaviour
 
     StringListMax storyLog = new(250);
 
-    private Coroutine typingCoroutine;
-    WaitForSeconds textQueueWait = new(0.7f);
-    WaitForSeconds typeWritingWait = new(0.015f);
     private Queue<(string text, TextEffect effect)> textQueue = new();
     private bool isTyping = false;
-    private bool skipQueueWait = false;
 
     // Delegates for other functions to use to invoke this. Probably not the right way but oh well.
     public delegate void UpdateStoryDisplayDelegate(string text, TextEffect effect = TextEffect.None);
@@ -56,63 +52,28 @@ public class StoryTextHandler : MonoBehaviour
         textQueue.Enqueue((text, effect));
         if (!isTyping)
         {
-            typingCoroutine = StartCoroutine(ProcessTextQueue());
+            StartCoroutine(ProcessTextQueue(UI_storyBox));
         }
 
         UiUtilMb.Instance.ScrollToBottom(storyScrollRect);
     }
 
-    private IEnumerator ProcessTextQueue()
+    private IEnumerator ProcessTextQueue(TextMeshProUGUI tmpBox)
     {
         isTyping = true;
         while (textQueue.Count > 0)
         {
-            skipQueueWait = false;
             var (nextText, effect) = textQueue.Dequeue();
 
             if (TextEffect.None == effect)
             {
-                UI_storyBox.text = storyLog.GetLogsString();
+                tmpBox.text = storyLog.GetLogsString();
             }
             else if (TextEffect.Typewriter == effect)
             {
-                yield return StartCoroutine(TypewriterAppend(nextText));
-                if (!skipQueueWait)
-                {
-                    yield return textQueueWait;
-                }
+                yield return StartCoroutine(UiUtilMb.Instance.TypewriterAppend(nextText, tmpBox));
             }
         }
         isTyping = false;
-    }
-
-    private IEnumerator TypewriterAppend(string newText)
-    {
-        int charIndex = 0;
-
-        while (charIndex < newText.Length)
-        {
-            if (Input.GetKey(KeyCode.Space))
-            {
-                // Stop coroutine and just display the text
-                UI_storyBox.text += newText;
-                skipQueueWait = true;
-                yield break;
-            }
-            // Skips typewriting the tags
-            if (newText[charIndex] == '<')
-            {
-                int tagEnd = newText.IndexOf('>', charIndex) - 1;
-                if (tagEnd != -1)
-                {
-                    UI_storyBox.text += newText.Substring(charIndex, tagEnd - charIndex + 1);
-                    charIndex = tagEnd + 1;
-                    continue;
-                }
-            }
-            UI_storyBox.text += newText[charIndex];
-            charIndex++;
-            yield return typeWritingWait;
-        }
     }
 }
