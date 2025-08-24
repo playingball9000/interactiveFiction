@@ -8,21 +8,6 @@ public interface IWearable : IExaminable, IItem
     List<Attribute> attributes { get; set; }
 }
 
-public interface IExaminable
-{
-    string displayName { get; set; }
-    string adjective { get; set; }
-    string description { get; set; }
-    public string GetDisplayName()
-    {
-        return string.IsNullOrEmpty(adjective) ? displayName : adjective + " " + displayName;
-    }
-    public string GetDescription()
-    {
-        return description;
-    }
-}
-
 public interface IItem : IExaminable
 {
     bool isGettable { get; set; }

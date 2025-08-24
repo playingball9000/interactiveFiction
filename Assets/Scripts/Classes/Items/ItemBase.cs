@@ -13,15 +13,11 @@ public class ItemBase : IItem
 
     public string GetPickUpNarration()
     {
-        return pickUpNarrationBackingField ?? $"you pick up the {GetDisplayName()}";
-    }
-    public string GetDisplayName()
-    {
-        return ((IExaminable)this).GetDisplayName();
+        return pickUpNarrationBackingField ?? $"you pick up the {this.GetDisplayName()}";
     }
 
     public override string ToString()
     {
-        return GetDisplayName();
+        return this.GetDisplayName();
     }
 }

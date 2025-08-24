@@ -74,24 +74,24 @@ public class GameInitializer : MonoBehaviour
 
         player.relationships.Add(npcGrace.internalCode, new Relationship { points = 0 });
 
-        // IWearable gasMask = new WearableBase()
-        // {
-        //     referenceName = "mask",
-        //     adjective = "gas",
-        //     internalCode = "wearable_gas_mask",
-        //     description = "Your trusty gas mask, protects you from all kinds of gas. The filter is one you stole from the UN.",
-        //     layer = ClothingLayer.Outer,
-        //     slotsTaken = new() { EquipmentSlot.Face },
-        //     attributes = new() {
-        //         new Attribute() {
-        //             displayName = "Gas Immunity",
-        //             internalCode = "ability_gas_immunity",
-        //             type = AttributeType.Ability,
-        //         }
-        //     }
-        // };
+        IWearable gasMask = new WearableBase()
+        {
+            displayName = "mask",
+            adjective = "gas",
+            internalCode = "wearable_gas_mask",
+            description = "Your trusty gas mask, protects you from all kinds of gas. The filter is one you stole from the UN.",
+            layer = ClothingLayer.Outer,
+            slotsTaken = new() { EquipmentSlot.Face },
+            attributes = new() {
+                new Attribute() {
+                    displayName = "Gas Immunity",
+                    internalCode = "ability_gas_immunity",
+                    type = AttributeType.Ability,
+                }
+            }
+        };
 
-        // player.AddToInventory(gasMask);
+        player.AddToInventory(gasMask);
         IItem masterKey = new KeyBase
         {
             displayName = "key",
