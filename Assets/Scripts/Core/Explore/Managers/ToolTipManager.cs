@@ -44,31 +44,17 @@ public class TooltipManager : MonoBehaviour
             tooltipBg.localPosition = pos + new Vector2(10f, -10f);
         }
     }
-
     private Vector2 CalculatePivot(Vector2 normalizedPosition)
     {
-        var pivotTopLeft = new Vector2(-0.05f, 1.05f);
-        var pivotTopRight = new Vector2(1.05f, 1.05f);
-        var pivotBottomLeft = new Vector2(-0.05f, -0.05f);
-        var pivotBottomRight = new Vector2(1.05f, -0.05f);
+        Vector2 pivot = new Vector2(-0.05f, 1.05f);
 
-        // Probably have it change pivots closer to the edges
-        if (normalizedPosition.x < 0.5f && normalizedPosition.y >= 0.5f)
-        {
-            return pivotTopLeft;
-        }
-        else if (normalizedPosition.x > 0.5f && normalizedPosition.y >= 0.5f)
-        {
-            return pivotTopRight;
-        }
-        else if (normalizedPosition.x <= 0.5f && normalizedPosition.y < 0.5f)
-        {
-            return pivotBottomLeft;
-        }
-        else
-        {
-            return pivotBottomRight;
-        }
+        if (normalizedPosition.x > 0.5f)
+            pivot.x = 1.05f;
+
+        if (normalizedPosition.y < 0.5f)
+            pivot.y = -0.05f;
+
+        return pivot;
     }
 
     public void ShowTooltipByID(ITooltip tip)

@@ -12,6 +12,7 @@ public class StatBarManager : MonoBehaviour
         EventManager.Subscribe(GameEvent.EnterArea, ResetBars);
         EventManager.Subscribe(GameEvent.StatsChanged, ReloadBars);
     }
+
     private void OnDisable()
     {
         EventManager.Unsubscribe(GameEvent.EnterArea, ResetBars);
