@@ -32,5 +32,4 @@ public class StatBarManager : MonoBehaviour
         foodBar.UpdateTotalFromStats();
         waterBar.UpdateTotalFromStats();
     }
-
 }

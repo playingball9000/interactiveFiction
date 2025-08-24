@@ -29,16 +29,10 @@ public class TooltipManager : MonoBehaviour
             tooltipBg.pivot = pivot;
 
             Vector2 pos;
-            // RectTransformUtility.ScreenPointToLocalPointInRectangle(
-            //     transform.parent as RectTransform,
-            //     Input.mousePosition,
-            //     null,
-            //     out pos
-            // );
             RectTransformUtility.ScreenPointToLocalPointInRectangle(
                 transform.parent as RectTransform,
                 Input.mousePosition,
-                tooltipCanvas.GetComponent<Canvas>().worldCamera,
+                null,
                 out pos
             );
             tooltipBg.localPosition = pos + new Vector2(10f, -10f);
