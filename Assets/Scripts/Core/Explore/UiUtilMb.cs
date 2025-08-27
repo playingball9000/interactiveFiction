@@ -6,7 +6,6 @@ using UnityEngine.UI;
 public class UiUtilMb : MonoBehaviour
 {
     WaitForSeconds typeWritingWait = new(0.015f);
-    WaitForSeconds textQueueWait = new(0.7f);
 
     private static UiUtilMb _instance;
 
@@ -38,10 +37,29 @@ public class UiUtilMb : MonoBehaviour
         scrollRect.verticalNormalizedPosition = 0f;
     }
 
+    public IEnumerator FadeHelper(CanvasGroup canvasGroup, float startAlpha, float endAlpha, float fadeDuration)
+    {
+        yield return StartCoroutine(FadeCanvasGroup(canvasGroup, startAlpha, endAlpha, fadeDuration));
+    }
+
+    IEnumerator FadeCanvasGroup(CanvasGroup cg, float from, float to, float duration)
+    {
+        if (cg == null) yield break;
+
+        cg.alpha = from;
+        float t = 0f;
+        while (t < duration)
+        {
+            t += Time.deltaTime;
+            cg.alpha = Mathf.Lerp(from, to, t / duration);
+            yield return null;
+        }
+        cg.alpha = to;
+    }
+
     public IEnumerator TypewriterAppend(string newText, TextMeshProUGUI tmpBox)
     {
         int charIndex = 0;
-        newText = TMPTagCleaner.Clean(newText);
 
         while (charIndex < newText.Length)
         {
@@ -65,7 +83,9 @@ public class UiUtilMb : MonoBehaviour
             }
             tmpBox.text += newText[charIndex];
             charIndex++;
-            yield return typeWritingWait;
+            yield return new WaitForSeconds(.05f);
         }
+        tmpBox.text = TMPTagCleaner.Clean(tmpBox.text);
+
     }
 }

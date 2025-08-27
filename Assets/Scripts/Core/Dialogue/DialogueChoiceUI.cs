@@ -16,7 +16,7 @@ public class DialogueChoiceUI : MonoBehaviour, IPointerEnterHandler, IPointerExi
     {
         label = GetComponentInChildren<TextMeshProUGUI>();
 
-        ColorUtility.TryParseHtmlString("#ADD8E6", out hoverColor);
+        ColorUtility.TryParseHtmlString("#5dd6ffff", out hoverColor);
         ColorUtility.TryParseHtmlString("#FFD700", out defaultColor);
     }
 
