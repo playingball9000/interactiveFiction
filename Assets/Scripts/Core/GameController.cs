@@ -1,3 +1,6 @@
+using System.Collections;
+using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 /*
@@ -12,6 +15,12 @@ public class GameController : MonoBehaviour
     public Canvas dialogueCanvas;
     public Canvas mainDisplayCanvas;
     public Canvas exploreCanvas;
+
+    public Canvas blackScreen;
+    public Canvas rpgTextBoxCanvas;
+    public TextMeshProUGUI introTextBox;
+    public float fadeDuration = 0.3f;
+    public List<string> paragraphs; // Fill in from Inspector
 
     /*
     Canvases are controlled by delegates and not events due to the nature of Unity lifecycle.
@@ -49,18 +58,55 @@ public class GameController : MonoBehaviour
 
     void Start()
     {
-        invokeShowMainCanvas();
-        // PlayerContext.Get.currentLocation = AreaRegistry.GetArea(LocationCode.Abyss_a);
-        // invokeShowExploreCanvas();
+        paragraphs.AddRange(new List<string>() { "this is intro", "sffsdf", "tadfsaf" });
+
+        if (WorldState.GetInstance().FLAG_showIntro)
+        {
+            blackScreen.gameObject.SetActive(true);
+            rpgTextBoxCanvas.gameObject.SetActive(false);
+            mainDisplayCanvas.gameObject.SetActive(false);
+            dialogueCanvas.gameObject.SetActive(false);
+            exploreCanvas.gameObject.SetActive(false);
+
+            StartCoroutine(IntroSequence());
+
+        }
+        else
+        {
+            // invokeShowMainCanvas();
+            PlayerContext.Get.currentLocation = AreaRegistry.GetArea(LocationCode.Abyss_a);
+            invokeShowExploreCanvas();
+        }
     }
 
+    IEnumerator IntroSequence()
+    {
+        rpgTextBoxCanvas.gameObject.SetActive(true);
+        CanvasGroup rpgTextBoxCanvasCG = rpgTextBoxCanvas.GetComponent<CanvasGroup>();
+        rpgTextBoxCanvasCG.alpha = 0;
+        yield return new WaitForSeconds(0.1f);
+
+        yield return StartCoroutine(UiUtilMb.Instance.FadeHelper(rpgTextBoxCanvasCG, 0f, 1f, fadeDuration));
+
+        for (int i = 0; i < paragraphs.Count; i++)
+        {
+            introTextBox.text = "";
+            yield return StartCoroutine(UiUtilMb.Instance.TypewriterAppend(paragraphs[i], introTextBox));
+            yield return new WaitUntil(() => Input.anyKeyDown);
+        }
+        rpgTextBoxCanvas.gameObject.SetActive(false);
+
+        invokeShowMainCanvas();
+    }
 
     public void ShowMainCanvas()
     {
+        StartCoroutine(UiUtilMb.Instance.FadeHelper(blackScreen.GetComponent<CanvasGroup>(), 1f, 0f, fadeDuration));
         WorldState.GetInstance().FLAG_dialogWindowActive = false;
         dialogueCanvas.gameObject.SetActive(false);
         mainDisplayCanvas.gameObject.SetActive(true);
         exploreCanvas.gameObject.SetActive(false);
+        rpgTextBoxCanvas.gameObject.SetActive(false);
     }
 
     public void ShowDialogueCanvas()
@@ -69,16 +115,19 @@ public class GameController : MonoBehaviour
         dialogueCanvas.gameObject.SetActive(true);
         mainDisplayCanvas.gameObject.SetActive(false);
         exploreCanvas.gameObject.SetActive(false);
+        rpgTextBoxCanvas.gameObject.SetActive(false);
     }
 
 
     public void ShowExploreCanvas()
     {
+        StartCoroutine(UiUtilMb.Instance.FadeHelper(blackScreen.GetComponent<CanvasGroup>(), 1f, 0f, fadeDuration));
         WorldState.GetInstance().FLAG_dialogWindowActive = false;
 
         dialogueCanvas.gameObject.SetActive(false);
         mainDisplayCanvas.gameObject.SetActive(false);
         exploreCanvas.gameObject.SetActive(true);
+        rpgTextBoxCanvas.gameObject.SetActive(false);
 
         // Need to raise event after canvas has been activated to make sure all UI elements have subscribed
         EventManager.Raise(GameEvent.EnterArea);
@@ -86,10 +135,10 @@ public class GameController : MonoBehaviour
 
     public void ResetPlayerOnDeath()
     {
+        Debug.Log("Player Reset on Death");
         PlayerContext.Get.currentLocation = RoomRegistry.GetRoom(LocationCode.StartingCamp_r);
         // Always call the delegate to do all the related stuff
         invokeShowMainCanvas();
-        CoroutineRunner.Instance.RunCoroutine(CommonCoroutines.Wait(0.5f));
         StoryTextHandler.invokeUpdateStoryDisplay("\nYou died... but it is not the end.\n", TextEffect.Typewriter);
 
     }

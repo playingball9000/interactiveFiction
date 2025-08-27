@@ -16,6 +16,7 @@ public class StoryTextHandler : MonoBehaviour
 
     private Queue<(string text, TextEffect effect)> textQueue = new();
     private bool isTyping = false;
+    WaitForSeconds textQueueWait = new(0.7f);
 
     // Delegates for other functions to use to invoke this. Probably not the right way but oh well.
     public delegate void UpdateStoryDisplayDelegate(string text, TextEffect effect = TextEffect.None);
@@ -72,6 +73,7 @@ public class StoryTextHandler : MonoBehaviour
             else if (TextEffect.Typewriter == effect)
             {
                 yield return StartCoroutine(UiUtilMb.Instance.TypewriterAppend(nextText, tmpBox));
+                yield return textQueueWait;
             }
         }
         isTyping = false;

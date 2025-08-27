@@ -79,10 +79,11 @@
 
 ## The Rule Engine
 
-1. Fact - flat data field representing the world in key:value form. ex. "in_inventory":"book"
-2. Query - List of facts representing the state (player, player memory, world, etc.)
-3. Criteria - A test for a Fact. ex. exists("in_inventory", "book") or equals("concept", "onMove")
-4. Rule - A list of criteria. When a query satisfies the rule, a corresponding action will be done.
+1. Fact - Flat data field representing the world in key:value form. ex. "in_inventory":"book" = the book is in the player's inventory
+2. Query - List of FACTS representing the game state (player, player memory, world, etc.)
+3. Criteria - A test for a FACT. ex. exists("in_inventory", "book") = is the book in the player's inventory?
+   or equals("concept", "onMove") = is the player moving?
+4. Rule - A list of CRITERIA. When a QUERY satisfies all the rule's criteria, a corresponding action will be done.
 
 Make use of the DSL for more concise and clearly written rules.
 

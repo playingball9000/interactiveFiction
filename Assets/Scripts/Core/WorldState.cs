@@ -11,6 +11,7 @@ public class WorldState
     public List<NPC> npcs = new();
 
     public bool FLAG_dialogWindowActive = false;
+    public bool FLAG_showIntro = true;
 
     private static WorldState instance;
 

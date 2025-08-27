@@ -114,7 +114,7 @@ public class GameInitializer : MonoBehaviour
     // Put stuff that happens at the start of the game here
     private void Start()
     {
-        StoryTextHandler.invokeUpdateStoryDisplay(@"At the edge of the world lays a hole so deep it might as well be endless. A colossal vertical pit known only as the Abyss. Its gaping maw is wrapped in mist and mystery, calling out to those who yearn for adventure. Layers upon layers spiral downward, each home to ancient ruins, otherworldly creatures, and powerful relics. However, the deeper one ventures, the stranger, and deadlier, the world becomes...");
+        // StoryTextHandler.invokeUpdateStoryDisplay(@"At the edge of the world lays a hole so deep it might as well be endless. A colossal vertical pit known only as the Abyss. Its gaping maw is wrapped in mist and mystery, calling out to those who yearn for adventure. Layers upon layers spiral downward, each home to ancient ruins, otherworldly creatures, and powerful relics. However, the deeper one ventures, the stranger, and deadlier, the world becomes...");
     }
 
 }
