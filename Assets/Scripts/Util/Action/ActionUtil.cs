@@ -259,6 +259,38 @@ public static class ActionUtil
 
     }
 
+    public static List<IExaminable> FindMatchingExaminables(List<string> mainClause, IEnumerable<IExaminable> examinables)
+    {
+        //TODO: Probably should make it match multiple words like adj
+
+        // Honestly just hard code checking hte first and 2nd words... any more complicated is not worth it
+        string secondToLastWord;
+
+        string lastWord = mainClause[mainClause.Count - 1];
+
+        // Check displayName first, 'examine bag' would find 'heavy bag'. Then adjective, 'examine heavy' would still find 'heavy bag'
+        List<IExaminable> possibleMatches = FindItemsFieldContainsString(examinables, item => item.displayName, lastWord).ToList();
+        if (!possibleMatches.Any())
+        {
+            possibleMatches = FindItemsFieldContainsString(examinables, item => item.adjective, lastWord);
+        }
+
+        if (possibleMatches.Count <= 1)
+        {
+            return possibleMatches;
+        }
+        else
+        {
+            if (mainClause.Count > 1)
+            {
+                // if hasn't returned here, then possible matches are many so disambiguate
+                secondToLastWord = mainClause[mainClause.Count - 2];
+                possibleMatches = FindItemsFieldContainsString(possibleMatches, item => item.adjective, secondToLastWord);
+            }
+            return possibleMatches;
+        }
+    }
+
     private static readonly string[] unknownCommandResponses =
     {
         "You've discovered the secret command for doing absolutely nothing.",
