@@ -44,11 +44,15 @@ public class ExamineAction : IPlayerAction
         List<IExaminable> examinables = player.currentRoom.GetExaminableThings();
         examinables.AddRange(player.GetInventory());
 
-        List<IExaminable> pm = ActionUtil.ProcessMainClauseFromEnd(actionInput.mainClause, examinables);
+        List<IExaminable> pm = ActionUtil.FindMatchingExaminables(actionInput.mainClause, examinables);
 
         ActionUtil.MatchZeroOneAndMany(
              pm,
-             () => StoryTextHandler.invokeUpdateStoryDisplay(CANT_ACTION_MESSAGE),
+             () =>
+                {
+                    List<Scenery> sceneryList = examinables.OfType<Scenery>().ToList();
+                    StoryTextHandler.invokeUpdateStoryDisplay(CANT_ACTION_MESSAGE);
+                },
              thing => StoryTextHandler.invokeUpdateStoryDisplay(thing.GetDescription()),
              things => StoryTextHandler.invokeUpdateStoryDisplay("Are you trying to examine " + StringUtil.CreateOrSeparatedString(things.Select(thing => thing.GetDisplayName())))
          );

@@ -66,7 +66,7 @@ public class UiUtilMb : MonoBehaviour
             if (Input.GetKey(KeyCode.Space))
             {
                 // Stop coroutine and just display the text
-                tmpBox.text += newText;
+                tmpBox.text += newText.Substring(charIndex);
                 // skipQueueWait = true;
                 yield break;
             }

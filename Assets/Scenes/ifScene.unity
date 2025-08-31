@@ -1832,6 +1832,7 @@ GameObject:
   - component: {fileID: 543387197}
   - component: {fileID: 543387196}
   - component: {fileID: 543387195}
+  - component: {fileID: 543387199}
   m_Layer: 5
   m_Name: Canvas - RpgTextBox
   m_TagString: Untagged
@@ -1922,6 +1923,18 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!225 &543387199
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 543387194}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &550516153
 GameObject:
   m_ObjectHideFlags: 0
@@ -3382,10 +3395,8 @@ MonoBehaviour:
   mainDisplayCanvas: {fileID: 1902638269}
   exploreCanvas: {fileID: 1581102468}
   blackScreen: {fileID: 772217493}
-  rpgTextBox: {fileID: 543387197}
+  rpgTextBoxCanvas: {fileID: 543387197}
   introTextBox: {fileID: 281945131}
-  fadeDuration: 1
-  paragraphs: []
 --- !u!4 &1186198839
 Transform:
   m_ObjectHideFlags: 0

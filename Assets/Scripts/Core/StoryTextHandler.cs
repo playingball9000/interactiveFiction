@@ -36,7 +36,11 @@ public class StoryTextHandler : MonoBehaviour
     void OnEnable()
     {
         invokeUpdateStoryDisplay += UpdateStoryDisplay;
-
+        Color c;
+        if (ColorUtility.TryParseHtmlString(UiConstants.TEXT_COLOR_STORY_TEXT, out c))
+        {
+            UI_storyBox.color = c;
+        }
     }
 
     void OnDisable()
@@ -46,7 +50,6 @@ public class StoryTextHandler : MonoBehaviour
 
     public void UpdateStoryDisplay(string text, TextEffect effect)
     {
-        text = TmpTextTagger.Color(text, UiConstants.TEXT_COLOR_STORY_TEXT);
         storyLog.Add(text + "\n");
 
         // Using a queue here in case multiple updates come through at once so each one is handled in order

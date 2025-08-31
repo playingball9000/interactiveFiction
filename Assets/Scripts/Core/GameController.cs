@@ -19,8 +19,8 @@ public class GameController : MonoBehaviour
     public Canvas blackScreen;
     public Canvas rpgTextBoxCanvas;
     public TextMeshProUGUI introTextBox;
-    public float fadeDuration = 0.3f;
-    public List<string> paragraphs; // Fill in from Inspector
+
+    float fadeDuration = 0.3f;
 
     /*
     Canvases are controlled by delegates and not events due to the nature of Unity lifecycle.
@@ -58,7 +58,6 @@ public class GameController : MonoBehaviour
 
     void Start()
     {
-        paragraphs.AddRange(new List<string>() { "this is intro", "sffsdf", "tadfsaf" });
 
         if (WorldState.GetInstance().FLAG_showIntro)
         {
@@ -69,7 +68,6 @@ public class GameController : MonoBehaviour
             exploreCanvas.gameObject.SetActive(false);
 
             StartCoroutine(IntroSequence());
-
         }
         else
         {
@@ -81,6 +79,7 @@ public class GameController : MonoBehaviour
 
     IEnumerator IntroSequence()
     {
+        var paragraphs = Intro.introParagraphs;
         rpgTextBoxCanvas.gameObject.SetActive(true);
         CanvasGroup rpgTextBoxCanvasCG = rpgTextBoxCanvas.GetComponent<CanvasGroup>();
         rpgTextBoxCanvasCG.alpha = 0;
@@ -93,10 +92,14 @@ public class GameController : MonoBehaviour
             introTextBox.text = "";
             yield return StartCoroutine(UiUtilMb.Instance.TypewriterAppend(paragraphs[i], introTextBox));
             yield return new WaitUntil(() => Input.anyKeyDown);
+            yield return new WaitForSeconds(0.12f);
+
         }
         rpgTextBoxCanvas.gameObject.SetActive(false);
 
         invokeShowMainCanvas();
+
+        StoryTextHandler.invokeUpdateStoryDisplay(Intro.introStory, TextEffect.Typewriter);
     }
 
     public void ShowMainCanvas()
