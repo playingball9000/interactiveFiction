@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -40,18 +41,27 @@ public class ExamineAction : IPlayerAction
      */
     void IPlayerAction.Execute(ActionInput actionInput)
     {
+        List<string> mainClause = actionInput.mainClause;
         Player player = PlayerContext.Get;
         List<IExaminable> examinables = player.currentRoom.GetExaminableThings();
         examinables.AddRange(player.GetInventory());
 
-        List<IExaminable> pm = ActionUtil.FindMatchingExaminables(actionInput.mainClause, examinables);
+        List<IExaminable> pm = ActionUtil.FindMatchingExaminables(mainClause, examinables);
 
         ActionUtil.MatchZeroOneAndMany(
              pm,
              () =>
                 {
                     List<Scenery> sceneryList = examinables.OfType<Scenery>().ToList();
-                    StoryTextHandler.invokeUpdateStoryDisplay(CANT_ACTION_MESSAGE);
+                    var found = sceneryList.FirstOrDefault(s => s.aliases.Contains(mainClause[mainClause.Count - 1]));
+                    if (found != null)
+                    {
+                        StoryTextHandler.invokeUpdateStoryDisplay(found.GetDescription());
+                    }
+                    else
+                    {
+                        StoryTextHandler.invokeUpdateStoryDisplay(CANT_ACTION_MESSAGE);
+                    }
                 },
              thing => StoryTextHandler.invokeUpdateStoryDisplay(thing.GetDescription()),
              things => StoryTextHandler.invokeUpdateStoryDisplay("Are you trying to examine " + StringUtil.CreateOrSeparatedString(things.Select(thing => thing.GetDisplayName())))

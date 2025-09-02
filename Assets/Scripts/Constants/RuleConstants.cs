@@ -25,6 +25,8 @@ public enum RuleKey
     InRoomNpc,
     InRoomItem,
 
+    RoomVisited,
+
     CardCompleted,
 
     ActionTargetNpc,

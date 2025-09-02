@@ -35,6 +35,7 @@ public class MoveAction : IPlayerAction
                     player.currentLocation = exit.targetDestination;
                     // Display room text description used to be here but was moved to rules engine
                     QueryRunner.RunPostMoveFacts(player.currentLocation);
+                    player.playerMemory.Update(RuleKey.RoomVisited, player.currentRoom.internalCode);
                 }
                 else
                 {

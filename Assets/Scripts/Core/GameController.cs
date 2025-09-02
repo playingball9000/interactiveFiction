@@ -71,9 +71,9 @@ public class GameController : MonoBehaviour
         }
         else
         {
-            // invokeShowMainCanvas();
-            PlayerContext.Get.currentLocation = AreaRegistry.GetArea(LocationCode.Abyss_a);
-            invokeShowExploreCanvas();
+            invokeShowMainCanvas();
+            // PlayerContext.Get.currentLocation = AreaRegistry.GetArea(LocationCode.Abyss_a);
+            // invokeShowExploreCanvas();
         }
     }
 

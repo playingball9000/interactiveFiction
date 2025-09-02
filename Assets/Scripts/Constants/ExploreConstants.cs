@@ -8,16 +8,6 @@ public enum TimerCode
     UITest
 }
 
-public enum LocationCode
-{
-    None,
-
-    Abyss_a,
-
-    StartingCamp_r,
-    AbyssEntrance_r
-}
-
 public enum CardCode
 {
     None,

@@ -33,6 +33,29 @@ public static class Log
             UnityEngine.Debug.Log(header + string.Join(", ", objects));
         }
     }
+
+    public static void PrintDictionary<TKey, TValue>(Dictionary<TKey, TValue> dict, string dictName = "Dictionary")
+    {
+        if (dict == null)
+        {
+            UnityEngine.Debug.Log($"{dictName} is null.");
+            return;
+        }
+
+        if (dict.Count == 0)
+        {
+            UnityEngine.Debug.Log($"{dictName} is empty.");
+            return;
+        }
+
+        UnityEngine.Debug.Log($"--- {dictName} ---");
+        foreach (var kvp in dict)
+        {
+            UnityEngine.Debug.Log($"Key: {kvp.Key}, Value: {kvp.Value}");
+        }
+        UnityEngine.Debug.Log($"--- End of {dictName} ---");
+    }
+
     public static void GameObject(GameObject obj)
     {
         if (obj == null)

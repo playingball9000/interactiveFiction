@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -73,6 +74,14 @@ public class PlayerInputHandler : MonoBehaviour
         StoryTextHandler.invokeUpdateStoryDisplay("> " + TmpTextTagger.Color(inputText, UiConstants.TEXT_COLOR_PLAYER_ACTION));
 
         inputText = NormalizeInput(inputText);
+
+        Dictionary<string, Action> roomContextDict = RoomContextRegistry.GetContextActions(PlayerContext.Get.currentRoom.internalCode);
+        if (roomContextDict != null && roomContextDict.TryGetValue(inputText, out Action doingAction))
+        {
+            doingAction.Invoke();
+            ActivateAndClearField();
+            return;
+        }
 
         string[] inputTextArray = inputText.Split(' ');
 

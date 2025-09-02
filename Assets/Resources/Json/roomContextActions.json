@@ -1,0 +1,14 @@
+{
+  "dictionary": [
+    {
+      "locationCode": "AirshipDeck_r",
+      "keylist": ["jump off ship", "jump into abyss", "jump over rail", "jump over railing", "suicide", "kill self"],
+      "value": "You give yourself a running start... and decide that today is not a good day to die."
+    },
+    {
+      "locationCode": "AirshipDeck_r",
+      "keylist": ["smell flowers", "sniff roses"],
+      "value": "The flowers smell wonderful."
+    }
+  ]
+}

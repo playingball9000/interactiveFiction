@@ -18,11 +18,11 @@ public class Intro
 {
     public static List<string> introParagraphs = new()
     {
-        @"The labyrinth... the abyss... the void... the endless...
+        @"It goes by many names... the labyrinth... the abyss... the void... the endless...
 
 To call it a mere chasm or canyon would not do it justice.
         ",
-        @"The entrance, which stretches over 3000 meters, and the bottom, which has yet to be discovered.
+        @"The entrance of the <b>Superdeep</b> stretches over 3000 meters, the bottom has yet to be discovered.
 
 In between lie treasures capable of breaking the rules of reality as we know it. Many seek to uncover its secrets.",
 
@@ -33,7 +33,7 @@ In between lie treasures capable of breaking the rules of reality as we know it.
 The massive city of Belsk spans the northern opening. This is where your adventure begins..."
     };
 
-    public static string introStory = @"You stand aboard the deck of the <i>Skypiercer</i>, an airship drifting within the first layer of the abyss. It just so happens that today is your graduation exam and the first step to becoming an official <color=#FFD700>Trail Blazer</color>. This is your first time on an airship and you have a bit of time before touchdown, the perfect opportunity to explore.";
+    public static string introStory = @"You stand aboard the deck of the <i>Skypiercer</i>, an airship drifting within the first layer of the Superdeep. It just so happens that today is your graduation exam and the first step to becoming an official <color=#FFD700>Trail Blazer</color>. This is your first time on an airship and you have a bit of time before touchdown, the perfect opportunity to explore.";
 
 }
 
