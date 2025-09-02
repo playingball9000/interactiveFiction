@@ -7,4 +7,7 @@ public static class FactExtensions
 
     public static Criterion FactIsTrue(RuleKey key)
         => Criterion.Create($"{key} == true", facts => Criterion.FactExists(facts, key, true));
+
+    public static Criterion FactNotExists(RuleKey key, object value)
+        => Criterion.Create($"{key} == {value}", facts => Criterion.FactDoesNotExist(facts, key, value));
 }

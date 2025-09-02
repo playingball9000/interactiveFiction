@@ -1,0 +1,142 @@
+{
+    "rooms": [
+        {
+            "displayName": "Deck of the Skypiercer",
+            "description": "You stand on the open deck of the airship. A gentle breeze blows hums around you. Worn wooden planks stretch from bow to stern. Beyond the railing the vast chasm walls surround you. In the distance, the city of Belsk clings to the rim of the massive cavern.",
+            "internalCode": "AirshipDeck_r",
+            "exits": [
+                {
+                    "direction": "S",
+                    "leadsTo": "AirshipCabin_r"
+                }
+            ],
+            "roomScenery": [
+                {
+                    "displayName": "railing",
+                    "description": "A waist-high rail of brass and oak. It’s meant to keep you from plummeting to your doom, unless you feel like testing it. It's warm to the touch under the sun and cool in the shade.",
+                    "adjective": "sturdy",
+                    "aliases": [
+                        "balustrade",
+                        "guardrail"
+                    ]
+                },
+                {
+                    "displayName": "deck",
+                    "description": "Wooden planks stretch bow to stern, scarred from years of travel. They creak softly with the ship’s sway. Up close, you notice old tar stains and rope marks.",
+                    "adjective": "worn",
+                    "aliases": [
+                        "floor",
+                        "planks",
+                        "boards"
+                    ]
+                },
+                {
+                    "displayName": "rigging",
+                    "description": "Lines of heavy rope stretch overhead, pulled taut against the wind.",
+                    "aliases": [
+                        "ropes",
+                        "lines",
+                        "cords"
+                    ]
+                },
+                {
+                    "displayName": "skypiercer",
+                    "description": "You hear the steady, thumping from the ship's engine, like a heartbeat. Ironically, the Skypiercer does more cave diving than its name suggests.",
+                    "aliases": [
+                        "airship",
+                        "ship",
+                        "boat"
+                    ]
+                },
+                {
+                    "displayName": "sky",
+                    "description": "A vast expanse of pale blue, dotted with wisps of cloud drifting lazily above the ship.",
+                    "aliases": [
+                        "horizon",
+                        "heavens",
+                        "air"
+                    ]
+                },
+                {
+                    "displayName": "belsk",
+                    "description": "Belsk clings to the rim of the Abyss like a nervous cat on a windowsill. Spires, smoke, rooftops, all spiraling inward toward the chasm. Even from here, the city looks alive, bustling, and precarious.",
+                    "aliases": [
+                        "city",
+                        "town"
+                    ]
+                },
+                {
+                    "displayName": "superdeep",
+                    "description": "The Superdeep yawns below, an imperfect circle carved into the world. Its depths vanish into mist, the light playing tricks that make it look alive. It is equal parts magnificent and terrifying.",
+                    "aliases": [
+                        "pit",
+                        "chasm",
+                        "hole",
+                        "walls",
+						"abyss",
+                        "cave"
+                    ]
+                }
+            ]
+        },
+        {
+            "displayName": "Main Cabin",
+            "description": "A central chamber tucked between the cargo hold and deck. It serves as both living space and meeting hall. A large wooden table stands in the center of the room. A map of the first few layers of the Superdeep adorns a wall. Next to it is a corkboard with various notes pinned to it.",
+            "internalCode": "AirshipCabin_r",
+            "exits": [
+                {
+                    "direction": "N",
+                    "leadsTo": "AirshipDeck_r"
+                }
+            ],
+            "roomScenery": [
+                {
+                    "displayName": "table",
+                    "description": "A solid oak table, pen marks and ink stains dot the surface, evidence of past voyages. A dark halo-shaped coffee ring sits at its heart, faintly glowing in the lantern light.",
+                    "adjective": "long",
+                    "aliases": [
+                        "oak table",
+                        "central table"
+                    ]
+                },
+                {
+                    "displayName": "map",
+                    "description": "A parchment stretched across the wall depicting the gorge. The upper world is drawn with meticulous detail, but as the map descends, the detail fades. At its base, the words 'Unexplored' are scrawled. Some of the ink appears fresh.",
+                    "aliases": [
+                        "parchment",
+						"paper"
+                    ]
+                },
+                {
+                    "displayName": "locker row",
+                    "description": "Four narrow steel lockers stand against the wall. One door hangs ajar, revealing a bundle of half-burned candles, a waterskin that smells faintly of salt though no sea is nearby, and a leather-bound book stripped of pages save for margin notes: 'Don’t look too long. Don’t listen too hard.' The handwriting seems to shift when viewed from the corner of your eye.",
+                    "adjective": "rusted",
+                    "aliases": [
+                        "lockers",
+                        "steel lockers",
+                        "storage lockers"
+                    ]
+                },
+                {
+                    "displayName": "lanterns",
+                    "description": "Iron lanterns dangle from ceiling chains, their flames casting shadows along the walls.",
+                    "aliases": [
+                        "lights",
+                        "hanging lanterns",
+                        "ceiling lanterns"
+                    ]
+                },
+                {
+                    "displayName": "corkboard",
+                    "description": "A corkboard cluttered with pinned scraps: duty rosters, cargo tallies, and scribbled sketches. Beneath the mundane papers lurks a charcoal drawing of the gorge’s mouth, depicted as a vast, lidless eye. Its gaze seems to follow you, no matter where you stand.",
+                    "aliases": [
+                        "board",
+                        "notice board",
+                        "bulletin board"
+                    ]
+                },
+                
+            ]
+        }
+    ]
+}
