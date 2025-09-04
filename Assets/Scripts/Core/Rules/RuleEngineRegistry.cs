@@ -63,14 +63,14 @@ public static class RuleEngineRegistry
         engine.AddRule(Rule.Create("First time in room with Magda")
         .WhenAll(
             FactExists(Concept, OnMove),
-            FactExists(InRoomNpc, ""),
+            FactExists(InRoomNpc, NpcCode.Mary_Hearth),
             FactNotExists(RoomVisited, LocationCode.AirshipCabin_r)
         )
         .Do(() =>
         {
             StoryTextHandler.invokeUpdateStoryDisplay(@"You step into the airship’s common room, the lantern-light swaying gently with the ship’s motion.
 
-She’s there, Magda, the Hearthkeeper, standing near the stove-fire that keeps this drifting vessel warm.", TextEffect.Typewriter);
+She’s there, Mary, the Hearth, standing idly looking out the window.", TextEffect.Typewriter);
         }));
 
         Register(RULE_ENGINE_GENERAL, engine);

@@ -1,3 +1,5 @@
+using UnityEditor;
+
 public static class DialogueBuilder
 {
     //TODO: probably make this better, caching, set on npc?
@@ -50,6 +52,14 @@ public static class DialogueBuilder
         dg.AddNode(new("node1222", "Woman", "They glance out the window, their tone reflective. 'Yeah, especially during sunrise or sunset. It's like nature showing off.'"));
         dg.GetNode("node1211").AddChoice(EndConversation("That's an interesting contrast. Thrills in a peaceful setting."));
         dg.GetNode("node1222").AddChoice(EndConversation("It's moments like that that make me love train rides."));
+
+        return dg;
+    }
+
+    public static DialogueGraph MaryDialogue1()
+    {
+        DialogueGraph dg = new();
+        dg.AddNode(new("node1", "Mary", "Today is your big day."));
 
         return dg;
     }

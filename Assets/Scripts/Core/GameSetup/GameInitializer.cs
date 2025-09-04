@@ -42,13 +42,19 @@ public class GameInitializer : MonoBehaviour
         NPC npcGrace = new Grace
         {
             displayName = "Grace",
-            internalCode = "npc_grace",
+            internalCode = NpcCode.Grace,
             description = @"A petite girl. Her bright, emerald-green eyes sparkle with excitement and mischief, scanning every crevice and glimmer as though each one hides a secret treasure. Her hair, a wild tangle of chestnut curls, is tied back in a messy ponytail with a faded red ribbon that flutters behind her like a tiny flag.",
             currentLocation = startingCamp,
             dialogueFile = "womanDialogue"
         };
 
         startingCamp.AddNPC(npcGrace);
+
+        NPC npcMary = new MaryHearth
+        {
+        };
+
+        RoomRegistry.GetRoom(LocationCode.AirshipCabin_r).AddNPC(npcMary);
 
         IItem itemBottle = ItemFactory.CreateItem(
             "bottle",

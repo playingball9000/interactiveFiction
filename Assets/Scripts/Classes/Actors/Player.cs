@@ -20,7 +20,7 @@ public class Player : IActor
     public int money { get; set; }
 
     public Memory playerMemory { get; set; } = new Memory();
-    public Dictionary<string, Relationship> relationships { get; set; } = new();
+    public Dictionary<NpcCode, Relationship> relationships { get; set; } = new();
 
     public List<Fact> GetPlayerFacts()
     {

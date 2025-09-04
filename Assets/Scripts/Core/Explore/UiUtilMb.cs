@@ -60,10 +60,11 @@ public class UiUtilMb : MonoBehaviour
     public IEnumerator TypewriterAppend(string newText, TextMeshProUGUI tmpBox)
     {
         int charIndex = 0;
+        yield return new WaitForSeconds(.1f);
 
         while (charIndex < newText.Length)
         {
-            if (Input.GetKey(KeyCode.Space))
+            if (Input.anyKey)
             {
                 // Stop coroutine and just display the text
                 tmpBox.text += newText.Substring(charIndex);
@@ -85,7 +86,7 @@ public class UiUtilMb : MonoBehaviour
             charIndex++;
             yield return new WaitForSeconds(.05f);
         }
-        tmpBox.text = TMPTagCleaner.Clean(tmpBox.text);
+        // tmpBox.text = TMPTagCleaner.Clean(tmpBox.text);
 
     }
 }

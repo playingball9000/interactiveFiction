@@ -20,7 +20,7 @@ public static class QueryRunner
         }
         facts.AddRange(PlayerContext.Get.GetPlayerFacts());
 
-        // Log.LogList(facts);
+        Log.LogList(facts);
 
         RuleEngineRegistry.Get(RuleConstants.RULE_ENGINE_GENERAL).Execute(facts);
     }

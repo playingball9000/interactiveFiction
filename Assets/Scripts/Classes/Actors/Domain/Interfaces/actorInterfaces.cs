@@ -8,7 +8,7 @@ public interface IActor
 public interface NPC : IExaminable, IActor
 {
     public string dialogueFile { get; set; }
-    public string internalCode { get; set; }
+    public NpcCode internalCode { get; set; }
     ILocation currentLocation { get; set; }
     List<IWearable> clothes { get; set; }
     public Memory memory { get; set; }
@@ -18,6 +18,10 @@ public interface NPC : IExaminable, IActor
         return false;
     }
     bool GetTickleReaction(string part)
+    {
+        return false;
+    }
+    bool GetInsultReaction()
     {
         return false;
     }

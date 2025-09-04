@@ -15,9 +15,8 @@ public class Fact
         string valueType = value != null ? value.GetType().Name : "null";
         string displayValue = value != null ? value.ToString() : "<i>null</i>";
 
-        return $"<b><color=#87CEFA>[Fact]</color></b>\n" +
-               $"  • Key: <b>{key}</b>\n" +
-               $"  • Value: {displayValue}\n" +
-               $"  • Type: <i>{valueType}</i>";
+        return $"<b><color=#87CEFA>[Fact]</color></b>" +
+               $" <b>{key}</b> |" +
+               $" {displayValue}\n";
     }
 }
