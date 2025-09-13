@@ -27,7 +27,7 @@ public class DialogueParser : MonoBehaviour
                          KeyCode.Keypad5, KeyCode.Keypad6, KeyCode.Keypad7, KeyCode.Keypad8, KeyCode.Keypad9 };
 
 
-    public delegate void StartDialogueDelegate(NPC npc);
+    public delegate void StartDialogueDelegate(ComplexNPC npc);
     public static StartDialogueDelegate invokeStartDialogue;
 
     void Awake()
@@ -76,7 +76,7 @@ public class DialogueParser : MonoBehaviour
         OnChoiceSelected(choice);
     }
 
-    public void StartDialogue(NPC npc)
+    public void StartDialogue(ComplexNPC npc)
     {
         dialogueLog.Clear();
         currentChoices.Clear();

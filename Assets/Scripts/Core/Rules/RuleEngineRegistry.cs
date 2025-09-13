@@ -28,6 +28,7 @@ public static class RuleEngineRegistry
     {
         RuleEngineBase engine = new();
 
+        // Rules execute in the order they were added
         engine.AddRule(Rule.Create("Leave with book")
             .AddCriteria(Criterion.Create("", facts => Criterion.FactExists(facts, Concept, OnMove)))
             .AddCriteria(Criterion.Create("", facts => Criterion.FactExists(facts, InInventory, "item_old_book")))
@@ -38,6 +39,16 @@ public static class RuleEngineRegistry
                     TmpTextTagger.Color(@"As you leave, the woman calls after you, ""Hey! That's my book!""", UiConstants.TEXT_COLOR_NPC_TEXT),
                     TextEffect.Typewriter);
             }));
+        engine.AddRule(Rule.Create("First time in room with Magda")
+        .WhenAll(
+            FactExists(Concept, OnMove),
+            FactExists(InRoomNpc, NpcCode.Mary_Hearth),
+            FactNotExists(RoomVisited, LocationCode.AirshipCabin_r)
+        )
+        .Do(() =>
+        {
+            StoryTextHandler.invokeUpdateStoryDisplay(RoomFlavorRegistry.GetFlavorText("maryIntro"), TextEffect.Typewriter);
+        }));
 
         engine.AddRule(Rule.Create("Player moves from Room to Area")
             .WhenAll(
@@ -60,18 +71,7 @@ public static class RuleEngineRegistry
                 PlayerContext.Get.currentRoom.DisplayRoomStoryText();
             }));
 
-        engine.AddRule(Rule.Create("First time in room with Magda")
-        .WhenAll(
-            FactExists(Concept, OnMove),
-            FactExists(InRoomNpc, NpcCode.Mary_Hearth),
-            FactNotExists(RoomVisited, LocationCode.AirshipCabin_r)
-        )
-        .Do(() =>
-        {
-            StoryTextHandler.invokeUpdateStoryDisplay(@"You step into the airship’s common room, the lantern-light swaying gently with the ship’s motion.
 
-She’s there, Mary, the Hearth, standing idly looking out the window.", TextEffect.Typewriter);
-        }));
 
         Register(RULE_ENGINE_GENERAL, engine);
     }

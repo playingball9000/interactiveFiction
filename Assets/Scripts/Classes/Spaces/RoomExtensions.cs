@@ -2,16 +2,16 @@ public static class RoomExtensions
 {
 
     // Room manages NPC location, but player manages its own
-    public static Room AddNPC(this Room room, NPC npc)
+    public static Room AddNPC(this Room room, INPC npc)
     {
-        npc.currentLocation = room;
+        npc.currentLocation = room.internalCode;
         room.npcs.Add(npc);
         return room;
     }
 
-    public static Room RemoveNPC(this Room room, NPC npc)
+    public static Room RemoveNPC(this Room room, INPC npc)
     {
-        npc.currentLocation = null;
+        npc.currentLocation = LocationCode.None;
         room.npcs.Remove(npc);
         return room;
     }

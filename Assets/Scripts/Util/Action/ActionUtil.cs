@@ -236,7 +236,7 @@ public static class ActionUtil
     }
 
 
-    public static List<NPC> FindMatchingNpcs(List<string> mainClause, List<NPC> npcs)
+    public static List<INPC> FindMatchingNpcs(List<string> mainClause, List<INPC> npcs)
     {
         //TODO: Probably should make it match multiple words like adj
 
@@ -244,7 +244,7 @@ public static class ActionUtil
         string firstWord = mainClause[0];
         string secondWord = mainClause[0];
 
-        List<NPC> possibleMatches = FindItemsFieldContainsString(npcs, item => item.adjective, firstWord);
+        List<INPC> possibleMatches = FindItemsFieldContainsString(npcs, item => item.adjective, firstWord);
         if (!possibleMatches.Any())
         {
             possibleMatches = FindItemsFieldContainsString(npcs, item => item.displayName, firstWord);

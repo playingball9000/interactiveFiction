@@ -13,11 +13,11 @@
             "roomScenery": [
                 {
                     "displayName": "railing",
-                    "description": "A waist-high rail of brass and oak. It’s meant to keep you from plummeting to your doom, unless you feel like testing it. It's warm to the touch under the sun and cool in the shade.",
-                    "adjective": "sturdy",
+                    "description": "A high rail of brass and oak. It’s meant to keep you from plummeting to your doom, unless you feel like jumping over it. It's warm to the touch under the sun and cool in the shade.",
                     "aliases": [
                         "balustrade",
-                        "guardrail"
+                        "guardrail",
+						"rail"
                     ]
                 },
                 {
@@ -41,7 +41,7 @@
                 },
                 {
                     "displayName": "skypiercer",
-                    "description": "You hear the steady, thumping from the ship's engine, like a heartbeat. Ironically, the Skypiercer does more cave diving than its name suggests.",
+                    "description": "You hear the steady, thrumming of the ship's engine, like a heartbeat. Ironically, the Skypiercer does more cave diving than its name suggests.",
                     "aliases": [
                         "airship",
                         "ship",
@@ -57,9 +57,17 @@
                         "air"
                     ]
                 },
+				{
+                    "displayName": "cloud",
+                    "description": "When compared to the mists of the deep, the clouds are somewhat comforting in their stillness and peace. You spend some time finding clouds that look like various animals.",
+                    "aliases": [
+                        "clouds",
+                        "wisps",
+                    ]
+                },
                 {
                     "displayName": "belsk",
-                    "description": "Belsk clings to the rim of the Abyss like a nervous cat on a windowsill. Spires, smoke, rooftops, all spiraling inward toward the chasm. Even from here, the city looks alive, bustling, and precarious.",
+                    "description": "The city of Belsk traverses the rim of the deep. Spires, smoke, rooftops, all spiraling inward. Even from here, the city looks alive, bustling, and precarious. You try to see your residence, but are unable to.",
                     "aliases": [
                         "city",
                         "town"
@@ -67,14 +75,15 @@
                 },
                 {
                     "displayName": "superdeep",
-                    "description": "The Superdeep yawns below, an imperfect circle carved into the world. Its depths vanish into mist, the light playing tricks that make it look alive. It is equal parts magnificent and terrifying.",
+                    "description": "The Superdeep yawns below, an imperfect circle carved into the landscape. Its depths vanish into mist, the light reflecting off of it almost makes it look alive.",
                     "aliases": [
                         "pit",
                         "chasm",
                         "hole",
                         "walls",
 						"abyss",
-                        "cave"
+                        "cave",
+						"cavern"
                     ]
                 }
             ]
@@ -92,11 +101,27 @@
             "roomScenery": [
                 {
                     "displayName": "table",
-                    "description": "A solid oak table, pen marks and ink stains dot the surface, evidence of past voyages. A dark halo-shaped coffee ring sits at its heart, faintly glowing in the lantern light.",
+                    "description": "A solid oak table, pen marks dot the surface, evidence of past voyages. A particular circular stain sits at one edge, faintly glowing in the lantern light.",
                     "adjective": "long",
                     "aliases": [
                         "oak table",
                         "central table"
+                    ]
+                },
+				{
+                    "displayName": "marks",
+                    "description": "The marks on the table all blend together. You can make out a word here and there. 'voyage' 'supplies' 'depths'.",
+                    "adjective": "pen",
+                    "aliases": [
+                        "mark",
+                    ]
+                },
+				{
+                    "displayName": "stain",
+                    "description": "Upon closer inspection, you find that it is coffee residue.",
+                    "adjective": "circular",
+                    "aliases": [
+                        "ring",
                     ]
                 },
                 {

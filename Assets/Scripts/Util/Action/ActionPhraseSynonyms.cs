@@ -19,6 +19,7 @@ public class ActionPhraseSynonyms
         new ("enter", new() { "go", "walk", "move", "step" }, new() { "in", "into" }),
         new ("equip", new() { "put" }, new() { "on" }),
         new ("unequip", new() { "take" }, new() { "off" }),
+        new ("get", new() { "pick" }, new() { "up" }),
     };
 
     public string[] Parse(string[] inputTextArray)
@@ -34,6 +35,17 @@ public class ActionPhraseSynonyms
                 {
                     inputTextArray = new string[] { phrase.action }.Concat(inputTextArray.Skip(2)).ToArray();
                     break;
+                }
+                else if (inputTextArray[0].Equals("pick"))
+                {
+                    // matches "pick x y up"
+                    string item = "";
+                    if (inputTextArray[^1].Equals("up"))
+                    {
+                        item = string.Join(" ", inputTextArray.Skip(1).Take(inputTextArray.Length - 2));
+                    }
+                    string normalized = $"get {item}";
+                    inputTextArray = normalized.Split(' ', StringSplitOptions.RemoveEmptyEntries);
                 }
             }
         }

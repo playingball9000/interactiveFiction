@@ -2,11 +2,11 @@ using System.Collections.Generic;
 using System.Linq;
 
 [System.Serializable]
-public class MaryHearth : NPC
+public class MaryHearth : ComplexNPC
 {
     public string dialogueFile { get; set; }
     public NpcCode internalCode { get; set; } = NpcCode.Mary_Hearth;
-    public ILocation currentLocation { get; set; }
+    public LocationCode currentLocation { get; set; }
     public List<IWearable> clothes { get; set; } = new();
     public string displayName { get; set; } = "Mary";
     public string description { get; set; } = "";
@@ -25,5 +25,17 @@ public class MaryHearth : NPC
         }
 
         return fullDescription;
+    }
+    public bool GetGiveReaction(IItem giftedItem)
+    {
+        return false;
+    }
+    public bool GetTickleReaction(string part)
+    {
+        return false;
+    }
+    public bool GetInsultReaction()
+    {
+        return false;
     }
 }

@@ -9,7 +9,7 @@ public class Room : ILocation
     public LocationCode internalCode { get; set; }
 
     public List<Exit> exits = new();
-    public List<NPC> npcs = new();
+    public List<INPC> npcs = new();
     public RoomItems roomItems = new();
     public List<IExaminable> roomScenery = new();
 
@@ -77,6 +77,7 @@ public class Room : ILocation
     {
         List<Fact> roomFacts = new();
         roomFacts.AddRange(npcs
+            .OfType<ComplexNPC>()
             .Select(npc => new Fact { key = RuleKey.InRoomNpc, value = npc.internalCode }));
         roomFacts.AddRange(roomItems.contents
             .Select(item => new Fact { key = RuleKey.InRoomItem, value = item.internalCode }));

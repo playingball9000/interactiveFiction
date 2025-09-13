@@ -33,7 +33,7 @@ public class GiveAction : IPlayerAction
                 List<IExaminable> npcs = ActionUtil.ProcessMainClauseFromEnd(actionInput.mainClause, player.currentRoom.npcs.Cast<IExaminable>().ToList());
 
                 ActionUtil.MatchZeroOneAndMany(
-                    npcs.Cast<NPC>().ToList(),
+                    npcs.Cast<INPC>().ToList(),
                     () => StoryTextHandler.invokeUpdateStoryDisplay("Who do you want to give that to?"),
                     npc =>
                     {
