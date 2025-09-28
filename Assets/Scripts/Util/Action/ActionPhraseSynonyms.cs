@@ -16,7 +16,7 @@ public class ActionPhraseSynonyms
     }
 
     List<ActionPhrase> phrases = new() {
-        new ("enter", new() { "go", "walk", "move", "step" }, new() { "in", "into" }),
+        new ("enter", new() { "go", "walk", "move", "step", "get" }, new() { "in", "into", "inside" }),
         new ("equip", new() { "put" }, new() { "on" }),
         new ("unequip", new() { "take" }, new() { "off" }),
         new ("get", new() { "pick" }, new() { "up" }),

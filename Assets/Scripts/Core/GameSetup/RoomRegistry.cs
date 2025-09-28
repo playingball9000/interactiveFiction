@@ -7,7 +7,7 @@ public static class RoomRegistry
 
     public static void Register(Room room)
     {
-        rooms[room.internalCode] = room;
+        rooms.Add(room.internalCode, room);
     }
 
     public static Room GetRoom(LocationCode internalCode)

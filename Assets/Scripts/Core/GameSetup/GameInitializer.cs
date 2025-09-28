@@ -15,7 +15,7 @@ public class GameInitializer : MonoBehaviour
         RoomLoader.LoadRooms();
         RoomLoader.LoadRoomContextActions();
 
-        RoomFlavorLoader.LoadFlavor();
+        RoomIncidentLoader.LoadFlavor();
 
         TimerManager.Instance.CreateTimer(TimerCode.Test, 1f, () =>
         {

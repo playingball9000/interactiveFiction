@@ -4,14 +4,14 @@ using Newtonsoft.Json;
 using YamlDotNet.Serialization;
 using YamlDotNet.Serialization.NamingConventions;
 
-public static class RoomFlavorLoader
+public static class RoomIncidentLoader
 {
 
     private static Dictionary<string, string> storySnippets;
 
     public static void LoadFlavor()
     {
-        TextAsset yamlFile = Resources.Load<TextAsset>("Json/roomFlavorText");
+        TextAsset yamlFile = Resources.Load<TextAsset>("Json/roomIncidentText");
 
         if (yamlFile == null)
         {
@@ -32,6 +32,6 @@ public static class RoomFlavorLoader
         string json = serializer.Serialize(yamlObject);
 
         storySnippets = JsonConvert.DeserializeObject<Dictionary<string, string>>(json);
-        RoomFlavorRegistry.Load(storySnippets);
+        RoomIncidentRegistry.Load(storySnippets);
     }
 }

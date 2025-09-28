@@ -2,37 +2,37 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-public static class RoomFlavorRegistry
+public static class RoomIncidentRegistry
 {
-    private static Dictionary<string, string> roomFlavorText = new();
+    private static Dictionary<string, string> roomIncidentDict = new();
 
     public static void Register(string code, string flavor)
     {
-        roomFlavorText[code] = flavor;
+        roomIncidentDict.Add(code, flavor);
     }
 
     public static string GetFlavorText(string code)
     {
-        return roomFlavorText.TryGetValue(code, out var flavor) ? flavor : null;
+        return roomIncidentDict.TryGetValue(code, out var flavor) ? flavor : null;
     }
 
     public static List<string> GetAllFlavorText()
     {
-        return roomFlavorText.Values.ToList();
+        return roomIncidentDict.Values.ToList();
     }
 
     public static Dictionary<string, string> GetDict()
     {
-        return roomFlavorText;
+        return roomIncidentDict;
     }
 
     public static void Load(Dictionary<string, string> r)
     {
-        roomFlavorText = r;
+        roomIncidentDict = r;
     }
 
     public static void ClearRegistry()
     {
-        roomFlavorText.Clear();
+        roomIncidentDict.Clear();
     }
 }

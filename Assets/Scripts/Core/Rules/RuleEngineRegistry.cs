@@ -39,7 +39,7 @@ public static class RuleEngineRegistry
                     TmpTextTagger.Color(@"As you leave, the woman calls after you, ""Hey! That's my book!""", UiConstants.TEXT_COLOR_NPC_TEXT),
                     TextEffect.Typewriter);
             }));
-        engine.AddRule(Rule.Create("First time in room with Magda")
+        engine.AddRule(Rule.Create("First time in room with Mary")
         .WhenAll(
             FactExists(Concept, OnMove),
             FactExists(InRoomNpc, NpcCode.Mary_Hearth),
@@ -47,7 +47,7 @@ public static class RuleEngineRegistry
         )
         .Do(() =>
         {
-            StoryTextHandler.invokeUpdateStoryDisplay(RoomFlavorRegistry.GetFlavorText("maryIntro"), TextEffect.Typewriter);
+            StoryTextHandler.invokeUpdateStoryDisplay(RoomIncidentRegistry.GetFlavorText("maryIntro"), TextEffect.Incidental);
         }));
 
         engine.AddRule(Rule.Create("Player moves from Room to Area")

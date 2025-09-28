@@ -7,7 +7,7 @@ public static class CardRegistry
 
     public static void Register(Card card)
     {
-        cards[card.internalCode] = card;
+        cards.Add(card.internalCode, card);
     }
 
     public static Card GetCard(CardCode internalCode) => cards[internalCode];

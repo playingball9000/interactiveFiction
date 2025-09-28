@@ -95,9 +95,9 @@ public class DialogueParser : MonoBehaviour
     {
         DialogueNode currentNode = dialogueGraph.currentNode;
         string fullText =
-            TmpTextTagger.Color($"{currentNode.speaker}   -   ", UiConstants.TEXT_COLOR_NPC_NAME) +
-            TmpTextTagger.Color($"{currentNode.text}", UiConstants.TEXT_COLOR_NPC_TEXT);
-        dialogueLog.Add(fullText + "\n");
+            TmpTextTagger.Color($"<indent=5%><line-indent=-5%>{currentNode.speaker}   -   ", UiConstants.TEXT_COLOR_NPC_NAME) +
+            TmpTextTagger.Color($"{currentNode.text}</indent>", UiConstants.TEXT_COLOR_NPC_TEXT);
+        dialogueLog.Add("" + fullText + "\n");
         UI_dialogueBox.text = dialogueLog.GetLogsString();
         ScrollToBottom();
         DisplayPlayerChoices(currentNode);
@@ -128,7 +128,7 @@ public class DialogueParser : MonoBehaviour
         currentChoices.Clear();
         UiUtilMb.Instance.DestroyChildrenInContainer(choicesPanel);
 
-        if (choice.nextNode == null)
+        if (choice.nextNodeId == null)
         {
             dialogueLog.Clear();
             GameController.invokeShowMainCanvas();
@@ -139,7 +139,7 @@ public class DialogueParser : MonoBehaviour
             {
                 choice.Execute();
             }
-            dialogueGraph.SetCurrentNode(choice.nextNode);
+            dialogueGraph.SetCurrentNode(choice.nextNodeId);
             StartCoroutine(DisplayDialogueWithDelay(choice.text));
         }
     }
@@ -147,8 +147,8 @@ public class DialogueParser : MonoBehaviour
     IEnumerator DisplayDialogueWithDelay(string choiceText)
     {
         string coloredText =
-                TmpTextTagger.Color($"You   -   ", UiConstants.TEXT_COLOR_PLAYER_NAME) +
-                TmpTextTagger.Color($"{choiceText}", UiConstants.TEXT_COLOR_PLAYER_TEXT);
+                TmpTextTagger.Color($"<indent=5%><line-indent=-5%>You   -   ", UiConstants.TEXT_COLOR_PLAYER_NAME) +
+                TmpTextTagger.Color($"{choiceText}</indent>", UiConstants.TEXT_COLOR_PLAYER_TEXT);
         dialogueLog.Add(coloredText + "\n");
         UI_dialogueBox.text = dialogueLog.GetLogsString();
 

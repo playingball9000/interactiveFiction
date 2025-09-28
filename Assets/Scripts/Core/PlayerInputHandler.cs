@@ -64,55 +64,54 @@ public class PlayerInputHandler : MonoBehaviour
 
     public void GrabTextFromInputField(string inputText)
     {
-        if (string.IsNullOrEmpty(inputText))
+        if (!string.IsNullOrEmpty(inputText))
         {
-            return;
-        }
 
-        AddToInputHistory(inputText);
-        // Updates the main story display with text
-        StoryTextHandler.invokeUpdateStoryDisplay("> " + TmpTextTagger.Color(inputText, UiConstants.TEXT_COLOR_PLAYER_ACTION));
+            AddToInputHistory(inputText);
+            // Updates the main story display with text
+            StoryTextHandler.invokeUpdateStoryDisplay("> " + TmpTextTagger.Color(inputText, UiConstants.TEXT_COLOR_PLAYER_ACTION));
 
-        inputText = NormalizeInput(inputText);
+            inputText = NormalizeInput(inputText);
 
-        Dictionary<string, Action> roomContextDict = RoomContextRegistry.GetContextActions(PlayerContext.Get.currentRoom.internalCode);
-        if (roomContextDict != null && roomContextDict.TryGetValue(inputText, out Action doingAction))
-        {
-            doingAction.Invoke();
-            ActivateAndClearField();
-            return;
-        }
-
-        string[] inputTextArray = inputText.Split(' ');
-
-        inputTextArray = ActionPhraseSynonyms.getInstance().Parse(inputTextArray);
-
-        inputTextArray = inputTextArray.Where(word => !prepositions.Contains(word)).ToArray();
-
-        PlayerAction action = ActionWordSynonyms.Get(inputTextArray[0]);
-
-        if (action != PlayerAction.Unknown)
-        {
-            IPlayerAction playerAction = ActionRegistry.Get(action);
-            // Log.Debug(playerAction);
-            // Log.Debug(inputTextArray);
-            if (inputTextArray.Length > playerAction.maxInputCount || inputTextArray.Length < playerAction.minInputCount)
+            Dictionary<string, Action> roomContextDict = RoomContextRegistry.GetContextActions(PlayerContext.Get.currentRoom.internalCode);
+            if (roomContextDict != null && roomContextDict.TryGetValue(inputText, out Action doingAction))
             {
-                StoryTextHandler.invokeUpdateStoryDisplay(playerAction.tooManyMessage);
+                doingAction.Invoke();
+                ActivateAndClearField();
+                return;
+            }
+
+            string[] inputTextArray = inputText.Split(' ');
+
+            inputTextArray = ActionPhraseSynonyms.getInstance().Parse(inputTextArray);
+
+            inputTextArray = inputTextArray.Where(word => !prepositions.Contains(word)).ToArray();
+
+            PlayerAction action = ActionWordSynonyms.Get(inputTextArray[0]);
+
+            if (action != PlayerAction.Unknown)
+            {
+                IPlayerAction playerAction = ActionRegistry.Get(action);
+                // Log.Debug(playerAction);
+                // Log.Debug(inputTextArray);
+                if (inputTextArray.Length > playerAction.maxInputCount || inputTextArray.Length < playerAction.minInputCount)
+                {
+                    StoryTextHandler.invokeUpdateStoryDisplay(playerAction.tooManyMessage);
+                }
+                else
+                {
+                    playerAction.Execute(new ActionInput
+                    {
+                        actionTaken = action,
+                        mainClause = inputTextArray.Skip(1).ToList()
+                    });
+                }
             }
             else
             {
-                playerAction.Execute(new ActionInput
-                {
-                    actionTaken = action,
-                    mainClause = inputTextArray.Skip(1).ToList()
-                });
+                Log.Debug("Action was null, no corresponding action for: " + inputTextArray[0]);
+                StoryTextHandler.invokeUpdateStoryDisplay(ActionUtil.GetUnknownCommandResponse());
             }
-        }
-        else
-        {
-            Log.Debug("Action was null, no corresponding action for: " + inputTextArray[0]);
-            StoryTextHandler.invokeUpdateStoryDisplay(ActionUtil.GetUnknownCommandResponse());
         }
         ActivateAndClearField();
     }

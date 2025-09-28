@@ -2,7 +2,7 @@
     "rooms": [
         {
             "displayName": "Deck of the Skypiercer",
-            "description": "You stand on the open deck of the airship. A gentle breeze blows hums around you. Worn wooden planks stretch from bow to stern. Beyond the railing the vast chasm walls surround you. In the distance, the city of Belsk clings to the rim of the massive cavern.",
+            "description": "You stand on the open deck of the airship. A gentle breeze blows around you. Worn wooden planks stretch from bow to stern. Beyond the railing the vast chasm walls surround you. In the distance, the city of Belsk clings to the rim of the massive cavern.",
             "internalCode": "AirshipDeck_r",
             "exits": [
                 {
@@ -17,26 +17,34 @@
                     "aliases": [
                         "balustrade",
                         "guardrail",
-						"rail"
+                        "rail"
                     ]
                 },
                 {
-                    "displayName": "deck",
+                    "displayName": "planks",
                     "description": "Wooden planks stretch bow to stern, scarred from years of travel. They creak softly with the ship’s sway. Up close, you notice old tar stains and rope marks.",
-                    "adjective": "worn",
+                    "adjective": "worn wooden",
                     "aliases": [
                         "floor",
-                        "planks",
+                        "deck",
                         "boards"
                     ]
                 },
                 {
-                    "displayName": "rigging",
-                    "description": "Lines of heavy rope stretch overhead, pulled taut against the wind.",
+                    "displayName": "stains",
+                    "description": "Black, sticky blotches scattered across the wood. They’ve seeped deep into the planks, leaving a faint smell.",
+                    "adjective": "tar",
                     "aliases": [
-                        "ropes",
-                        "lines",
-                        "cords"
+                        "pitch",
+                        "blotches"
+                    ]
+                },
+                {
+                    "displayName": "marks",
+                    "description": "Shallow grooves worn into the wood where heavy ropes once lay.",
+                    "adjective": "rope",
+                    "aliases": [
+                        "scratches"
                     ]
                 },
                 {
@@ -54,15 +62,23 @@
                     "aliases": [
                         "horizon",
                         "heavens",
-                        "air"
                     ]
                 },
-				{
+                {
                     "displayName": "cloud",
                     "description": "When compared to the mists of the deep, the clouds are somewhat comforting in their stillness and peace. You spend some time finding clouds that look like various animals.",
                     "aliases": [
                         "clouds",
-                        "wisps",
+                        "wisps"
+                    ]
+                },
+                {
+                    "displayName": "wind",
+                    "description": "The wind lashes against you. It smells faintly of rain.",
+                    "aliases": [
+                        "air",
+                        "gust",
+                        "breeze"
                     ]
                 },
                 {
@@ -74,6 +90,15 @@
                     ]
                 },
                 {
+                    "displayName": "spires",
+                    "description": "Tall towers dot the city scape amidst the mass of smaller structures. Most of the towers belong to [the Reticent]. You've never been in them and don't have the desire to.",
+                    "aliases": [
+                        "rooftops",
+                        "towers",
+                        "buildings"
+                    ]
+                },
+                {
                     "displayName": "superdeep",
                     "description": "The Superdeep yawns below, an imperfect circle carved into the landscape. Its depths vanish into mist, the light reflecting off of it almost makes it look alive.",
                     "aliases": [
@@ -81,9 +106,18 @@
                         "chasm",
                         "hole",
                         "walls",
-						"abyss",
+                        "abyss",
                         "cave",
-						"cavern"
+                        "cavern"
+                    ]
+                },
+                {
+                    "displayName": "mist",
+                    "description": "The mist rising from the depths of the Superdeep shifts and swirls. It's movement is closer to that of water though it floats and turns over itself like waves.",
+                    "aliases": [
+                        "fog",
+                        "vapors",
+                        "haze"
                     ]
                 }
             ]
@@ -108,28 +142,62 @@
                         "central table"
                     ]
                 },
-				{
+                {
                     "displayName": "marks",
                     "description": "The marks on the table all blend together. You can make out a word here and there. 'voyage' 'supplies' 'depths'.",
                     "adjective": "pen",
                     "aliases": [
-                        "mark",
+                        "mark"
                     ]
                 },
-				{
+                {
                     "displayName": "stain",
-                    "description": "Upon closer inspection, you find that it is coffee residue.",
+                    "description": "Upon closer inspection, you find that the stain on the table is coffee residue.",
                     "adjective": "circular",
                     "aliases": [
-                        "ring",
+                        "ring"
                     ]
                 },
                 {
                     "displayName": "map",
-                    "description": "A parchment stretched across the wall depicting the gorge. The upper world is drawn with meticulous detail, but as the map descends, the detail fades. At its base, the words 'Unexplored' are scrawled. Some of the ink appears fresh.",
+                    "description": "A parchment stretched across the wall depicting the gorge. The upper section is drawn with meticulous detail, but as the map descends, the detail fades. At its base, the words 'Unexplored' are scrawled. Some of the ink appears fresh.",
                     "aliases": [
                         "parchment",
-						"paper"
+                        "paper"
+                    ]
+                },
+				{
+                    "displayName": "section",
+                    "description": "The first few layers on the map are well documented: The Verdant Green, The Petrified Woods, The Immense Sprawl...",
+                    "adjective": "upper",
+                    "aliases": [
+                        "explored",
+						"gorge"
+                    ]
+                },
+				{
+                    "displayName": "green",
+                    "description": "The map depicts the first layer and the least dangerous. Equal parts rocky terrain, dense jungle, and dangerous creatures. The lower part of Belsk bleeds into here.",
+                    "adjective": "verdant",
+                    "aliases": []
+                },
+				{
+                    "displayName": "woods",
+                    "description": "The second layer on the map. You've never been, but you've heard tales of trees taller than the spires of Belsk, and harder than steel. Trail Blazers are mostly on their own here as it is too dangerous to send rescue parties.",
+                    "adjective": "petrified",
+                    "aliases": []
+                },
+				{
+                    "displayName": "sprawl",
+                    "description": "The third layer consists of a megastructure. A maze of stairs, corridors, walls, rooms. Who was it built by and why in the Superdeep?",
+                    "adjective": "immense",
+                    "aliases": []
+                },
+				{
+                    "displayName": "unexplored",
+                    "description": "You eye the lower parts of the map. Even now, there are still unexplored sections. Or at least, unmapped. Rumour has it that there are still groups wandering in the depths who haven't returned yet.",
+                    "aliases": [
+                        "faded",
                     ]
                 },
                 {
@@ -159,8 +227,7 @@
                         "notice board",
                         "bulletin board"
                     ]
-                },
-                
+                }
             ]
         }
     ]

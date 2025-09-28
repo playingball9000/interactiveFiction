@@ -4,10 +4,11 @@ using TMPro;
 using UnityEngine;
 
 /*
-explrot canvas -> panel
 tooltip look better
 explore log look better
 explore dialgoue box
+
+dialogue choices like torment
 */
 
 public class GameController : MonoBehaviour
