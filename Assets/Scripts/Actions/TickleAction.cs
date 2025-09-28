@@ -15,7 +15,7 @@ public class TickleAction : IPlayerAction
         List<IExaminable> npcMatch = ActionUtil.ProcessMainClauseFromEnd(actionInput.mainClause, npcs);
 
         ActionUtil.MatchZeroOneAndMany(
-            npcMatch.Cast<NPC>().ToList(),
+            npcMatch.Cast<INPC>().ToList(),
             () => StoryTextHandler.invokeUpdateStoryDisplay($"You can't {actionVerb} that"),
             npc =>
             {

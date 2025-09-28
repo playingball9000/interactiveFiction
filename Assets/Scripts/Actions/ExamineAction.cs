@@ -52,6 +52,7 @@ public class ExamineAction : IPlayerAction
              pm,
              () =>
                 {
+                    // If it doesn't match anything check the scenery aliases 
                     List<Scenery> sceneryList = examinables.OfType<Scenery>().ToList();
                     var found = sceneryList.FirstOrDefault(s => s.aliases.Contains(mainClause[mainClause.Count - 1]));
                     if (found != null)
@@ -63,7 +64,15 @@ public class ExamineAction : IPlayerAction
                         StoryTextHandler.invokeUpdateStoryDisplay(CANT_ACTION_MESSAGE);
                     }
                 },
-             thing => StoryTextHandler.invokeUpdateStoryDisplay(thing.GetDescription()),
+             thing =>
+             {
+                 string displayText = thing.GetDescription();
+                 if (thing is ContainerBase foundStorage && foundStorage.isOpen)
+                 {
+                     displayText = displayText + $"\nContents: {foundStorage.ContentsToString()}";
+                 }
+                 StoryTextHandler.invokeUpdateStoryDisplay(displayText);
+             },
              things => StoryTextHandler.invokeUpdateStoryDisplay("Are you trying to examine " + StringUtil.CreateOrSeparatedString(things.Select(thing => thing.GetDisplayName())))
          );
     }

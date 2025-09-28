@@ -15,22 +15,23 @@ public class DialogueNode
         this.text = text;
     }
 
-    public void AddChoice((string text, string dialogueNode) endChoice)
+    public DialogueNode AddChoice((string text, string dialogueNode) endChoice)
     {
-        AddChoice(endChoice.text, endChoice.dialogueNode);
+        return AddChoice(endChoice.text, endChoice.dialogueNode);
     }
 
 
-    public void AddChoice(string text, string dialogueNode, Rule showRule = null, Action action = null)
+    public DialogueNode AddChoice(string text, string dialogueNode, Rule showRule = null, Action action = null)
     {
-        choices.Add(new DialogueChoice { text = text, nextNode = dialogueNode, showRule = showRule, executeCode = action });
+        choices.Add(new DialogueChoice { text = text, nextNodeId = dialogueNode, showRule = showRule, executeCode = action });
+        return this;
     }
 }
 
 public class DialogueChoice
 {
     public string text;
-    public string nextNode;
+    public string nextNodeId;
     public Rule showRule = null;
     public Action executeCode { get; set; }
 

@@ -6,13 +6,15 @@ public class DialogueGraph
     private Dictionary<string, DialogueNode> nodes = new();
     public DialogueNode currentNode;
 
-    public void AddNode(DialogueNode node)
+    public DialogueNode AddNode(string id, string speaker, string text)
     {
+        DialogueNode newNode = new(id, speaker, text);
         if (!nodes.Any())
         {
-            currentNode = node;
+            currentNode = newNode;
         }
-        nodes.Add(node.id, node);
+        nodes.Add(newNode.id, newNode);
+        return newNode;
     }
 
     public DialogueNode GetNode(string id)

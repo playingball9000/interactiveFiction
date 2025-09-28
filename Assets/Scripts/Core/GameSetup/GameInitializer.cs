@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Numerics;
 using UnityEngine;
 
 public class GameInitializer : MonoBehaviour
@@ -13,6 +14,8 @@ public class GameInitializer : MonoBehaviour
 
         RoomLoader.LoadRooms();
         RoomLoader.LoadRoomContextActions();
+
+        RoomIncidentLoader.LoadFlavor();
 
         TimerManager.Instance.CreateTimer(TimerCode.Test, 1f, () =>
         {
@@ -38,17 +41,11 @@ public class GameInitializer : MonoBehaviour
 
         Player player = PlayerFactory.CreateNew("", LocationCode.AirshipDeck_r);
 
-        // TODO:This is silly, i set npc.currentLocation but also room.addNpc also sets it... should be able to do it once...
-        NPC npcGrace = new Grace
+        ComplexNPC npcMary = new MaryHearth
         {
-            displayName = "Grace",
-            internalCode = "npc_grace",
-            description = @"A petite girl. Her bright, emerald-green eyes sparkle with excitement and mischief, scanning every crevice and glimmer as though each one hides a secret treasure. Her hair, a wild tangle of chestnut curls, is tied back in a messy ponytail with a faded red ribbon that flutters behind her like a tiny flag.",
-            currentLocation = startingCamp,
-            dialogueFile = "womanDialogue"
         };
 
-        startingCamp.AddNPC(npcGrace);
+        RoomRegistry.GetRoom(LocationCode.AirshipCabin_r).AddNPC(npcMary);
 
         IItem itemBottle = ItemFactory.CreateItem(
             "bottle",
@@ -75,7 +72,7 @@ public class GameInitializer : MonoBehaviour
 
         startingCamp.AddItem(bag);
 
-        player.relationships.Add(npcGrace.internalCode, new Relationship { points = 0 });
+        player.relationships.Add(npcMary.internalCode, new Relationship { points = 0 });
 
         IWearable gasMask = new WearableBase()
         {

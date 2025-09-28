@@ -2,13 +2,13 @@
   "dictionary": [
     {
       "locationCode": "AirshipDeck_r",
-      "keylist": ["jump off ship", "jump into abyss", "jump over rail", "jump over railing", "suicide", "kill self"],
-      "value": "You give yourself a running start... and decide that today is not a good day to die."
+      "keylist": ["jump off ship", "jump into abyss", "jump into superdeep", "jump over rail", "jump over railing", "suicide", "kill self"],
+      "value": "Today is not a good day to die."
     },
     {
       "locationCode": "AirshipDeck_r",
-      "keylist": ["smell flowers", "sniff roses"],
-      "value": "The flowers smell wonderful."
+      "keylist": ["get arms", "retrieve arms", "quickly retrieve arms from drawer", "quickly retrieve arms"],
+      "value": "Listen here shitlord..."
     }
   ]
 }

@@ -8,7 +8,7 @@ public class WorldState
     public Dictionary<LocationCode, Area> areaData = new();
     public Dictionary<CardCode, Card> cardData = new();
 
-    public List<NPC> npcs = new();
+    public List<INPC> npcs = new();
 
     public bool FLAG_dialogWindowActive = false;
     public bool FLAG_showIntro = false;

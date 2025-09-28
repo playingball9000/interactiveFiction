@@ -15,12 +15,15 @@ public class TalkAction : IPlayerAction
         List<IExaminable> npcMatch = ActionUtil.ProcessMainClauseFromEnd(actionInput.mainClause, npcs);
 
         ActionUtil.MatchZeroOneAndMany(
-            npcMatch.Cast<NPC>().ToList(),
+            npcMatch.Cast<INPC>().ToList(),
             () => StoryTextHandler.invokeUpdateStoryDisplay("You can't talk to that"),
             npc =>
             {
-                StoryTextHandler.invokeUpdateStoryDisplay("You strike up a conversation...");
-                DialogueParser.invokeStartDialogue(npc);
+                if (npc is ComplexNPC complexNPC)
+                {
+                    StoryTextHandler.invokeUpdateStoryDisplay("You strike up a conversation...");
+                    DialogueParser.invokeStartDialogue(complexNPC);
+                }
             },
             npcs => StoryTextHandler.invokeUpdateStoryDisplay(
                 "Are you trying to talk to " + StringUtil.CreateOrSeparatedString(npcs.Select(npc => npc.GetDisplayName())))

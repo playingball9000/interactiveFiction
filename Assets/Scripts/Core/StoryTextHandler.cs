@@ -16,7 +16,7 @@ public class StoryTextHandler : MonoBehaviour
 
     private Queue<(string text, TextEffect effect)> textQueue = new();
     private bool isTyping = false;
-    WaitForSeconds textQueueWait = new(0.7f);
+    WaitForSeconds textQueueWait = new(0.4f);
 
     // Delegates for other functions to use to invoke this. Probably not the right way but oh well.
     public delegate void UpdateStoryDisplayDelegate(string text, TextEffect effect = TextEffect.None);
@@ -50,6 +50,10 @@ public class StoryTextHandler : MonoBehaviour
 
     public void UpdateStoryDisplay(string text, TextEffect effect)
     {
+        if (TextEffect.Incidental == effect)
+        {
+            text = $"<margin=70><color=#B9A986>{text}</color></margin>";
+        }
         storyLog.Add(text + "\n");
 
         // Using a queue here in case multiple updates come through at once so each one is handled in order
@@ -73,7 +77,7 @@ public class StoryTextHandler : MonoBehaviour
             {
                 tmpBox.text = storyLog.GetLogsString();
             }
-            else if (TextEffect.Typewriter == effect)
+            else if (TextEffect.Typewriter == effect || TextEffect.Incidental == effect)
             {
                 yield return StartCoroutine(UiUtilMb.Instance.TypewriterAppend(nextText, tmpBox));
                 yield return textQueueWait;

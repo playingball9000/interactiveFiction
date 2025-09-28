@@ -4,10 +4,11 @@ using TMPro;
 using UnityEngine;
 
 /*
-explrot canvas -> panel
 tooltip look better
 explore log look better
 explore dialgoue box
+
+dialogue choices like torment
 */
 
 public class GameController : MonoBehaviour
@@ -92,7 +93,7 @@ public class GameController : MonoBehaviour
             introTextBox.text = "";
             yield return StartCoroutine(UiUtilMb.Instance.TypewriterAppend(paragraphs[i], introTextBox));
             yield return new WaitUntil(() => Input.anyKeyDown);
-            yield return new WaitForSeconds(0.12f);
+            yield return new WaitForSeconds(0.05f);
 
         }
         rpgTextBoxCanvas.gameObject.SetActive(false);
