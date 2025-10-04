@@ -18,6 +18,7 @@ public interface ComplexNPC : INPC
     public string dialogueFile { get; set; }
     public NpcCode internalCode { get; set; }
     List<IWearable> clothes { get; set; }
+    List<IExaminable> examinables { get; set; }
     public Memory memory { get; set; }
 
 

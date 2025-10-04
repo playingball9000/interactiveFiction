@@ -53,7 +53,7 @@ public class ExamineAction : IPlayerAction
              () =>
                 {
                     // If it doesn't match anything check the scenery aliases 
-                    List<Scenery> sceneryList = examinables.OfType<Scenery>().ToList();
+                    List<IAliasable> sceneryList = examinables.OfType<IAliasable>().ToList();
                     var found = sceneryList.FirstOrDefault(s => s.aliases.Contains(mainClause[mainClause.Count - 1]));
                     if (found != null)
                     {

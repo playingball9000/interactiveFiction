@@ -16,6 +16,11 @@ public interface IItem : IExaminable
     //TODO: probably should contain a list of disambiguations, but priority check 1) exact match 2) partial match 3) disambiguation match
 }
 
+public interface IAliasable : IExaminable
+{
+    public List<string> aliases { get; set; }
+}
+
 public interface IPlayerAction
 {
     public PlayerAction playerActionCode { get; }

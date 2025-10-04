@@ -44,6 +44,8 @@ public class Room : ILocation
     public List<IExaminable> GetExaminableThings()
     {
         List<IExaminable> examinableThings = npcs.ToList<IExaminable>();
+        npcs.OfType<ComplexNPC>().ToList().ForEach(npc => examinableThings.AddRange(npc.examinables));
+
         examinableThings.AddRange(roomItems.contents.ToList<IExaminable>());
         examinableThings.AddRange(roomScenery);
 

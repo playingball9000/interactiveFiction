@@ -36,6 +36,11 @@ public static class TmpTextTagger
         return $"<color={color}>{text}</color>";
     }
 
+    public static string HangingIndent(string text, int indent)
+    {
+        return $"<indent={indent}%><line-indent=-{indent}%>{text}</indent>";
+    }
+
     /// <summary>
     /// Wraps the given text in a size tag.
     /// </summary>
