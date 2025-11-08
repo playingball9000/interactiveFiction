@@ -41,6 +41,7 @@ public class GiveAction : IPlayerAction
                         if (accepted)
                         {
                             containerHoldingItem.RemoveItem(item);
+                            EventManager.Raise(GameEvent.ActionPerformed);
                         }
                         else
                         {

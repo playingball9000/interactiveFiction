@@ -25,6 +25,7 @@ public class CloseAction : IPlayerAction
                     // TODO: Might be nice to have custom close text for each container
                     StoryTextHandler.invokeUpdateStoryDisplay($"You {actionVerb} " + container.GetDisplayName());
                     container.isOpen = false;
+                    EventManager.Raise(GameEvent.ActionPerformed);
                 }
                 else
                 {

@@ -57,7 +57,7 @@ public class ExamineAction : IPlayerAction
                     var found = sceneryList.FirstOrDefault(s => s.aliases.Contains(mainClause[mainClause.Count - 1]));
                     if (found != null)
                     {
-                        StoryTextHandler.invokeUpdateStoryDisplay(found.GetDescription());
+                        FinishUp(found, found.GetDescription());
                     }
                     else
                     {
@@ -71,9 +71,17 @@ public class ExamineAction : IPlayerAction
                  {
                      displayText = displayText + $"\nContents: {foundStorage.ContentsToString()}";
                  }
-                 StoryTextHandler.invokeUpdateStoryDisplay(displayText);
+                 FinishUp(thing, displayText);
              },
              things => StoryTextHandler.invokeUpdateStoryDisplay("Are you trying to examine " + StringUtil.CreateOrSeparatedString(things.Select(thing => thing.GetDisplayName())))
          );
+    }
+
+    private void FinishUp(IExaminable thing, string description)
+    {
+        StoryTextHandler.invokeUpdateStoryDisplay(description);
+        QueryRunner.RunPostExamineFacts(thing);
+        thing.examined = true;
+        EventManager.Raise(GameEvent.ActionPerformed);
     }
 }

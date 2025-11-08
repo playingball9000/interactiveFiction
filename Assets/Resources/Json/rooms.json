@@ -124,7 +124,7 @@
         },
         {
             "displayName": "Main Cabin",
-            "description": "A central chamber tucked between the cargo hold and deck. It serves as both living space and meeting hall. A large wooden table stands in the center of the room. A map of the first few layers of the Superdeep adorns a wall. Next to it is a corkboard with various notes pinned to it.",
+            "description": "A central chamber tucked between the cargo hold and deck. It serves as both living space and meeting hall. A long wooden table stands in the center of the room. A map of the first few layers of the Superdeep adorns a wall. Next to it is a corkboard with various notes pinned to it.",
             "internalCode": "AirshipCabin_r",
             "exits": [
                 {
@@ -136,10 +136,13 @@
                 {
                     "displayName": "table",
                     "description": "A solid oak table, pen marks dot the surface, evidence of past voyages. A particular circular stain sits at one edge, faintly glowing in the lantern light.",
-                    "adjective": "long",
+                    "adjective": "wooden",
                     "aliases": [
                         "oak table",
-                        "central table"
+                        "central table",
+						"long",
+						"long table",
+						"long wooden table"
                     ]
                 },
                 {

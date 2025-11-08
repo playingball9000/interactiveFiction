@@ -8,6 +8,7 @@ public static class QueryRunner
     // 1) get concept facts 2) get player related 3) get world state facts
     public static void RunPreMoveFacts(ILocation movedFrom)
     {
+        // ActionMovedFromLocation is needed because player.currentLocation isn't about moving
         List<Fact> facts = new()
         {
             new Fact { key = RuleKey.Concept, value = RuleConcept.OnMove },
@@ -48,6 +49,25 @@ public static class QueryRunner
         RuleEngineRegistry.Get(RuleConstants.RULE_ENGINE_GENERAL).Execute(facts);
     }
 
+    public static void RunPostExamineFacts(IExaminable examined)
+    {
+        List<Fact> facts = new()
+        {
+            new Fact { key = RuleKey.Concept, value = RuleConcept.OnExamine },
+        };
+
+        if (examined is Scenery)
+        {
+            facts.Add(new Fact { key = RuleKey.ActionTargetExaminable, value = examined.displayName });
+            facts.Add(new Fact { key = RuleKey.ExaminableExamined, value = examined.examined });
+        }
+
+        facts.AddRange(PlayerContext.Get.GetPlayerFacts());
+
+        // Log.LogList(facts);
+        RuleEngineRegistry.Get(RuleConstants.RULE_ENGINE_GENERAL).Execute(facts);
+    }
+
     // public static void RunGiveFacts()
     // {
     //     List<Fact> facts = new()
@@ -76,7 +96,4 @@ public static class QueryRunner
         // Log.LogList(facts);
 
     }
-
-
-
 }

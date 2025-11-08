@@ -61,6 +61,25 @@ public static class ActionUtil
         return matches;
     }
 
+    public static List<IItem> FindMatchingItemsInStorageFromEnd(IStorage containerToSearch, List<string> mainClause)
+    {
+        string lastWord = mainClause[^1];
+        string secondToLastWord = mainClause[^2];
+        List<IItem> possibleMatches = new();
+
+        possibleMatches = FindItemsFieldContainsString(containerToSearch.contents, item => item.displayName, lastWord);
+        if (!possibleMatches.Any())
+        {
+            possibleMatches = FindItemsFieldContainsString(containerToSearch.contents, item => item.adjective, lastWord);
+        }
+        if (possibleMatches.Count > 1 && mainClause.Count > 1)
+        {
+            // disambiguate ie. gold key vs silver key
+            secondToLastWord = mainClause[mainClause.Count - 2];
+            possibleMatches = FindItemsFieldContainsString(possibleMatches, npc => npc.adjective, secondToLastWord);
+        }
+        return possibleMatches;
+    }
 
     public static (IStorage, List<IItem>) FindItemsInAccessibleStorages(List<IStorage> containersToSearch, List<string> mainClause)
     {
@@ -238,32 +257,49 @@ public static class ActionUtil
 
     public static List<INPC> FindMatchingNpcs(List<string> mainClause, List<INPC> npcs)
     {
-        //TODO: Probably should make it match multiple words like adj
-
-        // Honestly just hard code checking hte first and 2nd words... any more complicated is not worth it
+        // Honestly just hard code checking the first and 2nd words... any more complicated is not worth it
         string firstWord = mainClause[0];
-        string secondWord = mainClause[0];
+        string lastWord = mainClause[mainClause.Count - 1];
+        string secondWord;
+        string secondToLastWord;
 
-        List<INPC> possibleMatches = FindItemsFieldContainsString(npcs, item => item.adjective, firstWord);
+        List<INPC> possibleMatches = FindItemsFieldContainsString(npcs, npc => npc.adjective, firstWord);
         if (!possibleMatches.Any())
         {
-            possibleMatches = FindItemsFieldContainsString(npcs, item => item.displayName, firstWord);
-        }
-        if (possibleMatches.Count <= 1)
-        {
-            return possibleMatches;
+            possibleMatches = FindItemsFieldContainsString(npcs, npc => npc.displayName, firstWord);
         }
 
-        // if hasn't returned here, then possible matches are many so disambiguate
-        return FindItemsFieldContainsString(possibleMatches, item => item.displayName, secondWord);
+        // If 1 match, then no need to disambiguate
+        if (possibleMatches.Count == 0)
+        {
+            // If 0 matches, then search from end
+            possibleMatches = FindItemsFieldContainsString(npcs, npc => npc.displayName, lastWord);
+            if (!possibleMatches.Any())
+            {
+                possibleMatches = FindItemsFieldContainsString(npcs, npc => npc.adjective, lastWord);
+            }
+            if (possibleMatches.Count > 1 && mainClause.Count > 1)
+            {
+                // disambiguate ie. gold key vs silver key
+                secondToLastWord = mainClause[mainClause.Count - 2];
+                possibleMatches = FindItemsFieldContainsString(possibleMatches, npc => npc.adjective, secondToLastWord);
+            }
+        }
+        else if (possibleMatches.Count > 1 && mainClause.Count > 1)
+        {
+            // disambiguate ie. gold key vs silver key
+            secondWord = mainClause[1];
+
+            possibleMatches = FindItemsFieldContainsString(possibleMatches, npc => npc.adjective, secondWord);
+        }
+
+        return possibleMatches;
 
     }
 
     public static List<IExaminable> FindMatchingExaminables(List<string> mainClause, IEnumerable<IExaminable> examinables)
     {
-        //TODO: Probably should make it match multiple words like adj
-
-        // Honestly just hard code checking hte first and 2nd words... any more complicated is not worth it
+        // Honestly just hard code checking the last and second to last words.
         string secondToLastWord;
 
         string lastWord = mainClause[mainClause.Count - 1];
@@ -275,20 +311,15 @@ public static class ActionUtil
             possibleMatches = FindItemsFieldContainsString(examinables, item => item.adjective, lastWord);
         }
 
-        if (possibleMatches.Count <= 1)
+        // If 0 or 1 match, then no need to disambiguate
+        if (possibleMatches.Count > 1 && mainClause.Count > 1)
         {
-            return possibleMatches;
+            // disambiguate ie. gold key vs silver key
+            secondToLastWord = mainClause[mainClause.Count - 2];
+            possibleMatches = FindItemsFieldContainsString(possibleMatches, item => item.adjective, secondToLastWord);
         }
-        else
-        {
-            if (mainClause.Count > 1)
-            {
-                // if hasn't returned here, then possible matches are many so disambiguate
-                secondToLastWord = mainClause[mainClause.Count - 2];
-                possibleMatches = FindItemsFieldContainsString(possibleMatches, item => item.adjective, secondToLastWord);
-            }
-            return possibleMatches;
-        }
+        return possibleMatches;
+
     }
 
     private static readonly string[] unknownCommandResponses =

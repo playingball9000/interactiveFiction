@@ -27,6 +27,9 @@ public class ActionWordSynonyms
 
         { "tickle", PlayerAction.Tickle },
 
+        { "wait", PlayerAction.Wait },
+        { "z", PlayerAction.Wait },
+
         { "insult", PlayerAction.Insult },
 
         { "battle", PlayerAction.Battle },

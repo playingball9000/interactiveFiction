@@ -1,6 +1,7 @@
 public enum PlayerAction
 {
     Look,
+    Wait,
     Examine,
     Talk,
     Tickle,

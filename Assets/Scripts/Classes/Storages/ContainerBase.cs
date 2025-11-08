@@ -12,6 +12,7 @@ public class ContainerBase : IStorage, IItem, IOpenable, IExaminable
     public bool isGettable { get; set; } = true;
     // This is used for isGettable = false to display message todo: probably a better way to do this
     public string pickUpNarration { get; set; }
+    public bool examined { get; set; } = false;
 
     public List<IItem> contents { get; set; }
 

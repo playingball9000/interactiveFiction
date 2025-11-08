@@ -21,6 +21,9 @@ public class BattleAction : IPlayerAction
             {
                 //TODO: fill this in
                 StoryTextHandler.invokeUpdateStoryDisplay("They don't want to battle");
+
+                EventManager.Raise(GameEvent.ActionPerformed);
+
             },
             npcs => StoryTextHandler.invokeUpdateStoryDisplay(
                 $"Are you trying to {actionVerb} " + StringUtil.CreateOrSeparatedString(npcs.Select(npc => npc.GetDisplayName())))

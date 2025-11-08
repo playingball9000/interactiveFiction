@@ -11,11 +11,11 @@ public class TalkAction : IPlayerAction
 
     void IPlayerAction.Execute(ActionInput actionInput)
     {
-        var npcs = PlayerContext.Get.currentRoom.npcs.Cast<IExaminable>();
-        List<IExaminable> npcMatch = ActionUtil.ProcessMainClauseFromEnd(actionInput.mainClause, npcs);
+        var npcs = PlayerContext.Get.currentRoom.npcs;
+        List<INPC> npcMatch = ActionUtil.FindMatchingNpcs(actionInput.mainClause, npcs);
 
         ActionUtil.MatchZeroOneAndMany(
-            npcMatch.Cast<INPC>().ToList(),
+            npcMatch,
             () => StoryTextHandler.invokeUpdateStoryDisplay("You can't talk to that"),
             npc =>
             {
@@ -24,6 +24,7 @@ public class TalkAction : IPlayerAction
                     StoryTextHandler.invokeUpdateStoryDisplay("You strike up a conversation...");
                     DialogueParser.invokeStartDialogue(complexNPC);
                 }
+                EventManager.Raise(GameEvent.ActionPerformed);
             },
             npcs => StoryTextHandler.invokeUpdateStoryDisplay(
                 "Are you trying to talk to " + StringUtil.CreateOrSeparatedString(npcs.Select(npc => npc.GetDisplayName())))

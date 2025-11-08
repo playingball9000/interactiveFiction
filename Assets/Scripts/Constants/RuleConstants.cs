@@ -9,6 +9,7 @@ public enum RuleConcept
 {
     OnGive,
     OnMove,
+    OnExamine,
     OnCardComplete
 }
 
@@ -26,12 +27,16 @@ public enum RuleKey
     InRoomItem,
 
     RoomVisited,
+    ExaminableExamined,
 
     CardCompleted,
 
     ActionTargetNpc,
+    ActionTargetExaminable,
     ActionMovedToLocation,
     ActionMovedFromLocation,
     ActionPlayerMovedToArea,
-    ActionPlayerMovedToRoom
+    ActionPlayerMovedToRoom,
+
+    TurnsInCurrentRoom
 }

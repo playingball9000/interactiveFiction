@@ -22,6 +22,13 @@
 1. Player, NPC, etc.
 2. Have Memory, which is just key value store of Facts basically. Used to run rules.
 
+There are two types of NPCs
+
+1. Simple
+2. Complex
+
+Simple is just for maybe saying one line. Most chars are complex.
+
 ## Core
 
 1. Pretty much all the main interfaces/managers for the UI, gameplay setup, etc.
@@ -32,21 +39,6 @@
 1. Actions are invoked via the command pattern
 1. Actions should implement IPlayerAction
 1. Make sure to update the ActionRegistry and ActionSynonyms with any new ones
-
-### Action List
-
-1. Look
-2. Talk
-3. Examine
-4. Get
-5. Drop
-6. Inventory
-7. Save
-8. Load
-9. Movement
-10. Open / Close
-11. Put
-12. Equip / Unequip
 
 ### Inventory
 
@@ -69,6 +61,7 @@
 ### Examine
 
 1. Anything examinable needs to implement IExaminable
+2. IAliasable is used for things with multiple names to reference it.
 
 ## Dialogue
 

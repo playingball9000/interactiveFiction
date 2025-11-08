@@ -34,6 +34,7 @@ public class GetAction : IPlayerAction
                     player.AddToInventory(item);
                     containerHoldingItem.RemoveItem(item);
                 }
+                EventManager.Raise(GameEvent.ActionPerformed);
             },
             items => StoryTextHandler.invokeUpdateStoryDisplay(
                 "Are you trying to get " + StringUtil.CreateOrSeparatedString(items.Select(item => item.GetDisplayName())))

@@ -9,6 +9,7 @@ public class ItemBase : IItem, IAliasable
     public string adjective { get; set; } = "";
     public bool isGettable { get; set; } = true;
     public List<string> aliases { get; set; } = new();
+    public bool examined { get; set; } = false;
 
     // Backing field is needed otherwise C# auto props will get into an infinite loop
     private string pickUpNarrationBackingField;
