@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 public class SimpleNPC : INPC
 {
     public LocationCode currentLocation { get; set; }
@@ -5,6 +7,8 @@ public class SimpleNPC : INPC
     public string displayName { get; set; }
     public string description { get; set; }
     public string adjective { get; set; } = "";
+    public bool examined { get; set; } = false;
+    public List<BodyPart> availableSpots { get; set; } = new();
 
     public static SimpleNPC Create()
     {

@@ -24,6 +24,7 @@ public class UnequipAction : IPlayerAction
                 StoryTextHandler.invokeUpdateStoryDisplay("You take off " + item.GetDisplayName());
                 player.AddToInventory(item);
                 player.equipment.Remove(item);
+                EventManager.Raise(GameEvent.ActionPerformed);
             },
             items => StoryTextHandler.invokeUpdateStoryDisplay(
                 "Are you trying to take off " + StringUtil.CreateOrSeparatedString(items.Select(item => item.GetDisplayName())))

@@ -61,6 +61,8 @@ public class UiUtilMb : MonoBehaviour
     {
         int charIndex = 0;
         yield return new WaitForSeconds(.1f);
+        // Append newline here for formatting.
+        newText = "\n" + newText;
 
         while (charIndex < newText.Length)
         {

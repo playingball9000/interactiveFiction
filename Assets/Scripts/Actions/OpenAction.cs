@@ -29,6 +29,7 @@ public class OpenAction : IPlayerAction
                 {
                     StoryTextHandler.invokeUpdateStoryDisplay("You open " + container.displayName + "\nContents: " + container.ContentsToString());
                     container.isOpen = true;
+                    EventManager.Raise(GameEvent.ActionPerformed);
                 }
             },
             containers => StoryTextHandler.invokeUpdateStoryDisplay(

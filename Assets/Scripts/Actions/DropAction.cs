@@ -23,6 +23,7 @@ public class DropAction : IPlayerAction
                 StoryTextHandler.invokeUpdateStoryDisplay($"You {actionVerb} " + item.GetDisplayName());
                 player.RemoveFromInventory(item);
                 player.currentRoom.AddItem(item);
+                EventManager.Raise(GameEvent.ActionPerformed);
             },
             items => StoryTextHandler.invokeUpdateStoryDisplay(
                 $"Are you trying to {actionVerb} " + StringUtil.CreateOrSeparatedString(items.Select(item => item.GetDisplayName())))

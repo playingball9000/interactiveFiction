@@ -50,6 +50,34 @@ public static class RuleEngineRegistry
             StoryTextHandler.invokeUpdateStoryDisplay(RoomIncidentRegistry.GetFlavorText("maryIntro"), TextEffect.Incidental);
         }));
 
+        engine.AddRule(Rule.Create("Examine railing in airship deck")
+        .WhenAll(
+            FactExists(Concept, OnExamine),
+            FactExists(ActionTargetExaminable, "railing"),
+            FactIsFalse(ExaminableExamined),
+            FactExists(CurrentLocation, LocationCode.AirshipDeck_r)
+
+        )
+        .Do(() =>
+        {
+            StoryTextHandler.invokeUpdateStoryDisplay("Whoa! Don't fall over!", TextEffect.Incidental);
+        }));
+
+        engine.AddRule(Rule.Create("3 Turns airship deck")
+        .WhenAll(
+            FactExists(CurrentLocation, LocationCode.AirshipDeck_r),
+            FactExists(TurnsInCurrentRoom, 3)
+        )
+        .Do(() =>
+        {
+            StoryTextHandler.invokeUpdateStoryDisplay("A small bird flies by...", TextEffect.Incidental);
+            PlayerContext.Get.currentRoom.AddItem(ItemFactory.CreateTickleItem(
+            "feather",
+            "brown",
+            "A soft brown feather you got from a passing bird."
+            ));
+        }));
+
         engine.AddRule(Rule.Create("Player moves from Room to Area")
             .WhenAll(
                 FactExists(Concept, OnMove),

@@ -17,6 +17,7 @@ public class Memory
         }
         else if (memory.TryGetValue(key, out var existingValue) && existingValue is int existingIntValue && value is int intValue)
         {
+            // using int as value increments by default
             memory[key] = existingIntValue + intValue;
         }
         else

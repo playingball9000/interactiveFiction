@@ -43,6 +43,7 @@ public class PutAction : IPlayerAction
                         StoryTextHandler.invokeUpdateStoryDisplay($"You put {item.GetDisplayName()} in {container.GetDisplayName()}");
                         containerHoldingItem.RemoveItem(item);
                         container.AddItem(item);
+                        EventManager.Raise(GameEvent.ActionPerformed);
                     },
                     containers => StoryTextHandler.invokeUpdateStoryDisplay(
                         "Are you trying to put in " + StringUtil.CreateOrSeparatedString(containers.Select(item => item.GetDisplayName())))

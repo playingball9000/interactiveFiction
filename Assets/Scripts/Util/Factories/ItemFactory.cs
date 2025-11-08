@@ -12,4 +12,15 @@ public static class ItemFactory
             description = description
         };
     }
+
+    public static TickleToolBase CreateTickleItem(string name, string adjective, string description)
+    {
+        return new TickleToolBase
+        {
+            displayName = name,
+            adjective = adjective,
+            internalCode = "item_" + adjective.Replace(" ", "_") + "_" + name.Replace(" ", "_"),
+            description = description
+        };
+    }
 }

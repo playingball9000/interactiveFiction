@@ -16,3 +16,15 @@ public enum ClothingLayer
     Outer,
 }
 
+public enum BodyPart
+{
+    Feet,
+    Knees,
+    Thighs,
+    Sides,
+    Stomach,
+    Ribs,
+    Underarms,
+    Neck,
+    Unknown
+}

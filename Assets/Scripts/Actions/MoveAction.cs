@@ -36,6 +36,7 @@ public class MoveAction : IPlayerAction
                     // Display room text description used to be here but was moved to rules engine
                     QueryRunner.RunPostMoveFacts(player.currentLocation);
                     player.playerMemory.Update(RuleKey.RoomVisited, player.currentRoom.internalCode);
+                    player.playerMemory.Delete(RuleKey.TurnsInCurrentRoom);
                 }
                 else
                 {

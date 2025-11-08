@@ -8,7 +8,9 @@ public enum GameEvent
     EnterArea,
     DieInArea,
 
-    StatsChanged
+    StatsChanged,
+
+    ActionPerformed
 }
 
 public class EventManager : MonoBehaviour

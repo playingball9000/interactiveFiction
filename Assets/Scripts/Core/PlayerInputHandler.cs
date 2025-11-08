@@ -15,7 +15,7 @@ public class PlayerInputHandler : MonoBehaviour
 
     HashSet<string> prepositions = new HashSet<string>
         {
-            "a", "an", "the", "go", "into", "in",
+            "a", "an", "the", "go", "into", "in", "with",
         };
 
     void Awake()
@@ -28,11 +28,14 @@ public class PlayerInputHandler : MonoBehaviour
     void OnEnable()
     {
         GameController.invokeShowMainCanvas += ActivateAndClearField;
+        EventManager.Subscribe(GameEvent.ActionPerformed, OnActionComplete);
+
     }
 
     void OnDisable()
     {
         GameController.invokeShowMainCanvas -= ActivateAndClearField;
+        EventManager.Unsubscribe(GameEvent.ActionPerformed, OnActionComplete);
     }
 
     void Start()
@@ -156,6 +159,15 @@ public class PlayerInputHandler : MonoBehaviour
             currentHistoryIndex = -1;
             inputHistory.Add(input);
         }
+    }
+
+    // Do this stuff after every successful action, so not like an incorrect command or trying to action on something not actionable
+    // Also stuff like Look and Inventory don't count.
+    public void OnActionComplete()
+    {
+        // Log.Debug("OnActionComplete - hit");
+        // TODO: call rule engine here, make new engine? revamp all that.
+        PlayerContext.Get.playerMemory.Update(RuleKey.TurnsInCurrentRoom, 1);
     }
 
 }

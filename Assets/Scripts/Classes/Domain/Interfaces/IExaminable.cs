@@ -3,6 +3,7 @@ public interface IExaminable
     string displayName { get; set; }
     string adjective { get; set; }
     string description { get; set; }
+    bool examined { get; set; }
 }
 
 public static class ExaminableExtensions

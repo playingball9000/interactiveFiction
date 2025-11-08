@@ -23,6 +23,7 @@ public class ActionRegistry
         CreateAction<TickleAction>(),
         CreateAction<InsultAction>(),
         CreateAction<BattleAction>(),
+        CreateAction<WaitAction>(),
     }
     .Concat(CreateMoveActions<MoveAction>())
     .ToDictionary(kvp => kvp.Key, kvp => kvp.Value);

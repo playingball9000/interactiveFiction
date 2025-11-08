@@ -21,6 +21,7 @@ public class InsultAction : IPlayerAction
             {
                 //TODO: fill this in
                 StoryTextHandler.invokeUpdateStoryDisplay("They don't care");
+                EventManager.Raise(GameEvent.ActionPerformed);
             },
             npcs => StoryTextHandler.invokeUpdateStoryDisplay(
                 $"Are you trying to {actionVerb} " + StringUtil.CreateOrSeparatedString(npcs.Select(npc => npc.GetDisplayName())))

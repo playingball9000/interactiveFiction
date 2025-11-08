@@ -37,6 +37,7 @@ public class UnlockAction : IPlayerAction
                         {
                             exitBack.isLocked = false;
                         }
+                        EventManager.Raise(GameEvent.ActionPerformed);
                     }
                     else
                     {

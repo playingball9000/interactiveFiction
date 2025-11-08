@@ -36,6 +36,7 @@ public class EquipAction : IPlayerAction
 
                 player.RemoveFromInventory(item);
                 player.equipment.Add(item);
+                EventManager.Raise(GameEvent.ActionPerformed);
 
             },
             items => StoryTextHandler.invokeUpdateStoryDisplay(

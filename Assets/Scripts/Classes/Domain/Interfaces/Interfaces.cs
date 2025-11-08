@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-public interface IWearable : IExaminable, IItem
+public interface IWearable : IItem
 {
     bool isWearable { get; set; }
     List<EquipmentSlot> slotsTaken { get; set; }
@@ -13,7 +13,12 @@ public interface IItem : IExaminable
     bool isGettable { get; set; }
     string pickUpNarration { get; }
     public string internalCode { get; set; }
-    //TODO: probably should contain a list of disambiguations, but priority check 1) exact match 2) partial match 3) disambiguation match
+    //TODO: probably should contain a list of aliases, but priority check 1) exact match 2) partial match 3) alias match - use IAliasable
+}
+
+public interface IAliasable : IExaminable
+{
+    public List<string> aliases { get; set; }
 }
 
 public interface IPlayerAction
@@ -56,3 +61,10 @@ public interface ITooltip
 {
     string GetTooltipText();
 }
+
+public interface ITickleable : IExaminable
+{
+    List<BodyPart> availableSpots { get; }
+    bool GetTickleReaction(string part, TickleToolBase tool = null);
+}
+
